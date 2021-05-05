@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Tweet from "./Tweet";
 import userData from "../placeholders/user";
 import tweetData from "../placeholders/tweets";
 
@@ -14,7 +15,7 @@ function Feed(props) {
   return (
     <ul>
       {tweets.map((tweet) => (
-        <div>{tweet.message}</div>
+        <Tweet key={tweet.id} tweet={tweet} user={user} />
       ))}
     </ul>
   );
