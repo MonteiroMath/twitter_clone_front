@@ -1,9 +1,12 @@
-import "./App.css";
 import "./components/Feed";
 import Feed from "./components/Feed";
 
 function App() {
-  return <Feed />;
+  return (
+    <div className="bg-light">
+      <Feed />
+    </div>
+  );
 }
 
 export default App;

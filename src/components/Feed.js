@@ -13,7 +13,7 @@ function Feed(props) {
   }, []);
 
   return (
-    <ul>
+    <ul className="p-0">
       {tweets.map((tweet) => (
         <Tweet key={tweet.id} tweet={tweet} user={user} />
       ))}
