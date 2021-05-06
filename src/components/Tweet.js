@@ -10,7 +10,7 @@ function Tweet(props) {
 
   //todo Extract avatar, textMessage and IconsBar into separate components
   return (
-    <Container className="border">
+    <Col className="border m-auto" xs="12" md="10" lg="6">
       <Row>
         <Col xs="2">
           <div className="pt-3">
@@ -32,7 +32,7 @@ function Tweet(props) {
           </p>
         </Col>
       </Row>
-    </Container>
+    </Col>
   );
 }
 
