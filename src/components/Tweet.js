@@ -1,9 +1,11 @@
 import React from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Row, Col } from "reactstrap";
+
+import Avatar from "./Avatar";
+
 import heart from "../icons/heart.svg";
 import retweet from "../icons/retweet.svg";
 import comment from "../icons/comment.svg";
-import avatar from "../images/phavatar.png";
 
 function Tweet(props) {
   let { tweet, user } = props;
@@ -13,9 +15,7 @@ function Tweet(props) {
     <Col className="border m-auto" xs="12" md="10" lg="6">
       <Row>
         <Col xs="2">
-          <div className="pt-3">
-            <img src={avatar} alt="like icon" width="50px" />
-          </div>
+          <Avatar />
         </Col>
         <Col>
           <p>
