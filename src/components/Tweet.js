@@ -2,6 +2,8 @@ import React from "react";
 import { Row, Col } from "reactstrap";
 
 import Avatar from "./Avatar";
+import InfoBar from "./InfoBar";
+import Message from "./Message";
 import InteractionBar from "./InteractionBar";
 
 function Tweet(props) {
@@ -9,18 +11,14 @@ function Tweet(props) {
 
   //todo Extract avatar, textMessage and IconsBar into separate components
   return (
-    <Col className="border m-auto" xs="12" md="10" lg="6">
+    <Col className="border m-auto p-2" xs="12" md="10" lg="6">
       <Row>
         <Col xs="2">
           <Avatar />
         </Col>
         <Col>
-          <p>
-            <span class="font-weight-bold">{user.username}</span>{" "}
-            <span class="text-secondary">@{user.username}</span> -
-            <span class="text-secondary"> {tweet.created}</span>
-          </p>
-          <p>{tweet.message}</p>
+          <InfoBar username={user.username} created={tweet.created} />
+          <Message message={tweet.message} />
           <InteractionBar
             likes={tweet.likes}
             retweets={tweet.retweets}
