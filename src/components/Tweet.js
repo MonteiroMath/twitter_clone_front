@@ -2,10 +2,7 @@ import React from "react";
 import { Row, Col } from "reactstrap";
 
 import Avatar from "./Avatar";
-
-import heart from "../icons/heart.svg";
-import retweet from "../icons/retweet.svg";
-import comment from "../icons/comment.svg";
+import InteractionBar from "./InteractionBar";
 
 function Tweet(props) {
   let { tweet, user } = props;
@@ -24,12 +21,11 @@ function Tweet(props) {
             <span class="text-secondary"> {tweet.created}</span>
           </p>
           <p>{tweet.message}</p>
-          <p>
-            <img src={heart} alt="like icon" width="15px" />
-            {tweet.likes}
-            <img src={retweet} alt="like icon" width="15px" /> {tweet.retweets}
-            <img src={comment} alt="like icon" width="15px" /> {tweet.comments}
-          </p>
+          <InteractionBar
+            likes={tweet.likes}
+            retweets={tweet.retweets}
+            comments={tweet.comments}
+          />
         </Col>
       </Row>
     </Col>
