@@ -1,3 +1,4 @@
+import "./App.css";
 import "./components/Feed";
 import Feed from "./components/Feed";
 
