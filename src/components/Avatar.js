@@ -12,6 +12,7 @@ function Avatar(props) {
   return (
     <div>
       <img
+        className="rounded-circle"
         src={src}
         onError={fallbackSrc}
         alt="like icon"
