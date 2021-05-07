@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Tweet from "./Tweet";
+import { Row, Col } from "reactstrap";
+
+import TweetList from "./TweetList";
 import NewTweet from "./NewTweet";
 import userData from "../placeholders/user";
 import tweetData from "../placeholders/tweets";
@@ -14,15 +16,10 @@ function Feed(props) {
   }, []);
 
   return (
-    <div>
+    <Col className="m-auto" xs="12" md="10" lg="6">
       <NewTweet />
-
-      <ul className="p-0">
-        {tweets.map((tweet) => (
-          <Tweet key={tweet.id} tweet={tweet} user={user} />
-        ))}
-      </ul>
-    </div>
+      <TweetList tweets={tweets} user={user} />
+    </Col>
   );
 }
 

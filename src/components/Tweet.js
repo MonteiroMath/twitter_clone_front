@@ -10,22 +10,20 @@ function Tweet(props) {
   let { tweet, user } = props;
 
   return (
-    <Col className="border m-auto p-3" xs="12" md="10" lg="6">
-      <Row noGutters={true}>
-        <Col xs="2">
-          <Avatar />
-        </Col>
-        <Col>
-          <InfoBar username={user.username} created={tweet.created} />
-          <Message message={tweet.message} />
-          <InteractionBar
-            likes={tweet.likes}
-            retweets={tweet.retweets}
-            comments={tweet.comments}
-          />
-        </Col>
-      </Row>
-    </Col>
+    <Row className="border p-3" noGutters={true}>
+      <Col xs="2">
+        <Avatar />
+      </Col>
+      <Col>
+        <InfoBar username={user.username} created={tweet.created} />
+        <Message message={tweet.message} />
+        <InteractionBar
+          likes={tweet.likes}
+          retweets={tweet.retweets}
+          comments={tweet.comments}
+        />
+      </Col>
+    </Row>
   );
 }
 
