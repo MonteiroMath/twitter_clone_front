@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Row, Col } from "reactstrap";
 
 import Avatar from "./Avatar";
 import InfoBar from "./InfoBar";
@@ -9,7 +9,6 @@ import InteractionBar from "./InteractionBar";
 function Tweet(props) {
   let { tweet, user } = props;
 
-  //todo Extract avatar, textMessage and IconsBar into separate components
   return (
     <Col className="border m-auto p-3" xs="12" md="10" lg="6">
       <Row noGutters={true}>
