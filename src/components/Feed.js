@@ -8,9 +8,6 @@ import FeedNavbar from "./FeedNavbar";
 import userData from "../placeholders/user";
 import tweetData from "../placeholders/tweets";
 
-//todo make the nav sticky
-//todo work on making the NewTweet appearing only on md+
-
 function Feed(props) {
   let [user, setUser] = useState(null);
   let [tweets, setTweets] = useState([]);

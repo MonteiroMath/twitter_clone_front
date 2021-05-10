@@ -6,7 +6,7 @@ import ToolBar from "./ToolBar";
 //!Consider extracting form entirely and making this component only about layout
 function NewTweet(props) {
   return (
-    <Row className="border p-3" noGutters={true}>
+    <Row className="border p-3 d-none d-md-flex" noGutters={true}>
       <Col xs="2">
         <Avatar />
       </Col>
