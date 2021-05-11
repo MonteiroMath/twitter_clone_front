@@ -4,6 +4,7 @@ import { Row, Col } from "reactstrap";
 import TweetList from "./TweetList";
 import NewTweet from "./NewTweet";
 import FeedNavbar from "./FeedNavbar";
+import NewTweetButton from "./NewTweetButton";
 
 import userData from "../placeholders/user";
 import tweetData from "../placeholders/tweets";
@@ -22,6 +23,7 @@ function Feed(props) {
       <FeedNavbar />
       <NewTweet />
       <TweetList tweets={tweets} user={user} />
+      <NewTweetButton />
     </Col>
   );
 }

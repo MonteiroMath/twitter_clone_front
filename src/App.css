@@ -5,3 +5,12 @@ body {
 textarea {
   resize: none !important;
 }
+
+.stickyButton {
+  position: fixed;
+  right: 10%;
+  bottom: 10%;
+  border-radius: 100% !important;
+  width: 65px;
+  height: 65px;
+}
