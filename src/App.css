@@ -19,3 +19,11 @@ textarea {
   background: url(icons/search.png) no-repeat scroll 15px 10px;
   padding-left: 30px;
 }
+
+.cfs-small {
+  font-size: 12px;
+}
+
+.cfw-bolder {
+  font-weight: bolder;
+}
