@@ -1,24 +1,42 @@
 import React from "react";
-import { Card, CardTitle, CardBody, CardFooter } from "reactstrap";
 
+import RightBarCard from "./RightBarCard";
 import ExploreSection from "./ExploreSection";
 
-//todo extract general card layout from specific functionality (exploresection)
+const placeholders = [
+  {
+    tags: ["tag1", "tag2"],
+    title: "Lorem Ipsum",
+    tweets: 321,
+  },
+  {
+    tags: ["tag3"],
+    title: "Wingardium Leviosa",
+    tweets: 32,
+  },
+  {
+    tags: ["tag5", "tag6"],
+    title: "Avada Kedavra",
+    tweets: 452,
+  },
+  {
+    tags: ["tag7", "tag8", "tag9"],
+    title: "Worst ever",
+    tweets: 1,
+  },
+  {
+    tags: ["tag1"],
+    title: "Bestest ever",
+    tweets: 9999,
+  },
+];
 
 function WhatsHappening(props) {
-  return (
-    <Card>
-      <CardTitle className="border-bottom p-3 mb-0 h5">
-        <span>What's Happening</span>
-      </CardTitle>
-      <CardBody className="p-0">
-        <ExploreSection />
-      </CardBody>
-      <a href="#" className="link-info">
-        <CardFooter>Show More</CardFooter>
-      </a>
-    </Card>
-  );
+  let content = placeholders.map((ph, i) => (
+    <ExploreSection key={i} content={ph} />
+  ));
+
+  return <RightBarCard title="What's Happening" content={content} />;
 }
 
 export default WhatsHappening;
