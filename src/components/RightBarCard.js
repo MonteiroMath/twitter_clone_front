@@ -1,6 +1,8 @@
 import React from "react";
 import { Card, CardTitle, CardBody, CardFooter } from "reactstrap";
 
+//todo bakein RIghtBarCard and RIghtBarSection
+
 function RightBarCard(props) {
   const { title, content } = props;
 
