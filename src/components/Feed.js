@@ -19,7 +19,7 @@ function Feed(props) {
   }, []);
 
   return (
-    <Col className="m-auto p-0" xs="12" md="10" lg="6">
+    <Col className="mx-auto p-0" xs="12" md="10" lg="6">
       <FeedNavbar />
       <NewTweet />
       <TweetList tweets={tweets} user={user} />
