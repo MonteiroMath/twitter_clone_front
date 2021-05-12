@@ -5,7 +5,7 @@ function RightBarCard(props) {
   const { title, content } = props;
 
   return (
-    <Card>
+    <Card className="mt-3">
       <CardTitle className="border-bottom p-3 mb-0 h5">
         <span>{title}</span>
       </CardTitle>
