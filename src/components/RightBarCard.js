@@ -1,10 +1,12 @@
 import React from "react";
 import { Card, CardTitle, CardBody, CardFooter } from "reactstrap";
 
-//todo bakein RIghtBarCard and RIghtBarSection
-
 function RightBarCard(props) {
-  const { title, content } = props;
+  const { placeholders, title, SectionComponent } = props;
+
+  let content = placeholders.map((ph, i) => (
+    <SectionComponent key={i} content={ph} />
+  ));
 
   return (
     <Card className="mt-3">

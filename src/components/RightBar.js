@@ -2,7 +2,7 @@ import React from "react";
 import { Col } from "reactstrap";
 
 import SearchBar from "./SearchBar";
-import RightBarSection from "./RightBarSection";
+import RightBarCard from "./RightBarCard";
 
 import ExploreSection from "./ExploreSection";
 import WtF_Section from "./WtF_Section";
@@ -12,19 +12,19 @@ function RightBar(props) {
   return (
     <Col className="d-none d-lg-block p-2" lg="3">
       <SearchBar />
-      <RightBarSection
+      <RightBarCard
         title="What's Happening"
         placeholders={WiH_placeholders}
         SectionComponent={ExploreSection}
       />
 
-      <RightBarSection
+      <RightBarCard
         title="Topics To Follow"
         placeholders={TtF_placeholders}
         SectionComponent={TopicSection}
       />
 
-      <RightBarSection
+      <RightBarCard
         title="Who to Follow"
         placeholders={WtF_placeholders}
         SectionComponent={WtF_Section}
