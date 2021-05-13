@@ -5,6 +5,7 @@ import TweetList from "./TweetList";
 import NewTweet from "./NewTweet";
 import FeedNavbar from "./FeedNavbar";
 import NewTweetButton from "./NewTweetButton";
+import BottomBar from "./BottomBar";
 
 import userData from "../placeholders/user";
 import tweetData from "../placeholders/tweets";
@@ -24,6 +25,7 @@ function Feed(props) {
       <NewTweet />
       <TweetList tweets={tweets} user={user} />
       <NewTweetButton />
+      <BottomBar />
     </Col>
   );
 }
