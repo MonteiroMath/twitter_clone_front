@@ -4,7 +4,7 @@ import { Navbar, Nav, NavItem, NavLink } from "reactstrap";
 
 function FeedNavbar(props) {
   return (
-    <Navbar className="sticky-top border p-2" expand="xs" color="light">
+    <Navbar className="sticky-top border p-2" expand="xs" color="white">
       <Nav navbar>
         <NavItem>
           <NavLink href="#">

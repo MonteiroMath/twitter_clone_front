@@ -9,7 +9,7 @@ function RightBarCard(props) {
   ));
 
   return (
-    <Card className="mt-3">
+    <Card className="mt-3" color="light">
       <CardTitle className="border-bottom p-3 mb-0 h5">
         <span>{title}</span>
       </CardTitle>

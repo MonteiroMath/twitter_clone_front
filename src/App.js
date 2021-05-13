@@ -8,7 +8,7 @@ import { Row } from "reactstrap";
 
 function App() {
   return (
-    <div className="bg-light">
+    <div color="white">
       <Row noGutters>
         <LeftBar />
         <Feed />

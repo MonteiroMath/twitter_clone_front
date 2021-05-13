@@ -7,7 +7,7 @@ function SearchBar(props) {
       <FormGroup>
         <Input
           name="SearchBar"
-          className="searchBar pl-5"
+          className="searchBar pl-5 bg-light"
           type="text"
           placeholder="Search Twitter"
         />
