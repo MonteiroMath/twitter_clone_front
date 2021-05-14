@@ -11,7 +11,7 @@ function App() {
     <div color="white">
       <Row noGutters>
         <LeftBar />
-        <Feed />
+        <Feed/>
         <RightBar />
       </Row>
     </div>
