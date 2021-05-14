@@ -10,7 +10,7 @@ import TopicSection from "./TopicSection";
 
 function RightBar(props) {
   return (
-    <Col className="d-none d-lg-block p-2" lg="3">
+    <Col className="d-none d-lg-block px-2 pt-0" lg="3">
       <SearchBar />
       <RightBarCard
         title="What's Happening"
