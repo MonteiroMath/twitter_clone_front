@@ -8,6 +8,10 @@ import search from "../icons/search.svg";
 import bell from "../icons/bell.svg";
 import mail from "../icons/mail.svg";
 import feather from "../icons/feather.svg";
+import bookmark from "../icons/bookmark.svg";
+import list from "../icons/list.svg";
+import profile from "../icons/profile.svg";
+import dots from "../icons/three-dots.svg";
 
 function LeftNavBar(props) {
   return (
@@ -40,6 +44,32 @@ function LeftNavBar(props) {
             <span className="ml-3 d-none d-lg-inline">Messages</span>
           </NavLink>
         </NavItem>
+        <NavItem>
+          <NavLink href="#">
+            <img src={bookmark} alt="bookmarks icon" width="25px" />
+            <span className="ml-3 d-none d-lg-inline">Bookmarks</span>
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink href="#">
+            <img src={list} alt="lists icon" width="25px" />
+            <span className="ml-3 d-none d-lg-inline">List</span>
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink href="#">
+            <img src={profile} alt="profile icon" width="25px" />
+            <span className="ml-3 d-none d-lg-inline">Profile</span>
+          </NavLink>
+        </NavItem>
+
+        <NavItem>
+          <NavLink href="#">
+            <img src={dots} alt="more icon" width="25px" />
+            <span className="ml-3 d-none d-lg-inline">More</span>
+          </NavLink>
+        </NavItem>
+
         <Button color="info" className="mt-4">
           <div>
             <img
