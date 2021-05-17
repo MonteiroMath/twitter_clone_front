@@ -11,7 +11,7 @@ function LeftBar(props) {
         <LeftNavBar />
       </Row>
 
-      <Row className="justify-content-center mt-5">
+      <Row className="justify-content-end justify-content-lg-center mt-5 mr-3">
         <ProfileInfoButton />
       </Row>
     </div>
