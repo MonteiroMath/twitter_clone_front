@@ -1,12 +1,12 @@
 import React from "react";
-import { Row, Col } from "reactstrap";
+import { Row } from "reactstrap";
 
 import LeftNavBar from "./LeftNavBar";
 import ProfileInfoButton from "./ProfileInfoButton";
 
 function LeftBar(props) {
   return (
-    <Col className="d-none d-md-block pt-1 fixed-top" md="2" lg="3">
+    <div>
       <Row className="justify-content-end justify-content-lg-center" noGutters>
         <LeftNavBar />
       </Row>
@@ -14,7 +14,7 @@ function LeftBar(props) {
       <Row className="justify-content-center mt-5">
         <ProfileInfoButton />
       </Row>
-    </Col>
+    </div>
   );
 }
 

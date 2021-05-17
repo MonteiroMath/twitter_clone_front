@@ -1,5 +1,4 @@
 import React from "react";
-import { Col } from "reactstrap";
 
 import SearchBar from "./SearchBar";
 import RightBarCard from "./RightBarCard";
@@ -10,7 +9,7 @@ import TopicSection from "./TopicSection";
 
 function RightBar(props) {
   return (
-    <Col className="d-none d-lg-block px-2 pt-0" lg="3">
+    <div>
       <SearchBar />
       <RightBarCard
         title="What's Happening"
@@ -29,7 +28,7 @@ function RightBar(props) {
         placeholders={WtF_placeholders}
         SectionComponent={WtF_Section}
       />
-    </Col>
+    </div>
   );
 }
 
