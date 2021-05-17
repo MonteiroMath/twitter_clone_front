@@ -8,7 +8,7 @@ function ProfileInfoButton(props) {
     <Button color="white">
       <Row noGutters>
         <Col>
-          <Avatar />
+          <Avatar size="35px" />
         </Col>
         <Col className="d-none d-lg-block">
           <div className="ml-3 text-left">

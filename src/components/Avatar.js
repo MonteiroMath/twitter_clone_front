@@ -5,6 +5,8 @@ import avatar2 from "../images/avatar.png";
 function Avatar(props) {
   let [src, setSrc] = useState(avatar2);
 
+  let size = props.size ? props.size : "50px";
+
   function fallbackSrc(e) {
     setSrc(avatar);
   }
@@ -15,9 +17,9 @@ function Avatar(props) {
         className="rounded-circle"
         src={src}
         onError={fallbackSrc}
-        alt="like icon"
-        width="50px"
-        height="50px"
+        alt="User avatar"
+        width={size}
+        height={size}
       />
     </div>
   );
