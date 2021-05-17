@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import { Row, Col } from "reactstrap";
+
 import TweetList from "./TweetList";
 import NewTweet from "./NewTweet";
 import FeedNavbar from "./FeedNavbar";
@@ -21,6 +23,7 @@ function Feed(props) {
   return (
     <div>
       <FeedNavbar />
+
       <NewTweet />
       <TweetList tweets={tweets} user={user} />
       <NewTweetButton />
