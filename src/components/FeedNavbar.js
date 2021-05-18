@@ -14,7 +14,7 @@ function FeedNavbar(props) {
         </div>
       </Col>
 
-      <Col>
+      <Col className="pl-3">
         <Navbar>
           <Nav navbar>
             <NavItem>

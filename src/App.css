@@ -25,5 +25,9 @@ textarea {
 }
 
 .cfw-bolder {
-  font-weight:900;
+  font-weight: 900;
+}
+
+.croundSides {
+  border-radius: 18px !important;
 }

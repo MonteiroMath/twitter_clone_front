@@ -3,7 +3,7 @@ import { Row, Col, Form, Input } from "reactstrap";
 
 import ToolBar from "./ToolBar";
 
-//!Consider extracting form entirely and making this component only about layout
+//!Extract form to its own component
 function NewTweet(props) {
   return (
     <Row className="border p-3 d-none d-md-flex" noGutters={true}>
