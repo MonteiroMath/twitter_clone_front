@@ -6,10 +6,11 @@ textarea {
   resize: none !important;
 }
 
-.stickyButton {
+.cstickyButton,
+.cstickyButton active {
   position: fixed;
   right: 10%;
-  bottom: 10%;
+  bottom: 13%;
   border-radius: 100% !important;
   width: 65px;
   height: 65px;
@@ -28,6 +29,18 @@ textarea {
   font-weight: 900;
 }
 
+.croundCorners {
+  border-radius: 15px !important;
+}
+
 .croundSides {
   border-radius: 18px !important;
+}
+
+.croundBottom {
+  border-radius: 0 0 15px 15px !important;
+}
+
+.cnoBorder {
+  border-width: 0 !important;
 }

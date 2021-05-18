@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button } from "reactstrap";
+import TweetButton from "./TweetButton";
 
 function ToolBar(props) {
   return (
@@ -73,9 +73,7 @@ function ToolBar(props) {
           </div>
         </div>
 
-        <Button className="ml-auto mr-4 croundSides" color="info">
-          Tweet
-        </Button>
+        <TweetButton />
       </div>
     </div>
   );
