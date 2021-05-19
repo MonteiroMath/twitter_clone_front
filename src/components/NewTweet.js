@@ -10,11 +10,11 @@ function NewTweet(props) {
       className="border p-3 d-none d-md-flex"
       noGutters={true}
     >
-      <Col xs="2">
+      <Col xs="1">
         <Avatar />
       </Col>
 
-      <Col>
+      <Col className="ml-3">
         <Form>
           <Input type="textarea" placeholder="What's happening?" />
           <Input className="mt-3" type="select">
