@@ -5,7 +5,7 @@ import Avatar from "./Avatar";
 
 function ProfileInfoButton(props) {
   return (
-    <Button color="white">
+    <Button className="p-0" color="white">
       <Row noGutters>
         <Col>
           <Avatar size="45px" />

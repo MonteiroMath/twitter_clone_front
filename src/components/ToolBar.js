@@ -73,7 +73,9 @@ function ToolBar(props) {
           </div>
         </div>
 
-        <TweetButton />
+        <div className="ml-auto mr-3">
+          <TweetButton />
+        </div>
       </div>
     </div>
   );

@@ -1,9 +1,21 @@
+:root {
+  --sm: 576px;
+  --md: 768px;
+  --lg: 992px;
+  --xl: 1200px;
+  --xxl: 1400px;
+}
+
 body {
   min-width: 320px;
 }
 
 textarea {
   resize: none !important;
+}
+
+.c-vp-height {
+  height: 100vh;
 }
 
 .cstickyButton,
@@ -43,4 +55,18 @@ textarea {
 
 .cnoBorder {
   border-width: 0 !important;
+}
+
+.csidebarTweet {
+  border-radius: 100% !important;
+  width: 55px;
+  height: 55px;
+}
+
+@media (min-width: 992px) {
+  .csidebarTweet {
+    border-radius: 18px !important;
+    width: 100%;
+    height: auto;
+  }
 }
