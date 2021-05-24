@@ -11,10 +11,10 @@ function Tweet(props) {
 
   return (
     <Row className="border p-3" noGutters={true}>
-      <Col xs="1">
+      <Col xs="2" md="1">
         <Avatar />
       </Col>
-      <Col className="ml-3">
+      <Col className="ml-2 ml-md-3">
         <InfoBar username={user.username} created={tweet.created} />
         <Message message={tweet.message} />
         <InteractionBar
