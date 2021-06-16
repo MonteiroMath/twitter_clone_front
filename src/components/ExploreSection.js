@@ -4,7 +4,7 @@ function ExploreSection(props) {
   const { tags, title, tweets } = props.content;
 
   return (
-    <a href="#">
+    <a href="/#">
       <div className="border-bottom p-2">
         <div>
           <span className="cfs-small text-black-50">{tags.join(" ")}</span>

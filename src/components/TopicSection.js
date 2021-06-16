@@ -7,7 +7,7 @@ function TopicSection(props) {
   const { topic, genre } = props.content;
 
   return (
-    <a href="#">
+    <a href="/#">
       <Row className="border-bottom p-2 align-items-center" noGutters>
         <Col>
           <div className="text-dark cfw-bolder">{topic}</div>

@@ -14,7 +14,7 @@ function RightBarCard(props) {
         <span>{title}</span>
       </CardTitle>
       <CardBody className="p-0">{content}</CardBody>
-      <a href="#" className="link-info">
+      <a href="/#" className="link-info">
         <CardFooter className="croundBottom cnoBorder">Show More</CardFooter>
       </a>
     </Card>

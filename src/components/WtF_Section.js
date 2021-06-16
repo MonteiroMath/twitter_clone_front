@@ -7,7 +7,7 @@ function WtF_Section(props) {
   const { name } = props.content;
 
   return (
-    <a href="#">
+    <a href="/#">
       <Row className="border-bottom p-2 align-items-center" noGutters>
         <Col lg="2">
           <Avatar />
