@@ -1,8 +1,7 @@
 import "./App.css";
-import "./components/Feed";
-import Feed from "./components/Feed";
-import RightBar from "./components/RightBar";
-import LeftBar from "./components/LeftBar";
+import Feed from "./components/feed/Feed";
+import RightBar from "./components/rightBar/RightBar";
+import LeftBar from "./components/leftBar/LeftBar";
 
 import { Row, Col } from "reactstrap";
 

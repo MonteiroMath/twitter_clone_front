@@ -2,16 +2,16 @@ import React from "react";
 
 import { Navbar, Nav, NavItem, NavLink, NavbarBrand } from "reactstrap";
 
-import tweet from "../icons/tweet.svg";
-import home from "../icons/home.svg";
-import search from "../icons/search.svg";
-import bell from "../icons/bell.svg";
-import mail from "../icons/mail.svg";
+import tweet from "../../icons/tweet.svg";
+import home from "../../icons/home.svg";
+import search from "../../icons/search.svg";
+import bell from "../../icons/bell.svg";
+import mail from "../../icons/mail.svg";
 
-import bookmark from "../icons/bookmark.svg";
-import list from "../icons/list.svg";
-import profile from "../icons/profile.svg";
-import dots from "../icons/three-dots.svg";
+import bookmark from "../../icons/bookmark.svg";
+import list from "../../icons/list.svg";
+import profile from "../../icons/profile.svg";
+import dots from "../../icons/three-dots.svg";
 
 function LeftNavBar(props) {
   return (

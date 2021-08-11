@@ -1,7 +1,7 @@
-import Avatar from "./Avatar";
+import Avatar from "../Avatar";
 import { Row, Col, Form, Input } from "reactstrap";
 
-import ToolBar from "./ToolBar";
+import ToolBar from "../ToolBar";
 
 //!Extract form to its own component
 function NewTweet(props) {
