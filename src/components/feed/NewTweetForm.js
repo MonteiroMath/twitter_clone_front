@@ -1,7 +1,19 @@
-import React from "react";
-import { Form, Input } from "reactstrap";
+import React, { useState } from "react";
+import { Row, Col, Form, Input } from "reactstrap";
+import ToolBar from "../ToolBar";
 
-function NewTweetForm({ tweetText, handleChange }) {
+function NewTweetForm({ handleNewTweet }) {
+  const [tweetText, setTweetText] = useState("");
+
+  function handleChange(evt) {
+    const { value } = evt.target;
+    setTweetText(value);
+  }
+
+  function emptyTextBox() {
+    setTweetText("");
+  }
+
   return (
     <Form>
       <Input
@@ -15,6 +27,12 @@ function NewTweetForm({ tweetText, handleChange }) {
         <option>People you follow</option>
         <option>Only people you mention</option>
       </Input>
+
+      <ToolBar
+        tweetText={tweetText}
+        emptyTextBox={emptyTextBox}
+        handleNewTweet={handleNewTweet}
+      />
     </Form>
   );
 }
