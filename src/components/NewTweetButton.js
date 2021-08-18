@@ -1,9 +1,13 @@
 import React from "react";
 import { Button } from "reactstrap";
 
-function NewTweetButton(props) {
+function NewTweetButton({ handleNewTweet }) {
   return (
-    <Button className="d-sm-none cstickyButton" color="info">
+    <Button
+      className="d-sm-none cstickyButton"
+      color="info"
+      onClick={handleNewTweet}
+    >
       <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"

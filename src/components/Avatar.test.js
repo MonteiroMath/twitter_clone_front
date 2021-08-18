@@ -1,18 +1,23 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, cleanup } from "@testing-library/react";
+
 import Avatar from "./Avatar";
 
-/*
+afterEach(cleanup);
 
-- Avatar should render with the size prop value for width and height
-  - If the prop is not informed, it should render with 50px
-- Avatar should render the image informed in the src property
-  - If no prop is informed, it should fallback to the default value
-*/
+describe("Avatar", () => {
+  test("Render avatar without props", () => {
+    render(<Avatar />);
 
+    expect(screen.getByAltText(/User avatar/)).toBeInTheDocument();
+    expect(screen.getByAltText(/User avatar/)).toHaveAttribute("width", "50px");
+  });
 
-//
-test("renders avatar link", () => {
-  render(<Avatar />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  test("Render avatar with size prop", () => {
+    let size = "100px";
+
+    render(<Avatar size={size} />);
+
+    expect(screen.getByAltText(/User avatar/)).toBeInTheDocument();
+    expect(screen.getByAltText(/User avatar/)).toHaveAttribute("width", size);
+  });
 });

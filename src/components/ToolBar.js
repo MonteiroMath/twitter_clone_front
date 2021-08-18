@@ -2,7 +2,7 @@ import React from "react";
 
 import TweetButton from "./TweetButton";
 
-function ToolBar(props) {
+function ToolBar({ emptyTextBox, handleNewTweet }) {
   return (
     <div>
       <div className="d-flex pt-2 align-items-center">
@@ -74,7 +74,13 @@ function ToolBar(props) {
         </div>
 
         <div className="ml-auto mr-3">
-          <TweetButton />
+          <TweetButton
+            handleClick={(evt) => {
+              evt.preventDefault();
+              emptyTextBox();
+              handleNewTweet();
+            }}
+          />
         </div>
       </div>
     </div>
