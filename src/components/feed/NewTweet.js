@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Avatar from "../Avatar";
-import { Row, Col, Form, Input } from "reactstrap";
+import { Row, Col } from "reactstrap";
 
+import NewTweetForm from "./NewTweetForm";
 import ToolBar from "../ToolBar";
 import TweetButton from "../TweetButton";
 
@@ -27,19 +28,7 @@ function NewTweet({ handleNewTweet }) {
       <Col className="ml-3">
         <Row noGutters={true}>
           <Col>
-            <Form>
-              <Input
-                type="textarea"
-                placeholder="What's happening?"
-                value={tweetText}
-                onChange={handleChange}
-              />
-              <Input className="mt-3" type="select">
-                <option>Everyone </option>
-                <option>People you follow</option>
-                <option>Only people you mention</option>
-              </Input>
-            </Form>
+            <NewTweetForm tweetText={tweetText} handleChange={handleChange} />
           </Col>
         </Row>
 
