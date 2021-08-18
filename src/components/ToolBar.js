@@ -13,7 +13,7 @@ import {
 
 function ToolBar({ tweetText, emptyTextBox, handleNewTweet }) {
   return (
-    <Row className="align-items-center text-info pt-2">
+    <Row className="align-items-center text-info pt-2" noGutters={true}>
       <Col className="d-flex">
         <div className="mr-3">
           <AddImageIcon />
@@ -36,9 +36,11 @@ function ToolBar({ tweetText, emptyTextBox, handleNewTweet }) {
         </div>
       </Col>
 
-      <Col className="mr-3">
+      <Col className="d-flex justify-content-end mr-3">
         <TweetButton
-          disabled={tweetText == ""}
+          disabled={
+            tweetText.trim().length === 0 || tweetText.trim().length > 280
+          }
           handleClick={(evt) => {
             evt.preventDefault();
             handleNewTweet(tweetText);
