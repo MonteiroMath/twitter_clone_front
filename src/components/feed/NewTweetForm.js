@@ -4,15 +4,34 @@ import ToolBar from "../ToolBar";
 
 function NewTweetForm({ handleNewTweet }) {
   const [tweetText, setTweetText] = useState("");
+  const [attach, setAttach] = useState("");
 
   function handleChange(evt) {
     const { value } = evt.target;
     setTweetText(value);
   }
 
-  function emptyTextBox() {
-    setTweetText("");
+  function handleAttach(evt) {
+    let preview = URL.createObjectURL(evt.target.files[0]);
+    console.log(preview);
+    setAttach(preview);
   }
+
+  function clearForm() {
+    setTweetText("");
+    setAttach("");
+  }
+
+  let preview = attach ? (
+    <div className="mt-2">
+      <img
+        className="ctweetAttach"
+        id="attachPreview"
+        alt="update preview"
+        src={attach}
+      />
+    </div>
+  ) : null;
 
   return (
     <Form>
@@ -22,6 +41,7 @@ function NewTweetForm({ handleNewTweet }) {
         value={tweetText}
         onChange={handleChange}
       />
+      {preview}
       <Input className="mt-3" type="select">
         <option>Everyone </option>
         <option>People you follow</option>
@@ -30,8 +50,10 @@ function NewTweetForm({ handleNewTweet }) {
 
       <ToolBar
         tweetText={tweetText}
-        emptyTextBox={emptyTextBox}
+        clearForm={clearForm}
         handleNewTweet={handleNewTweet}
+        attach={attach}
+        handleAttach={handleAttach}
       />
     </Form>
   );

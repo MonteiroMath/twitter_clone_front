@@ -18,12 +18,14 @@ function Feed(props) {
     setTweets(tweetData.reverse());
   }, []);
 
-  function handleNewTweet(message) {
+  function handleNewTweet(newTweet) {
     let tweet = {
       id: 5,
       author: 1,
       created: new Date().toDateString(),
-      message,
+      message: newTweet.message,
+      attach: newTweet.attach,
+      poll: false,
       likes: 0,
       retweets: 0,
       comments: 0,

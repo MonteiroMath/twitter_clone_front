@@ -73,6 +73,14 @@ textarea {
   max-width: 100%;
 }
 
+.cpointer{
+  cursor: pointer;
+}
+
+input[type="file"] {
+  display: none;
+}
+
 @media (min-width: 992px) {
   .csidebarTweet {
     border-radius: 18px !important;
