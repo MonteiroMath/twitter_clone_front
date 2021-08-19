@@ -1,11 +1,15 @@
 import React from "react";
 
 function Attachment(props) {
-  let { url } = props;
+  let { url, alt } = props;
 
   let output = url ? (
     <div>
-      <img className="ctweetAttach" alt="user attachment" src={url} />
+      <img
+        className="ctweetAttach"
+        alt={alt ? alt : "user attachment"}
+        src={url}
+      />
     </div>
   ) : null;
 

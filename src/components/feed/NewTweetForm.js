@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Form, Input } from "reactstrap";
 import ToolBar from "../ToolBar";
+import Attachment from "../Attachment";
+
+//! if complexity builds up, divide into FormControl and FormDisplay components
 
 function NewTweetForm({ handleNewTweet }) {
   const [tweetText, setTweetText] = useState("");
@@ -12,8 +15,13 @@ function NewTweetForm({ handleNewTweet }) {
   }
 
   function handleAttach(evt) {
-    let preview = URL.createObjectURL(evt.target.files[0]);
-    console.log(preview);
+    if (evt.target.files[0]) {
+      preview = URL.createObjectURL(evt.target.files[0]);
+    } else {
+      URL.revokeObjectURL(preview);
+      preview = "";
+    }
+
     setAttach(preview);
   }
 
@@ -24,11 +32,11 @@ function NewTweetForm({ handleNewTweet }) {
 
   let preview = attach ? (
     <div className="mt-2">
-      <img
+      <Attachment
         className="ctweetAttach"
         id="attachPreview"
         alt="update preview"
-        src={attach}
+        url={attach}
       />
     </div>
   ) : null;

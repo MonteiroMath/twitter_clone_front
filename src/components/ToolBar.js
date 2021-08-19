@@ -1,5 +1,5 @@
-import React from "react";
-import { Row, Col, Input, Label } from "reactstrap";
+import React, { useState } from "react";
+import { Row, Col, Input, Label, Tooltip } from "reactstrap";
 
 import TweetButton from "./TweetButton";
 
@@ -11,6 +11,8 @@ import {
   CalendarIcon,
 } from "./svg/Svg";
 
+//todo extract a UtiliesBar component
+
 function ToolBar({
   tweetText,
   clearForm,
@@ -18,6 +20,12 @@ function ToolBar({
   attach,
   handleAttach,
 }) {
+  const [tooltipOpen, setTooltipOpen] = useState({ img: false, gif: false });
+
+  const toggle = (field) => {
+    setTooltipOpen({ ...tooltipOpen, [field]: !tooltipOpen[field] });
+  };
+
   function isDisabled(tweetText, attach) {
     if (
       (tweetText.trim().length === 0 || tweetText.trim().length > 280) &&
@@ -32,9 +40,17 @@ function ToolBar({
     <Row className="align-items-center text-info pt-2" noGutters={true}>
       <Col className="d-flex">
         <div className="mr-3">
-          <Label className="cpointer" for="imgAttach">
+          <Label className="cpointer" id="imgAttachLabel" for="imgAttach">
             <AddImageIcon />
           </Label>
+          <Tooltip
+            placement="right"
+            isOpen={tooltipOpen.img}
+            target="imgAttachLabel"
+            toggle={() => toggle("img")}
+          >
+            Image
+          </Tooltip>
           <Input
             type="file"
             id="imgAttach"
@@ -45,7 +61,29 @@ function ToolBar({
         </div>
 
         <div className="mr-3">
-          <AddMediaIcon />
+          <Label
+            className="cpointer cutitilyBarDisable"
+            id="gifAttachLabel"
+            for="gifAttach"
+          >
+            <AddMediaIcon />
+          </Label>
+          <Tooltip
+            placement="right"
+            isOpen={tooltipOpen.gif}
+            target="gifAttachLabel"
+            toggle={() => toggle("gif")}
+          >
+            GIF
+          </Tooltip>
+          <Input
+            type="file"
+            id="gifAttach"
+            name="gifAttach"
+            accept="image/gif"
+            onChange={handleAttach}
+            disabled={attach ? true : false}
+          />
         </div>
 
         <div className="mr-3">

@@ -77,6 +77,12 @@ textarea {
   cursor: pointer;
 }
 
+.cutitilyBarDisable:disabled {
+
+  opacity: 0.5;
+
+}
+
 input[type="file"] {
   display: none;
 }
