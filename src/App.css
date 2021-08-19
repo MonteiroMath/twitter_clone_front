@@ -77,7 +77,7 @@ textarea {
   cursor: pointer;
 }
 
-.cutitilyBarDisable:disabled {
+.cutitilyBarDisable:disabled+label {
 
   opacity: 0.5;
 

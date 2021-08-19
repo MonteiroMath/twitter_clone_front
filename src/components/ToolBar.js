@@ -40,6 +40,14 @@ function ToolBar({
     <Row className="align-items-center text-info pt-2" noGutters={true}>
       <Col className="d-flex">
         <div className="mr-3">
+          <Input
+            className="cutitilyBarDisable"
+            type="file"
+            id="imgAttach"
+            name="imgAttach"
+            accept="image/png, image/jpeg"
+            onChange={handleAttach}
+          />
           <Label className="cpointer" id="imgAttachLabel" for="imgAttach">
             <AddImageIcon />
           </Label>
@@ -51,16 +59,18 @@ function ToolBar({
           >
             Image
           </Tooltip>
-          <Input
-            type="file"
-            id="imgAttach"
-            name="imgAttach"
-            accept="image/png, image/jpeg"
-            onChange={handleAttach}
-          />
         </div>
 
         <div className="mr-3">
+          <Input
+            className="cutitilyBarDisable"
+            type="file"
+            id="gifAttach"
+            name="gifAttach"
+            accept="image/gif"
+            onChange={handleAttach}
+            disabled={attach ? true : false}
+          />
           <Label
             className="cpointer cutitilyBarDisable"
             id="gifAttachLabel"
@@ -76,14 +86,6 @@ function ToolBar({
           >
             GIF
           </Tooltip>
-          <Input
-            type="file"
-            id="gifAttach"
-            name="gifAttach"
-            accept="image/gif"
-            onChange={handleAttach}
-            disabled={attach ? true : false}
-          />
         </div>
 
         <div className="mr-3">
