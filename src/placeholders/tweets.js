@@ -7,6 +7,8 @@ const tweets = [
     likes: 3,
     retweets: 0,
     comments: 0,
+    attach: "/images/phattach.jpeg",
+    poll: false,
   },
   {
     id: 1,
@@ -16,6 +18,8 @@ const tweets = [
     likes: 3,
     retweets: 0,
     comments: 0,
+    attach: "",
+    poll: false,
   },
   {
     id: 2,
@@ -25,6 +29,8 @@ const tweets = [
     likes: 3,
     retweets: 0,
     comments: 0,
+    attach: "",
+    poll: false,
   },
   {
     id: 3,
@@ -34,6 +40,8 @@ const tweets = [
     likes: 3,
     retweets: 0,
     comments: 0,
+    attach: "",
+    poll: false,
   },
   {
     id: 4,
@@ -43,6 +51,8 @@ const tweets = [
     likes: 3,
     retweets: 0,
     comments: 0,
+    attach: "",
+    poll: false,
   },
 ];
 

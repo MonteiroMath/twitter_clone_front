@@ -63,6 +63,16 @@ textarea {
   height: 55px;
 }
 
+.ctweetMessage{
+  white-space: normal;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
+.ctweetAttach{
+  max-width: 100%;
+}
+
 @media (min-width: 992px) {
   .csidebarTweet {
     border-radius: 18px !important;

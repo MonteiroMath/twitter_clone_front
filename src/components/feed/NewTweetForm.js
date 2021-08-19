@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Form, Input } from "reactstrap";
+import { Form, Input } from "reactstrap";
 import ToolBar from "../ToolBar";
 
 function NewTweetForm({ handleNewTweet }) {
