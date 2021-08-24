@@ -87,6 +87,22 @@ input[type="file"] {
   display: none;
 }
 
+.cremoveAttach {
+  position:absolute;
+  
+  left: 5px;
+  margin-top: 5px;
+  padding: 5px 10px;
+
+  border-width: 0;
+  border-radius: 100%;
+
+  color: white;
+  background-color: black;
+
+  font-weight: 800;  
+}
+
 @media (min-width: 992px) {
   .csidebarTweet {
     border-radius: 18px !important;

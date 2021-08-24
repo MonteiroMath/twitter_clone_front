@@ -8,6 +8,7 @@ import Attachment from "../Attachment";
 function NewTweetForm({ handleNewTweet }) {
   const [tweetText, setTweetText] = useState("");
   const [attach, setAttach] = useState("");
+  const [block, setBlock] = useState(false);
 
   function handleChange(evt) {
     const { value } = evt.target;
@@ -17,17 +18,26 @@ function NewTweetForm({ handleNewTweet }) {
   function handleAttach(evt) {
     if (evt.target.files[0]) {
       preview = URL.createObjectURL(evt.target.files[0]);
+      setBlock(true);
     } else {
       URL.revokeObjectURL(preview);
+      setBlock(false);
       preview = "";
     }
 
     setAttach(preview);
   }
 
+  function handleRemove() {
+    URL.revokeObjectURL(preview);
+    setBlock(false);
+    preview = "";
+  }
+
   function clearForm() {
     setTweetText("");
     setAttach("");
+    setBlock(false);
   }
 
   let preview = attach ? (
@@ -37,6 +47,8 @@ function NewTweetForm({ handleNewTweet }) {
         id="attachPreview"
         alt="update preview"
         url={attach}
+        handleRemove={handleRemove}
+        preview={true}
       />
     </div>
   ) : null;
@@ -62,6 +74,7 @@ function NewTweetForm({ handleNewTweet }) {
         handleNewTweet={handleNewTweet}
         attach={attach}
         handleAttach={handleAttach}
+        block={block}
       />
     </Form>
   );

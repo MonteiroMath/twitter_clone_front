@@ -12,6 +12,7 @@ import {
 } from "./svg/Svg";
 
 //todo extract a UtiliesBar component
+//todo figure out gif attachment
 
 function ToolBar({
   tweetText,
@@ -19,6 +20,7 @@ function ToolBar({
   handleNewTweet,
   attach,
   handleAttach,
+  block
 }) {
   const [tooltipOpen, setTooltipOpen] = useState({ img: false, gif: false });
 
@@ -47,6 +49,7 @@ function ToolBar({
             name="imgAttach"
             accept="image/png, image/jpeg"
             onChange={handleAttach}
+            disabled={block}
           />
           <Label className="cpointer" id="imgAttachLabel" for="imgAttach">
             <AddImageIcon />
@@ -69,7 +72,7 @@ function ToolBar({
             name="gifAttach"
             accept="image/gif"
             onChange={handleAttach}
-            disabled={attach ? true : false}
+            disabled={block}
           />
           <Label
             className="cpointer cutitilyBarDisable"
