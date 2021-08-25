@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Form, Input } from "reactstrap";
-import ToolBar from "../ToolBar";
-import Attachment from "../Attachment";
-import PollForm from "./Poll";
+import React, { useState } from "react";
 
 import NewTweetFormDisplay from "./NewTweetFormDisplay";
+
+//!todo bug:insert the same image twice in a roll. Second time do not work unless you cancel the selection
 
 function NewTweetFormControl({ handleNewTweet }) {
   const [tweetText, setTweetText] = useState("");
@@ -91,7 +89,24 @@ function NewTweetFormControl({ handleNewTweet }) {
     setBlock(false);
   }
 
-  return <NewTweetFormDisplay />;
+  return (
+    <NewTweetFormDisplay
+      tweetText={tweetText}
+      attach={attach}
+      poll={poll}
+      pollChoices={pollChoices}
+      pollLength={pollLength}
+      block={block}
+      handleTextChange={handleTextChange}
+      handleAttach={handleAttach}
+      handleRemoveAttach={handleRemoveAttach}
+      handlePoll={handlePoll}
+      handleChoices={handleChoices}
+      handlePollLength={handlePollLength}
+      handleNewTweet={handleNewTweet}
+      clearForm={clearForm}
+    />
+  );
 }
 
 export default NewTweetFormControl;

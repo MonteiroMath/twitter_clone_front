@@ -2,6 +2,7 @@ import Avatar from "../Avatar";
 import { Row, Col } from "reactstrap";
 
 import NewTweetForm from "./NewTweetForm";
+import NewTweetFormControl from "./NewTweetFormControl";
 
 function NewTweet({ handleNewTweet }) {
   return (
@@ -11,7 +12,7 @@ function NewTweet({ handleNewTweet }) {
       </Col>
 
       <Col className="ml-3">
-        <NewTweetForm handleNewTweet={handleNewTweet} />
+        <NewTweetFormControl handleNewTweet={handleNewTweet} />
       </Col>
     </Row>
   );
