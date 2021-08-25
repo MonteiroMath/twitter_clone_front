@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input } from "reactstrap";
 import ToolBar from "../ToolBar";
 import Attachment from "../Attachment";
 import PollForm from "./Poll";
 
-//!divide into FormControl and FormDisplay components
+import NewTweetFormDisplay from "./NewTweetFormDisplay";
 
-function NewTweetForm({ handleNewTweet }) {
+function NewTweetFormControl({ handleNewTweet }) {
   const [tweetText, setTweetText] = useState("");
   const [attach, setAttach] = useState("");
   const [poll, setPoll] = useState(false);
@@ -16,14 +16,15 @@ function NewTweetForm({ handleNewTweet }) {
     hours: 0,
     minutes: 0,
   });
-
   const [block, setBlock] = useState(false);
 
-  function handleChange(evt) {
+  //control function for the text input field
+  function handleTextChange(evt) {
     const { value } = evt.target;
     setTweetText(value);
   }
 
+  //creates an attachment preview and updates the state
   function handleAttach(evt) {
     let preview = "";
     if (evt.target.files[0]) {
@@ -38,12 +39,15 @@ function NewTweetForm({ handleNewTweet }) {
     setAttach(preview);
   }
 
-  function handleRemove() {
+  //Removes attachment preview and revert the state back to defaultI
+  function handleRemoveAttach(evt) {
+    evt.preventDefault();
     URL.revokeObjectURL(attach);
     setAttach("");
     setBlock(false);
   }
 
+  //manages the display of the poll form fields
   function handlePoll(evt) {
     evt.preventDefault();
     setPollChoices(["", ""]);
@@ -56,6 +60,7 @@ function NewTweetForm({ handleNewTweet }) {
     setBlock(!block);
   }
 
+  //control function for the poll form choice fields
   function handleChoices(evt, i) {
     const { value } = evt.target;
 
@@ -65,63 +70,28 @@ function NewTweetForm({ handleNewTweet }) {
     setPollChoices(newState);
   }
 
+  //control function for the poll form length fields
   function handlePollLength(evt, field) {
     const { value } = evt.target;
 
     setPollLength(Object.assign({}, pollLength, { [field]: value }));
   }
 
+  //reset the state of the form to the defaul
   function clearForm() {
     setTweetText("");
     setAttach("");
     setPoll(false);
+    setPollChoices(["", ""]);
+    setPollLength({
+      days: 0,
+      hours: 0,
+      minutes: 0,
+    });
     setBlock(false);
   }
 
-  return (
-    <Form>
-      <Input
-        type="textarea"
-        placeholder="What's happening?"
-        value={tweetText}
-        onChange={handleChange}
-      />
-
-      <Attachment
-        className="ctweetAttach"
-        id="attachPreview"
-        alt="update preview"
-        url={attach}
-        handleRemove={handleRemove}
-        preview={true}
-      />
-
-      <PollForm
-        poll={poll}
-        handlePoll={handlePoll}
-        choices={pollChoices}
-        handleChoices={handleChoices}
-        pollLength={pollLength}
-        handlePollLength={handlePollLength}
-      />
-
-      <Input className="mt-3" type="select">
-        <option>Everyone </option>
-        <option>People you follow</option>
-        <option>Only people you mention</option>
-      </Input>
-
-      <ToolBar
-        tweetText={tweetText}
-        clearForm={clearForm}
-        handleNewTweet={handleNewTweet}
-        attach={attach}
-        handleAttach={handleAttach}
-        block={block}
-        handlePoll={handlePoll}
-      />
-    </Form>
-  );
+  return <NewTweetFormDisplay />;
 }
 
-export default NewTweetForm;
+export default NewTweetFormControl;

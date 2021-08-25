@@ -1,7 +1,6 @@
 import React from "react";
 import { FormGroup, Input, Label, Button, Row, Col } from "reactstrap";
 
-//!todo continue poll form
 function PollForm({
   poll,
   handlePoll,
