@@ -10,6 +10,13 @@ function NewTweetForm({ handleNewTweet }) {
   const [tweetText, setTweetText] = useState("");
   const [attach, setAttach] = useState("");
   const [poll, setPoll] = useState(false);
+  const [pollChoices, setPollChoices] = useState(["", ""]);
+  const [pollLength, setPollLength] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+  });
+
   const [block, setBlock] = useState(false);
 
   function handleChange(evt) {
@@ -31,16 +38,37 @@ function NewTweetForm({ handleNewTweet }) {
     setAttach(preview);
   }
 
-  function handlePoll(evt) {
-    evt.preventDefault();
-    setPoll(!poll);
-    setBlock(!block);
-  }
-
   function handleRemove() {
     URL.revokeObjectURL(attach);
     setAttach("");
     setBlock(false);
+  }
+
+  function handlePoll(evt) {
+    evt.preventDefault();
+    setPollChoices(["", ""]);
+    setPollLength({
+      days: 0,
+      hours: 0,
+      minutes: 0,
+    });
+    setPoll(!poll);
+    setBlock(!block);
+  }
+
+  function handleChoices(evt, i) {
+    const { value } = evt.target;
+
+    let newState = [...pollChoices];
+    newState[i] = value;
+
+    setPollChoices(newState);
+  }
+
+  function handlePollLength(evt, field) {
+    const { value } = evt.target;
+
+    setPollLength(Object.assign({}, pollLength, { [field]: value }));
   }
 
   function clearForm() {
@@ -68,7 +96,14 @@ function NewTweetForm({ handleNewTweet }) {
         preview={true}
       />
 
-      <PollForm poll={poll} handlePoll={handlePoll} />
+      <PollForm
+        poll={poll}
+        handlePoll={handlePoll}
+        choices={pollChoices}
+        handleChoices={handleChoices}
+        pollLength={pollLength}
+        handlePollLength={handlePollLength}
+      />
 
       <Input className="mt-3" type="select">
         <option>Everyone </option>
