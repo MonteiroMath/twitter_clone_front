@@ -41,22 +41,28 @@ function PollForm({ poll, handlePoll }) {
         </FormGroup>
         <FormGroup row>
           <Col xs={12}>
-            <p>Poll length</p>
+            <p className="cBold">Poll length</p>
           </Col>
           <Col>
-            <Label for="days">Days</Label>
+            <Label className="cfontSmall" for="days">
+              Days
+            </Label>
             <Input name="days" type="select">
               {generateOptions("day", 7)}
             </Input>
           </Col>
           <Col>
-            <Label for="hours">Hours</Label>
+            <Label className="cfontSmall" for="hours">
+              Hours
+            </Label>
             <Input name="hours" type="select">
               {generateOptions("hours", 23)}
             </Input>
           </Col>
           <Col>
-            <Label for="minutes">Minutes</Label>
+            <Label className="cfontSmall" for="minutes">
+              Minutes
+            </Label>
             <Input name="minutes" type="select">
               {generateOptions("minutes", 59)}
             </Input>

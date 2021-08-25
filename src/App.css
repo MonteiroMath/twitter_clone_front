@@ -92,7 +92,7 @@ textarea {
 .cpollForm {
   border: 1px solid lightgrey;
   border-radius: 1em;
-  padding: 1.5em;
+  padding: 1em;
   
 }
 
@@ -114,6 +114,14 @@ input[type="file"] {
   background-color: black;
 
   font-weight: 800;  
+}
+
+.cBold{
+  font-weight: 800;  
+}
+
+.cfontSmall {
+  font-size: small;
 }
 
 @media (min-width: 992px) {
