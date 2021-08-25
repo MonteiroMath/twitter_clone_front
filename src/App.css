@@ -77,10 +77,23 @@ textarea {
   cursor: pointer;
 }
 
+.cnoBorder{
+
+  border-width: 0;
+  border-radius: 100%;
+}
+
 .cutitilyBarDisable:disabled+label {
 
   opacity: 0.5;
 
+}
+
+.cpollForm {
+  border: 1px solid lightgrey;
+  border-radius: 1em;
+  padding: 1.5em;
+  
 }
 
 input[type="file"] {

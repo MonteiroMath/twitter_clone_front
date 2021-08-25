@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Form, Input } from "reactstrap";
 import ToolBar from "../ToolBar";
 import Attachment from "../Attachment";
+import PollForm from "./Poll";
 
 //! if complexity builds up, divide into FormControl and FormDisplay components
 
 function NewTweetForm({ handleNewTweet }) {
   const [tweetText, setTweetText] = useState("");
   const [attach, setAttach] = useState("");
+  const [poll, setPoll] = useState(false);
   const [block, setBlock] = useState(false);
 
   function handleChange(evt) {
@@ -16,6 +18,7 @@ function NewTweetForm({ handleNewTweet }) {
   }
 
   function handleAttach(evt) {
+    let preview = "";
     if (evt.target.files[0]) {
       preview = URL.createObjectURL(evt.target.files[0]);
       setBlock(true);
@@ -28,30 +31,24 @@ function NewTweetForm({ handleNewTweet }) {
     setAttach(preview);
   }
 
+  function handlePoll(evt) {
+    evt.preventDefault();
+    setPoll(!poll);
+    setBlock(!block);
+  }
+
   function handleRemove() {
-    URL.revokeObjectURL(preview);
+    URL.revokeObjectURL(attach);
+    setAttach("");
     setBlock(false);
-    preview = "";
   }
 
   function clearForm() {
     setTweetText("");
     setAttach("");
+    setPoll(false);
     setBlock(false);
   }
-
-  let preview = attach ? (
-    <div className="mt-2">
-      <Attachment
-        className="ctweetAttach"
-        id="attachPreview"
-        alt="update preview"
-        url={attach}
-        handleRemove={handleRemove}
-        preview={true}
-      />
-    </div>
-  ) : null;
 
   return (
     <Form>
@@ -61,7 +58,18 @@ function NewTweetForm({ handleNewTweet }) {
         value={tweetText}
         onChange={handleChange}
       />
-      {preview}
+
+      <Attachment
+        className="ctweetAttach"
+        id="attachPreview"
+        alt="update preview"
+        url={attach}
+        handleRemove={handleRemove}
+        preview={true}
+      />
+
+      <PollForm poll={poll} handlePoll={handlePoll} />
+
       <Input className="mt-3" type="select">
         <option>Everyone </option>
         <option>People you follow</option>
@@ -75,6 +83,7 @@ function NewTweetForm({ handleNewTweet }) {
         attach={attach}
         handleAttach={handleAttach}
         block={block}
+        handlePoll={handlePoll}
       />
     </Form>
   );

@@ -4,7 +4,7 @@ function Attachment(props) {
   let { url, alt, handleRemove, preview } = props;
 
   let output = url ? (
-    <div>
+    <div className="mt-2">
       {preview ? (
         <button className="cremoveAttach" onClick={handleRemove}>
           X

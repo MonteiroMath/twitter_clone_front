@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Input, Label, Tooltip } from "reactstrap";
+import { Row, Col, Input, Label, Tooltip, Button } from "reactstrap";
 
 import TweetButton from "./TweetButton";
 
@@ -20,9 +20,14 @@ function ToolBar({
   handleNewTweet,
   attach,
   handleAttach,
-  block
+  block,
+  handlePoll,
 }) {
-  const [tooltipOpen, setTooltipOpen] = useState({ img: false, gif: false });
+  const [tooltipOpen, setTooltipOpen] = useState({
+    img: false,
+    gif: false,
+    poll: false,
+  });
 
   const toggle = (field) => {
     setTooltipOpen({ ...tooltipOpen, [field]: !tooltipOpen[field] });
@@ -92,7 +97,24 @@ function ToolBar({
         </div>
 
         <div className="mr-3">
-          <PollIcon />
+          <Button
+            className="cpointer cutitilyBarDisable p-0 cnoBorder"
+            color="info"
+            outline={true}
+            id="pollButton"
+            onClick={handlePoll}
+            disabled={block}
+          >
+            <PollIcon />
+          </Button>
+          <Tooltip
+            placement="right"
+            isOpen={tooltipOpen.poll}
+            target="pollButton"
+            toggle={() => toggle("poll")}
+          >
+            Poll
+          </Tooltip>
         </div>
 
         <div className="mr-3">
