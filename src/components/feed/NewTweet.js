@@ -1,7 +1,6 @@
 import Avatar from "../Avatar";
 import { Row, Col } from "reactstrap";
 
-import NewTweetForm from "./NewTweetForm";
 import NewTweetFormControl from "./NewTweetFormControl";
 
 function NewTweet({ handleNewTweet }) {
