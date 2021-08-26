@@ -89,6 +89,27 @@ function NewTweetFormControl({ handleNewTweet }) {
     setBlock(false);
   }
 
+  //defines if the Tweet Button is disabled or enabled
+  function isDisabled() {
+    if (
+      (tweetText.trim().length === 0 || tweetText.trim().length > 280) &&
+      attach === ""
+    )
+      return true;
+
+    return false;
+  }
+
+  //handles submission of tweet
+  function handleSubmit(evt){
+    evt.preventDefault();
+    handleNewTweet({
+      message: tweetText,
+      attach: attach,
+    });
+    clearForm();
+  }
+
   return (
     <NewTweetFormDisplay
       tweetText={tweetText}
@@ -105,6 +126,8 @@ function NewTweetFormControl({ handleNewTweet }) {
       handlePollLength={handlePollLength}
       handleNewTweet={handleNewTweet}
       clearForm={clearForm}
+      isDisabled={isDisabled}
+      handleSubmit={handleSubmit}
     />
   );
 }

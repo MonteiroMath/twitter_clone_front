@@ -20,6 +20,8 @@ function NewTweetFormDisplay(props) {
     handlePollLength,
     handleNewTweet,
     clearForm,
+    isDisabled,
+    handleSubmit,
   } = props;
 
   return (
@@ -56,7 +58,7 @@ function NewTweetFormDisplay(props) {
           <option>Only people you mention</option>
         </Input>
       </Form>
-      
+
       <ToolBar
         tweetText={tweetText}
         clearForm={clearForm}
@@ -65,6 +67,8 @@ function NewTweetFormDisplay(props) {
         handleAttach={handleAttach}
         block={block}
         handlePoll={handlePoll}
+        isDisabled={isDisabled}
+        handleSubmit={handleSubmit}
       />
     </div>
   );
