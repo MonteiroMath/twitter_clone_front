@@ -89,19 +89,33 @@ function NewTweetFormControl({ handleNewTweet }) {
     setBlock(false);
   }
 
-  //defines if the Tweet Button is disabled or enabled
-  function isDisabled() {
+  //determines if the poll fields are filled
+  function isPollFilled() {
     if (
-      (tweetText.trim().length === 0 || tweetText.trim().length > 280) &&
-      attach === ""
+      pollChoices[0].length > 0 &&
+      pollChoices[0].length <= 25 &&
+      pollChoices[1].length > 0 &&
+      pollChoices[1].length <= 25 &&
+      (pollLength.days > 0 || pollLength.hours > 0 || pollLength.minutes > 0)
     )
       return true;
 
     return false;
   }
 
+  //defines if the Tweet Button is disabled or enabled
+  function isDisabled() {
+    let tweetLength =
+      tweetText.trim().length === 0 || tweetText.trim().length > 280;
+
+    if (poll && (tweetLength || !isPollFilled())) return true;
+    else if (tweetLength && attach === "") return true;
+
+    return false;
+  }
+
   //handles submission of tweet
-  function handleSubmit(evt){
+  function handleSubmit(evt) {
     evt.preventDefault();
     handleNewTweet({
       message: tweetText,
