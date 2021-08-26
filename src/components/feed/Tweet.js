@@ -5,6 +5,7 @@ import Avatar from "../Avatar";
 import InfoBar from "../InfoBar";
 import Message from "../Message";
 import Attachment from "../Attachment";
+import Poll from "./Poll";
 import InteractionBar from "../InteractionBar";
 
 function Tweet(props) {
@@ -19,6 +20,7 @@ function Tweet(props) {
         <InfoBar username={user.username} created={tweet.created} />
         <Message message={tweet.message} />
         <Attachment url={tweet.attach} />
+        <Poll poll={tweet.poll} pollSettings={tweet.pollSettings} />
         <InteractionBar
           likes={tweet.likes}
           retweets={tweet.retweets}

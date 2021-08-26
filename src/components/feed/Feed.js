@@ -19,13 +19,30 @@ function Feed(props) {
   }, []);
 
   function handleNewTweet(newTweet) {
+    let now = new Date();
+    let ends;
+
+    //!test bugs with dates
+    if (newTweet.poll) {
+      ends = new Date();
+
+      ends.setDate(ends.getDay() + newTweet.pollSettings.days);
+      ends.setHours(ends.getHours() + newTweet.pollSettings.hours);
+      ends.setMinutes(ends.getMinutes() + newTweet.pollSettings.minutes);
+    }
+
     let tweet = {
       id: 5,
       author: 1,
-      created: new Date().toDateString(),
+      created: now.toDateString(),
       message: newTweet.message,
       attach: newTweet.attach,
-      poll: false,
+      poll: newTweet.poll,
+      pollSettings: {
+        choices: newTweet.pollSettings.choices,
+        ends: ends,
+        votes: [0, 11],
+      },
       likes: 0,
       retweets: 0,
       comments: 0,

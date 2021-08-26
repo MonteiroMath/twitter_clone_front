@@ -120,6 +120,11 @@ function NewTweetFormControl({ handleNewTweet }) {
     handleNewTweet({
       message: tweetText,
       attach: attach,
+      poll: poll,
+      pollSettings: {
+        choices: pollChoices,
+        length: pollLength,
+      },
     });
     clearForm();
   }

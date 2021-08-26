@@ -9,6 +9,7 @@ const tweets = [
     comments: 0,
     attach: "/images/phattach.jpeg",
     poll: false,
+    pollSettings: {},
   },
   {
     id: 1,
@@ -20,6 +21,7 @@ const tweets = [
     comments: 0,
     attach: "",
     poll: false,
+    pollSettings: {},
   },
   {
     id: 2,
@@ -31,6 +33,7 @@ const tweets = [
     comments: 0,
     attach: "",
     poll: false,
+    pollSettings: {},
   },
   {
     id: 3,
@@ -42,6 +45,7 @@ const tweets = [
     comments: 0,
     attach: "",
     poll: false,
+    pollSettings: {},
   },
   {
     id: 4,
@@ -52,7 +56,12 @@ const tweets = [
     retweets: 0,
     comments: 0,
     attach: "",
-    poll: false,
+    poll: true,
+    pollSettings: {
+      choices: ["Yes I do", "No I don't"],
+      ends: new Date().toDateString(),
+      votes: [1, 5],
+    },
   },
 ];
 
