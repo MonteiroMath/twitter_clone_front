@@ -1,4 +1,5 @@
 import React from "react";
+import { Progress } from "reactstrap";
 
 function GetTimeLeft(start, maxLen) {
   const { days, hours, minutes } = maxLen;
@@ -21,9 +22,6 @@ function GetTimeLeft(start, maxLen) {
 }
 
 function evaluateTimeLapse(timelapse, maxLen, units) {
-  console.log("tl: " + timelapse[0]);
-  console.log("ml: " + maxLen[0]);
-
   if (timelapse[0] > maxLen[0]) {
     return "Final Results";
   } else if (maxLen[0] > timelapse[0]) {
@@ -39,7 +37,7 @@ function evaluateTimeLapse(timelapse, maxLen, units) {
   }
 }
 
-//todo improve display
+//todo Extract Progress bars into another component (will be better when more poll options are implemented)
 function Poll({ poll, pollSettings, start }) {
   const { choices, votes, pollLen } = pollSettings;
 
@@ -52,12 +50,34 @@ function Poll({ poll, pollSettings, start }) {
 
   return poll ? (
     <div>
-      <div>
-        {choices[0]} - {((votes[0] / totalVotes) * 100).toFixed(2)} %
-      </div>
-      <div>
-        {choices[1]} - {((votes[1] / totalVotes) * 100).toFixed(2)} %
-      </div>
+      <Progress
+        style={{ height: 30 }}
+        barStyle={{ overflow: "visible" }}
+        className="mb-3"
+        animated
+        color="info"
+        value={(votes[0] / totalVotes) * 100}
+      >
+        <div className="cAbsolute w-100 p-2 cBold text-dark d-flex justify-content-between">
+          <span>{choices[0]}</span>
+          <span>{((votes[0] / totalVotes) * 100).toFixed(2)} %</span>
+        </div>
+      </Progress>
+
+      <Progress
+        style={{ height: 30 }}
+        barStyle={{ overflow: "visible" }}
+        className="mb-3"
+        animated
+        color="info"
+        value={(votes[1] / totalVotes) * 100}
+      >
+        <span className="cAbsolute w-100 p-2 cBold text-dark d-flex justify-content-between">
+          <span>{choices[1]}</span>
+          <span>{((votes[1] / totalVotes) * 100).toFixed(2)} %</span>
+        </span>
+      </Progress>
+
       <div>
         {totalVotes} votes - {timeleft}
       </div>

@@ -124,6 +124,11 @@ input[type="file"] {
   font-size: small;
 }
 
+.cAbsolute {
+  position: absolute;
+}
+
+
 @media (min-width: 992px) {
   .csidebarTweet {
     border-radius: 18px !important;
