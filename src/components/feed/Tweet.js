@@ -20,7 +20,11 @@ function Tweet(props) {
         <InfoBar username={user.username} created={tweet.created} />
         <Message message={tweet.message} />
         <Attachment url={tweet.attach} />
-        <Poll poll={tweet.poll} pollSettings={tweet.pollSettings} />
+        <Poll
+          poll={tweet.poll}
+          pollSettings={tweet.pollSettings}
+          start={tweet.created}
+        />
         <InteractionBar
           likes={tweet.likes}
           retweets={tweet.retweets}

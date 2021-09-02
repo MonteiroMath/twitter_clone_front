@@ -2,7 +2,7 @@ const tweets = [
   {
     id: 0,
     author: 1,
-    created: new Date().toDateString(),
+    created: new Date().getTime(),
     message: "This is my first tweet, hi everyone",
     likes: 3,
     retweets: 0,
@@ -14,7 +14,7 @@ const tweets = [
   {
     id: 1,
     author: 1,
-    created: new Date().toDateString(),
+    created: new Date().getTime(),
     message: "This is my second tweet lol getting good at this",
     likes: 3,
     retweets: 0,
@@ -26,7 +26,7 @@ const tweets = [
   {
     id: 2,
     author: 1,
-    created: new Date().toDateString(),
+    created: new Date().getTime(),
     message: "Ok it is getting harder now",
     likes: 3,
     retweets: 0,
@@ -38,7 +38,7 @@ const tweets = [
   {
     id: 3,
     author: 1,
-    created: new Date().toDateString(),
+    created: new Date().getTime(),
     message: "Hate the character limit, anyone with me?",
     likes: 3,
     retweets: 0,
@@ -50,7 +50,7 @@ const tweets = [
   {
     id: 4,
     author: 1,
-    created: new Date().toDateString(),
+    created: new Date().getTime(),
     message: "How do you win at this",
     likes: 3,
     retweets: 0,
@@ -59,7 +59,11 @@ const tweets = [
     poll: true,
     pollSettings: {
       choices: ["Yes I do", "No I don't"],
-      ends: new Date().toDateString(),
+      pollLen: {
+        days: 1,
+        hours: 3,
+        minutes: 35,
+      },
       votes: [1, 5],
     },
   },

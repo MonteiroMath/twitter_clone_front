@@ -75,7 +75,7 @@ function NewTweetFormControl({ handleNewTweet }) {
     setPollLength(Object.assign({}, pollLength, { [field]: value }));
   }
 
-  //reset the state of the form to the defaul
+  //reset the state of the form to the default
   function clearForm() {
     setTweetText("");
     setAttach("");
@@ -123,7 +123,7 @@ function NewTweetFormControl({ handleNewTweet }) {
       poll: poll,
       pollSettings: {
         choices: pollChoices,
-        length: pollLength,
+        pollLen: pollLength,
       },
     });
     clearForm();
