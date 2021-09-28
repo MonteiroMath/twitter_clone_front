@@ -3,7 +3,7 @@ import { Row, Col } from "reactstrap";
 
 import NewTweetFormControl from "./NewTweetFormControl";
 
-function NewTweet({ handleNewTweet }) {
+function NewTweet() {
   return (
     <Row className="border p-3 d-none d-md-flex" noGutters={true}>
       <Col xs="1">
@@ -11,7 +11,7 @@ function NewTweet({ handleNewTweet }) {
       </Col>
 
       <Col className="ml-3">
-        <NewTweetFormControl handleNewTweet={handleNewTweet} />
+        <NewTweetFormControl />
       </Col>
     </Row>
   );

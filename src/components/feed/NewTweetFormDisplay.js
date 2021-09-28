@@ -18,7 +18,6 @@ function NewTweetFormDisplay(props) {
     handlePoll,
     handleChoices,
     handlePollLength,
-    handleNewTweet,
     clearForm,
     isDisabled,
     handleSubmit,
@@ -62,7 +61,6 @@ function NewTweetFormDisplay(props) {
       <ToolBar
         tweetText={tweetText}
         clearForm={clearForm}
-        handleNewTweet={handleNewTweet}
         attach={attach}
         handleAttach={handleAttach}
         block={block}

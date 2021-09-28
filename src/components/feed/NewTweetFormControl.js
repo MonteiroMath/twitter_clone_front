@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { ACTIONS } from "../../store/actions";
 
 import NewTweetFormDisplay from "./NewTweetFormDisplay";
 
 //!todo bug:insert the same image twice in a roll. Second time do not work unless you cancel the selection
 
-function NewTweetFormControl({ handleNewTweet }) {
+function NewTweetFormControl() {
   const [tweetText, setTweetText] = useState("");
   const [attach, setAttach] = useState("");
   const [poll, setPoll] = useState(false);
@@ -15,6 +18,7 @@ function NewTweetFormControl({ handleNewTweet }) {
     minutes: 0,
   });
   const [block, setBlock] = useState(false);
+  const dispatch = useDispatch();
 
   //control function for the text input field
   function handleTextChange(evt) {
@@ -117,15 +121,22 @@ function NewTweetFormControl({ handleNewTweet }) {
   //handles submission of tweet
   function handleSubmit(evt) {
     evt.preventDefault();
-    handleNewTweet({
-      message: tweetText,
-      attach: attach,
-      poll: poll,
-      pollSettings: {
-        choices: pollChoices,
-        pollLen: pollLength,
+
+    dispatch({
+      type: ACTIONS.POST_TWEET,
+      payload: {
+        newTweet: {
+          message: tweetText,
+          attach: attach,
+          poll: poll,
+          pollSettings: {
+            choices: pollChoices,
+            pollLen: pollLength,
+          },
+        },
       },
     });
+
     clearForm();
   }
 
@@ -143,7 +154,6 @@ function NewTweetFormControl({ handleNewTweet }) {
       handlePoll={handlePoll}
       handleChoices={handleChoices}
       handlePollLength={handlePollLength}
-      handleNewTweet={handleNewTweet}
       clearForm={clearForm}
       isDisabled={isDisabled}
       handleSubmit={handleSubmit}

@@ -6,7 +6,11 @@
 
 */
 
-import { render, screen, cleanup, fireEvent } from "@testing-library/react";
+import { render, screen, cleanup } from "@testing-library/react";
+import { Provider } from "react-redux";
+
+import { store } from "../../store/store.js";
+
 import Feed from "./Feed.js";
 import userEvent from "@testing-library/user-event";
 
@@ -14,7 +18,11 @@ afterEach(cleanup);
 
 describe("Add new tweet", () => {
   test("Add a tweet to the top of the feed", () => {
-    render(<Feed />);
+    render(
+      <Provider store={store}>
+        <Feed />
+      </Provider>
+    );
 
     let textBox = screen.getByPlaceholderText(/What's happening?/);
 
