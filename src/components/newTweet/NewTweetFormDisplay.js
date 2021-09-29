@@ -1,8 +1,8 @@
 import React from "react";
 import { Form, Input } from "reactstrap";
-import ToolBar from "../ToolBar";
-import Attachment from "../Attachment";
-import PollForm from "./PollForm";
+import ToolBar from "./ToolBar.js";
+import Attachment from "../Attachment.js";
+import PollForm from "./PollForm.js";
 
 function NewTweetFormDisplay(props) {
   const {

@@ -1,12 +1,13 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
 
-import Avatar from "../Avatar";
-import InfoBar from "../InfoBar";
-import Message from "../Message";
 import Attachment from "../Attachment";
+
+import Avatar from "../Avatar";
+import InfoBar from "./InfoBar";
+import Message from "./Message";
 import Poll from "./Poll";
-import InteractionBar from "../InteractionBar";
+import InteractionBar from "./InteractionBar";
 
 function Tweet(props) {
   let { tweet, user } = props;

@@ -7,7 +7,7 @@ import NewTweetFormDisplay from "./NewTweetFormDisplay";
 
 //!todo bug:insert the same image twice in a roll. Second time do not work unless you cancel the selection
 
-function NewTweetFormControl() {
+function NewTweetForm() {
   const [tweetText, setTweetText] = useState("");
   const [attach, setAttach] = useState("");
   const [poll, setPoll] = useState(false);
@@ -161,4 +161,4 @@ function NewTweetFormControl() {
   );
 }
 
-export default NewTweetFormControl;
+export default NewTweetForm;

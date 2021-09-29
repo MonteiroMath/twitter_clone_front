@@ -7,7 +7,7 @@ import {
   PollIcon,
   EmoticonIcon,
   CalendarIcon,
-} from "./svg/Svg";
+} from "../svg/Svg";
 
 function UtilitiesBar(props) {
   const { handleAttach, handlePoll, block } = props;

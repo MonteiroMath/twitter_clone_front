@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
-import TweetList from "./TweetList";
-import NewTweet from "./NewTweet";
+import { Row } from "reactstrap";
+
+import NewTweet from "../newTweet/NewTweet";
+
 import FeedNavbar from "./FeedNavbar";
-import NewTweetButton from "../NewTweetButton";
+import TweetList from "./TweetList";
+import NewTweetButton from "./NewTweetButton";
 import BottomBar from "./BottomBar";
 
 import userData from "../../placeholders/user";
 
+//todo with the introduction of redux, Feed lost sense as a control comp
+//todo With the introduction of router, mobile display needs changed
+//todo Change feed into a display comp, bringing out the layout settings
+
 function Feed(props) {
   let [user, setUser] = useState({});
-
-  const tweets = [...useSelector((state) => state.tweets)].reverse();
 
   useEffect(() => {
     setUser(userData);
@@ -21,8 +25,10 @@ function Feed(props) {
   return (
     <div>
       <FeedNavbar />
-      <NewTweet />
-      <TweetList tweets={tweets} user={user} />
+      <Row className="border p-3 d-none d-md-flex" noGutters={true}>
+        <NewTweet />
+      </Row>
+      <TweetList user={user} />
       <NewTweetButton />
       <BottomBar />
     </div>

@@ -1,8 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
 import Tweet from "./Tweet";
 
 function TweetList(props) {
-  const { tweets, user } = props;
+  const { user } = props;
+
+  const tweets = [...useSelector((state) => state.tweets)].reverse();
 
   return (
     <div className="mt-3">
