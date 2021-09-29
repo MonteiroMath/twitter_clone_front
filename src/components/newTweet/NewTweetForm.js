@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { ACTIONS } from "../../store/actions";
@@ -19,6 +20,7 @@ function NewTweetForm() {
   });
   const [block, setBlock] = useState(false);
   const dispatch = useDispatch();
+  let history = useHistory();
 
   //control function for the text input field
   function handleTextChange(evt) {
@@ -138,6 +140,8 @@ function NewTweetForm() {
     });
 
     clearForm();
+
+    history.push("/");
   }
 
   return (

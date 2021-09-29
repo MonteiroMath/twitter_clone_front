@@ -7,6 +7,7 @@
 */
 
 import { render, screen, cleanup } from "@testing-library/react";
+import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import { store } from "../../store/store.js";
@@ -19,9 +20,11 @@ afterEach(cleanup);
 describe("Add new tweet", () => {
   test("Add a tweet to the top of the feed", () => {
     render(
-      <Provider store={store}>
-        <Feed />
-      </Provider>
+      <Router>
+        <Provider store={store}>
+          <Feed />
+        </Provider>
+      </Router>
     );
 
     let textBox = screen.getByPlaceholderText(/What's happening?/);

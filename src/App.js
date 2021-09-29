@@ -6,7 +6,7 @@ import "./App.css";
 import Feed from "./components/feed/Feed";
 import RightBar from "./components/rightBar/RightBar";
 import LeftBar from "./components/leftBar/LeftBar";
-import NewTweet from "./components/newTweet/NewTweet";
+import Compose from "./components/compose/Compose";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
           <Col className="ml-auto p-0" xs="12" md="10" lg="6">
             <Switch>
               <Route path="/compose">
-                <NewTweet />
+                <Compose />
               </Route>
               <Route path="/">
                 <Feed />
