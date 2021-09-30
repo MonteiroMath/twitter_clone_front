@@ -8,7 +8,7 @@ import NewTweetFormDisplay from "./NewTweetFormDisplay";
 
 //!todo bug:insert the same image twice in a roll. Second time do not work unless you cancel the selection
 
-function NewTweetForm() {
+function NewTweetForm({ toggle }) {
   const [tweetText, setTweetText] = useState("");
   const [attach, setAttach] = useState("");
   const [poll, setPoll] = useState(false);
@@ -82,7 +82,7 @@ function NewTweetForm() {
   }
 
   //reset the state of the form to the default
-  function clearForm() {
+  function clearForm(toggle) {
     setTweetText("");
     setAttach("");
     setPoll(false);
@@ -93,6 +93,8 @@ function NewTweetForm() {
       minutes: 0,
     });
     setBlock(false);
+
+    if (toggle) toggle();
   }
 
   //determines if the poll fields are filled
@@ -122,8 +124,6 @@ function NewTweetForm() {
 
   //handles submission of tweet
   function handleSubmit(evt) {
-    evt.preventDefault();
-
     dispatch({
       type: ACTIONS.POST_TWEET,
       payload: {
@@ -139,7 +139,7 @@ function NewTweetForm() {
       },
     });
 
-    clearForm();
+    clearForm(toggle);
 
     history.push("/");
   }
