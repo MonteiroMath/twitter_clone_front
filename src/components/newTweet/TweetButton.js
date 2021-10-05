@@ -9,7 +9,7 @@ function TweetButton({ handleClick, disabled }) {
       color="info"
       onClick={handleClick}
     >
-      <span>Tweet</span>
+      Tweet
     </Button>
   );
 }

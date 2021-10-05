@@ -14,7 +14,6 @@ function NewTweetFormDisplay(props) {
     block,
     handleTextChange,
     handleAttach,
-    handleRemoveAttach,
     handlePoll,
     handleChoices,
     handlePollLength,
@@ -38,7 +37,7 @@ function NewTweetFormDisplay(props) {
           id="attachPreview"
           alt="update preview"
           url={attach}
-          handleRemove={handleRemoveAttach}
+          handleRemove={handleAttach}
           preview={true}
         />
 

@@ -6,8 +6,6 @@ import { ACTIONS } from "../../store/actions";
 
 import NewTweetFormDisplay from "./NewTweetFormDisplay";
 
-//!todo bug:insert the same image twice in a roll. Second time do not work unless you cancel the selection
-
 function NewTweetForm({ toggle }) {
   const [tweetText, setTweetText] = useState("");
   const [attach, setAttach] = useState("");
@@ -31,24 +29,16 @@ function NewTweetForm({ toggle }) {
   //creates an attachment preview and updates the state
   function handleAttach(evt) {
     let preview = "";
-    if (evt.target.files[0]) {
+    if (!attach) {
       preview = URL.createObjectURL(evt.target.files[0]);
       setBlock(true);
+      evt.target.value = "";
     } else {
-      URL.revokeObjectURL(preview);
+      URL.revokeObjectURL(attach);
       setBlock(false);
-      preview = "";
     }
 
     setAttach(preview);
-  }
-
-  //Removes attachment preview and revert the state back to defaultI
-  function handleRemoveAttach(evt) {
-    evt.preventDefault();
-    URL.revokeObjectURL(attach);
-    setAttach("");
-    setBlock(false);
   }
 
   //manages the display of the poll form fields
@@ -154,7 +144,6 @@ function NewTweetForm({ toggle }) {
       block={block}
       handleTextChange={handleTextChange}
       handleAttach={handleAttach}
-      handleRemoveAttach={handleRemoveAttach}
       handlePoll={handlePoll}
       handleChoices={handleChoices}
       handlePollLength={handlePollLength}

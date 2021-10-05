@@ -29,6 +29,7 @@ function UtilitiesBar(props) {
           className="cutitilyBarDisable"
           type="file"
           id="imgAttach"
+          data-testid="imgAttach"
           name="imgAttach"
           accept="image/png, image/jpeg"
           onChange={handleAttach}
