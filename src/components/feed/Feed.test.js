@@ -7,10 +7,7 @@
 */
 
 import { render, screen, cleanup } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
-import { Provider } from "react-redux";
-
-import { store } from "../../store/store.js";
+import Providers from "../Providers.js";
 
 import Feed from "./Feed.js";
 import userEvent from "@testing-library/user-event";
@@ -20,21 +17,18 @@ afterEach(cleanup);
 describe("Add new tweet", () => {
   test("Add a tweet to the top of the feed", () => {
     render(
-      <Router>
-        <Provider store={store}>
-          <Feed />
-        </Provider>
-      </Router>
+      <Providers>
+        <Feed />
+      </Providers>
     );
 
     let textBox = screen.getByPlaceholderText(/What's happening?/);
-
     expect(textBox).toBeInTheDocument();
 
     let typedText = "Typed by the user";
     userEvent.type(textBox, typedText);
 
-    let tweetButton = screen.getByText(/Tweet/);
+    let tweetButton = screen.getByRole("button", { name: /tweet/i });
     expect(tweetButton).toBeInTheDocument();
 
     userEvent.click(tweetButton);
