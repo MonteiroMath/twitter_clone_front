@@ -1,6 +1,8 @@
 import React from "react";
 import { Progress } from "reactstrap";
 
+import VoteProgress from "./VoteProgress";
+
 function GetTimeLeft(start, maxLen) {
   const { days, hours, minutes } = maxLen;
 
@@ -37,14 +39,6 @@ function evaluateTimeLapse(timelapse, maxLen, units) {
   }
 }
 
-function evaluteVotePercentage(votes, totalVotes) {
-  if (totalVotes === 0) {
-    return 0;
-  }
-
-  return ((votes / totalVotes) * 100).toFixed(2);
-}
-
 //todo Extract Progress bars into another component (will be better when more poll options are implemented)
 function Poll({ poll, pollSettings, start }) {
   const { choices, votes, pollLen } = pollSettings;
@@ -56,33 +50,17 @@ function Poll({ poll, pollSettings, start }) {
 
   return poll ? (
     <div>
-      <Progress
-        style={{ height: 30 }}
-        barStyle={{ overflow: "visible" }}
-        className="mb-3"
-        animated
-        color="info"
-        value={evaluteVotePercentage(votes[0], totalVotes)}
-      >
-        <div className="cAbsolute w-100 p-2 cBold text-dark d-flex justify-content-between">
-          <span>{choices[0]}</span>
-          <span>{evaluteVotePercentage(votes[0], totalVotes)} %</span>
-        </div>
-      </Progress>
+      <VoteProgress
+        choice={choices[0]}
+        votes={votes[0]}
+        totalVotes={totalVotes}
+      />
 
-      <Progress
-        style={{ height: 30 }}
-        barStyle={{ overflow: "visible" }}
-        className="mb-3"
-        animated
-        color="info"
-        value={evaluteVotePercentage(votes[1], totalVotes)}
-      >
-        <span className="cAbsolute w-100 p-2 cBold text-dark d-flex justify-content-between">
-          <span>{choices[1]}</span>
-          <span>{evaluteVotePercentage(votes[1], totalVotes)} %</span>
-        </span>
-      </Progress>
+      <VoteProgress
+        choice={choices[1]}
+        votes={votes[1]}
+        totalVotes={totalVotes}
+      />
 
       <div>
         {totalVotes} votes - {timeleft}
