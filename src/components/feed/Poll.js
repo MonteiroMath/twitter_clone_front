@@ -45,14 +45,14 @@ function Poll({ poll, pollSettings, start }) {
   if (poll) {
     var totalVotes = choices[0].votes + choices[1].votes;
     var timeleft = GetTimeLeft(start, pollLen);
+    var progressBars = choices.map((choice, i) => (
+      <VoteProgress key={i} choice={choice} totalVotes={totalVotes} />
+    ));
   }
 
   return poll ? (
     <div>
-      <VoteProgress choice={choices[0]} totalVotes={totalVotes} />
-
-      <VoteProgress choice={choices[1]} totalVotes={totalVotes} />
-
+      {progressBars}
       <div>
         {totalVotes} votes - {timeleft}
       </div>

@@ -12,6 +12,7 @@ function evaluteVotePercentage(votes, totalVotes) {
 
 function VoteProgress({ choice, totalVotes }) {
   const { text, votes } = choice;
+  const votePer = evaluteVotePercentage(votes, totalVotes);
 
   return (
     <Progress
@@ -20,11 +21,11 @@ function VoteProgress({ choice, totalVotes }) {
       className="mb-3"
       animated
       color="info"
-      value={evaluteVotePercentage(votes, totalVotes)}
+      value={votePer}
     >
       <div className="cAbsolute w-100 p-2 cBold text-dark d-flex justify-content-between">
         <span>{text}</span>
-        <span>{evaluteVotePercentage(votes, totalVotes)} %</span>
+        <span>{votePer} %</span>
       </div>
     </Progress>
   );
