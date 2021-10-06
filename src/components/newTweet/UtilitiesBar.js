@@ -77,6 +77,7 @@ function UtilitiesBar(props) {
 
       <div className="mr-3">
         <Button
+          aria-label="add poll"
           className="cpointer cutitilyBarDisable p-0 cnoBorder"
           color="info"
           outline={true}

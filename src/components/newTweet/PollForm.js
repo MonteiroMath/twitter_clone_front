@@ -9,7 +9,7 @@ function PollForm({
   pollLength,
   handlePollLength,
 }) {
-  function generateOptions(prefix, max) {
+  function generateTimeOptions(prefix, max) {
     let options = [];
     for (let i = 0; i <= max; i++) {
       options.push(<option key={`${prefix}${i}`}>{i}</option>);
@@ -22,11 +22,13 @@ function PollForm({
     <div className="mt-3 cpollForm">
       <FormGroup>
         <Input
+          aria-label="choice 1"
           placeholder="Choice 1"
           value={choices[0]}
           onChange={(evt) => handleChoices(evt, 0)}
         />
         <Input
+          aria-label="choice 2"
           className="mt-2"
           placeholder="Choice 2"
           value={choices[1]}
@@ -42,12 +44,13 @@ function PollForm({
             Days
           </Label>
           <Input
+            id="days"
             name="days"
             type="select"
             value={pollLength.days}
             onChange={(evt) => handlePollLength(evt, "days")}
           >
-            {generateOptions("day", 7)}
+            {generateTimeOptions("day", 7)}
           </Input>
         </Col>
         <Col>
@@ -60,7 +63,7 @@ function PollForm({
             value={pollLength.hours}
             onChange={(evt) => handlePollLength(evt, "hours")}
           >
-            {generateOptions("hours", 23)}
+            {generateTimeOptions("hours", 23)}
           </Input>
         </Col>
         <Col>
@@ -73,7 +76,7 @@ function PollForm({
             value={pollLength.minutes}
             onChange={(evt) => handlePollLength(evt, "minutes")}
           >
-            {generateOptions("minutes", 59)}
+            {generateTimeOptions("minutes", 59)}
           </Input>
         </Col>
       </FormGroup>

@@ -1,11 +1,3 @@
-/*
-
-  test:
-
-  todo: tweet button add a tweet to the list
-
-*/
-
 import { render, screen, cleanup } from "@testing-library/react";
 import Providers from "../Providers.js";
 

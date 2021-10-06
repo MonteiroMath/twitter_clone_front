@@ -4,8 +4,6 @@ import userEvent from "@testing-library/user-event";
 import Providers from "../Providers";
 import NewTweet from "./NewTweet.js";
 
-import testImage from "../../../public/images/test.jpeg";
-
 afterEach(cleanup);
 
 describe("Rendering test", () => {
