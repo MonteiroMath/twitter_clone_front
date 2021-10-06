@@ -114,6 +114,10 @@ function NewTweetForm({ toggle }) {
 
   //handles submission of tweet
   function handleSubmit(evt) {
+    let choices = pollChoices.map((choice) => {
+      return { text: choice, votes: 0 };
+    });
+
     dispatch({
       type: ACTIONS.POST_TWEET,
       payload: {
@@ -122,7 +126,7 @@ function NewTweetForm({ toggle }) {
           attach: attach,
           poll: poll,
           pollSettings: {
-            choices: pollChoices,
+            choices,
             pollLen: pollLength,
           },
         },

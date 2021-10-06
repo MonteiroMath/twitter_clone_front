@@ -58,13 +58,15 @@ const tweets = [
     attach: "",
     poll: true,
     pollSettings: {
-      choices: ["Yes I do", "No I don't"],
+      choices: [
+        { text: "Yes I do", votes: 1 },
+        { text: "No I don't", votes: 5 },
+      ],
       pollLen: {
         days: 1,
         hours: 3,
         minutes: 35,
       },
-      votes: [1, 5],
     },
   },
 ];

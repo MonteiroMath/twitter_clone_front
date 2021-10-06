@@ -1,5 +1,5 @@
 // Extract vote progress bars
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Progress } from "reactstrap";
 
 function evaluteVotePercentage(votes, totalVotes) {
@@ -10,7 +10,9 @@ function evaluteVotePercentage(votes, totalVotes) {
   return ((votes / totalVotes) * 100).toFixed(2);
 }
 
-function VoteProgress({ choice, votes, totalVotes }) {
+function VoteProgress({ choice, totalVotes }) {
+  const { text, votes } = choice;
+
   return (
     <Progress
       style={{ height: 30 }}
@@ -21,7 +23,7 @@ function VoteProgress({ choice, votes, totalVotes }) {
       value={evaluteVotePercentage(votes, totalVotes)}
     >
       <div className="cAbsolute w-100 p-2 cBold text-dark d-flex justify-content-between">
-        <span>{choice}</span>
+        <span>{text}</span>
         <span>{evaluteVotePercentage(votes, totalVotes)} %</span>
       </div>
     </Progress>

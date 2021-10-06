@@ -39,28 +39,19 @@ function evaluateTimeLapse(timelapse, maxLen, units) {
   }
 }
 
-//todo Extract Progress bars into another component (will be better when more poll options are implemented)
 function Poll({ poll, pollSettings, start }) {
-  const { choices, votes, pollLen } = pollSettings;
+  const { choices, pollLen } = pollSettings;
 
   if (poll) {
-    var totalVotes = votes[0] + votes[1];
+    var totalVotes = choices[0].votes + choices[1].votes;
     var timeleft = GetTimeLeft(start, pollLen);
   }
 
   return poll ? (
     <div>
-      <VoteProgress
-        choice={choices[0]}
-        votes={votes[0]}
-        totalVotes={totalVotes}
-      />
+      <VoteProgress choice={choices[0]} totalVotes={totalVotes} />
 
-      <VoteProgress
-        choice={choices[1]}
-        votes={votes[1]}
-        totalVotes={totalVotes}
-      />
+      <VoteProgress choice={choices[1]} totalVotes={totalVotes} />
 
       <div>
         {totalVotes} votes - {timeleft}
