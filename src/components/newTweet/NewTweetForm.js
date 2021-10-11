@@ -4,11 +4,14 @@ import { useDispatch } from "react-redux";
 
 import { ACTIONS } from "../../store/actions";
 
+import PollForm from "./PollForm";
+import ToolBar from "./ToolBar";
 import NewTweetFormDisplay from "./NewTweetFormDisplay";
 
 function NewTweetForm({ toggle }) {
   const [tweetText, setTweetText] = useState("");
   const [attach, setAttach] = useState("");
+
   const [poll, setPoll] = useState(false);
   const [pollChoices, setPollChoices] = useState(["", ""]);
   const [pollLength, setPollLength] = useState({
@@ -138,22 +141,35 @@ function NewTweetForm({ toggle }) {
     history.push("/");
   }
 
+  let pollForm = (
+    <PollForm
+      poll={poll}
+      choices={pollChoices}
+      pollLength={pollLength}
+      handlePoll={handlePoll}
+      handleChoices={handleChoices}
+      handlePollLength={handlePollLength}
+    />
+  );
+
+  let toolBar = (
+    <ToolBar
+      handleAttach={handleAttach}
+      block={block}
+      handlePoll={handlePoll}
+      isDisabled={isDisabled}
+      handleSubmit={handleSubmit}
+    />
+  );
+
   return (
     <NewTweetFormDisplay
       tweetText={tweetText}
       attach={attach}
-      poll={poll}
-      pollChoices={pollChoices}
-      pollLength={pollLength}
-      block={block}
-      handleTextChange={handleTextChange}
       handleAttach={handleAttach}
-      handlePoll={handlePoll}
-      handleChoices={handleChoices}
-      handlePollLength={handlePollLength}
-      clearForm={clearForm}
-      isDisabled={isDisabled}
-      handleSubmit={handleSubmit}
+      handleTextChange={handleTextChange}
+      pollForm={pollForm}
+      toolBar={toolBar}
     />
   );
 }

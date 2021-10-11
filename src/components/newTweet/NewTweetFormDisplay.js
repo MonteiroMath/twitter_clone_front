@@ -1,25 +1,15 @@
 import React from "react";
 import { Form, Input } from "reactstrap";
-import ToolBar from "./ToolBar.js";
 import Attachment from "../Attachment.js";
-import PollForm from "./PollForm.js";
 
 function NewTweetFormDisplay(props) {
   const {
     tweetText,
     attach,
-    poll,
-    pollChoices,
-    pollLength,
-    block,
     handleTextChange,
     handleAttach,
-    handlePoll,
-    handleChoices,
-    handlePollLength,
-    clearForm,
-    isDisabled,
-    handleSubmit,
+    pollForm,
+    toolBar,
   } = props;
 
   return (
@@ -41,14 +31,7 @@ function NewTweetFormDisplay(props) {
           preview={true}
         />
 
-        <PollForm
-          poll={poll}
-          handlePoll={handlePoll}
-          choices={pollChoices}
-          handleChoices={handleChoices}
-          pollLength={pollLength}
-          handlePollLength={handlePollLength}
-        />
+        {pollForm}
 
         <Input className="mt-3" type="select">
           <option>Everyone </option>
@@ -56,17 +39,7 @@ function NewTweetFormDisplay(props) {
           <option>Only people you mention</option>
         </Input>
       </Form>
-
-      <ToolBar
-        tweetText={tweetText}
-        clearForm={clearForm}
-        attach={attach}
-        handleAttach={handleAttach}
-        block={block}
-        handlePoll={handlePoll}
-        isDisabled={isDisabled}
-        handleSubmit={handleSubmit}
-      />
+      {toolBar}
     </div>
   );
 }
