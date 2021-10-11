@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { ACTIONS } from "../../store/actions";
 
+import Attachment from "../Attachment.js";
 import PollForm from "./PollForm";
 import ToolBar from "./ToolBar";
 import NewTweetFormDisplay from "./NewTweetFormDisplay";
@@ -11,7 +12,6 @@ import NewTweetFormDisplay from "./NewTweetFormDisplay";
 function NewTweetForm({ toggle }) {
   const [tweetText, setTweetText] = useState("");
   const [attach, setAttach] = useState("");
-
   const [poll, setPoll] = useState(false);
   const [pollChoices, setPollChoices] = useState(["", ""]);
   const [pollLength, setPollLength] = useState({
@@ -47,12 +47,7 @@ function NewTweetForm({ toggle }) {
   //manages the display of the poll form fields
   function handlePoll(evt) {
     evt.preventDefault();
-    setPollChoices(["", ""]);
-    setPollLength({
-      days: 0,
-      hours: 0,
-      minutes: 0,
-    });
+    clearPoll();
     setPoll(!poll);
     setBlock(!block);
   }
@@ -74,17 +69,21 @@ function NewTweetForm({ toggle }) {
     setPollLength(Object.assign({}, pollLength, { [field]: value }));
   }
 
-  //reset the state of the form to the default
-  function clearForm(toggle) {
-    setTweetText("");
-    setAttach("");
-    setPoll(false);
+  function clearPoll() {
     setPollChoices(["", ""]);
     setPollLength({
       days: 0,
       hours: 0,
       minutes: 0,
     });
+  }
+
+  //reset the state of the form to the default
+  function clearForm(toggle) {
+    setTweetText("");
+    setAttach("");
+    clearPoll();
+    setPoll(false);
     setBlock(false);
 
     if (toggle) toggle();
@@ -141,6 +140,17 @@ function NewTweetForm({ toggle }) {
     history.push("/");
   }
 
+  let attachPreview = (
+    <Attachment
+      className="ctweetAttach"
+      id="attachPreview"
+      alt="update preview"
+      url={attach}
+      handleRemove={handleAttach}
+      preview={true}
+    />
+  );
+
   let pollForm = (
     <PollForm
       poll={poll}
@@ -165,9 +175,8 @@ function NewTweetForm({ toggle }) {
   return (
     <NewTweetFormDisplay
       tweetText={tweetText}
-      attach={attach}
-      handleAttach={handleAttach}
       handleTextChange={handleTextChange}
+      attachPreview={attachPreview}
       pollForm={pollForm}
       toolBar={toolBar}
     />

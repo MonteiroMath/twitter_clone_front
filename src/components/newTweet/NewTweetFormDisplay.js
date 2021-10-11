@@ -1,16 +1,9 @@
 import React from "react";
 import { Form, Input } from "reactstrap";
-import Attachment from "../Attachment.js";
 
 function NewTweetFormDisplay(props) {
-  const {
-    tweetText,
-    attach,
-    handleTextChange,
-    handleAttach,
-    pollForm,
-    toolBar,
-  } = props;
+  const { tweetText, attachPreview, handleTextChange, pollForm, toolBar } =
+    props;
 
   return (
     <div>
@@ -22,15 +15,7 @@ function NewTweetFormDisplay(props) {
           onChange={handleTextChange}
         />
 
-        <Attachment
-          className="ctweetAttach"
-          id="attachPreview"
-          alt="update preview"
-          url={attach}
-          handleRemove={handleAttach}
-          preview={true}
-        />
-
+        {attachPreview}
         {pollForm}
 
         <Input className="mt-3" type="select">
