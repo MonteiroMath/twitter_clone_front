@@ -7,7 +7,7 @@ import Avatar from "../Avatar";
 
 function FeedNavbar(props) {
   return (
-    <Row className="sticky-top border bg-white px-2" noGutters>
+    <Row className="w-100 px-2" noGutters>
       <Col className="d-flex d-md-none align-items-center" xs="1">
         <div className="mx-auto">
           <Avatar size="40px" />

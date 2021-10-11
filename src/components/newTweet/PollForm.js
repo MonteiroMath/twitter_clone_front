@@ -1,6 +1,15 @@
 import React from "react";
 import { FormGroup, Input, Label, Button, Row, Col } from "reactstrap";
 
+function generateTimeOptions(prefix, max) {
+  let options = [];
+  for (let i = 0; i <= max; i++) {
+    options.push(<option key={`${prefix}${i}`}>{i}</option>);
+  }
+
+  return options;
+}
+
 function PollForm({
   poll,
   handlePoll,
@@ -9,13 +18,10 @@ function PollForm({
   pollLength,
   handlePollLength,
 }) {
-  function generateTimeOptions(prefix, max) {
-    let options = [];
-    for (let i = 0; i <= max; i++) {
-      options.push(<option key={`${prefix}${i}`}>{i}</option>);
-    }
-
-    return options;
+  if (poll) {
+    var dayOpt = generateTimeOptions("day", 7);
+    var hourOpt = generateTimeOptions("hours", 23);
+    var minOpt = generateTimeOptions("minutes", 59);
   }
 
   return poll ? (
@@ -50,7 +56,7 @@ function PollForm({
             value={pollLength.days}
             onChange={(evt) => handlePollLength(evt, "days")}
           >
-            {generateTimeOptions("day", 7)}
+            {dayOpt}
           </Input>
         </Col>
         <Col>
@@ -63,7 +69,7 @@ function PollForm({
             value={pollLength.hours}
             onChange={(evt) => handlePollLength(evt, "hours")}
           >
-            {generateTimeOptions("hours", 23)}
+            {hourOpt}
           </Input>
         </Col>
         <Col>
@@ -76,7 +82,7 @@ function PollForm({
             value={pollLength.minutes}
             onChange={(evt) => handlePollLength(evt, "minutes")}
           >
-            {generateTimeOptions("minutes", 59)}
+            {minOpt}
           </Input>
         </Col>
       </FormGroup>

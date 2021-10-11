@@ -11,10 +11,6 @@ import BottomBar from "./BottomBar";
 
 import userData from "../../placeholders/user";
 
-//todo with the introduction of redux, Feed lost sense as a control comp
-//todo With the introduction of router, mobile display needs changed
-//todo Change feed into a display comp, bringing out the layout settings
-
 function Feed(props) {
   let [user, setUser] = useState({});
 
@@ -24,7 +20,9 @@ function Feed(props) {
 
   return (
     <div>
-      <FeedNavbar />
+      <Row className="sticky-top border bg-white" noGutters>
+        <FeedNavbar />
+      </Row>
       <Row className="border p-3 d-none d-md-flex" noGutters={true}>
         <NewTweet />
       </Row>
