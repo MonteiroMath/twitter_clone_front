@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+
+import { useDispatch } from "react-redux";
 import { Row, Col } from "reactstrap";
 
 import Attachment from "../Attachment";
@@ -8,9 +10,22 @@ import InfoBar from "./InfoBar";
 import Message from "./Message";
 import Poll from "./Poll";
 import InteractionBar from "./InteractionBar";
+import { ACTIONS } from "../../store/actions";
 
 function Tweet(props) {
   let { tweet, user } = props;
+  const [liked, setLiked] = useState(false);
+  let dispatch = useDispatch();
+
+  function handleLike() {
+    let type = liked ? ACTIONS.UNLIKE : ACTIONS.LIKE;
+    dispatch({
+      type,
+      payload: { id: tweet.id },
+    });
+
+    setLiked(!liked);
+  }
 
   return (
     <Row className="border p-3" noGutters={true}>
@@ -28,6 +43,7 @@ function Tweet(props) {
         />
         <InteractionBar
           likes={tweet.likes}
+          handleLike={handleLike}
           retweets={tweet.retweets}
           comments={tweet.comments}
         />

@@ -3,7 +3,7 @@ import tweetData from "../placeholders/tweets";
 
 export default function reducer(state = { tweets: tweetData }, action) {
   switch (action.type) {
-    case ACTIONS.POST_TWEET:
+    case ACTIONS.POST_TWEET: {
       let now = new Date().getTime();
       let { newTweet } = action.payload;
 
@@ -25,6 +25,35 @@ export default function reducer(state = { tweets: tweetData }, action) {
       };
 
       return { ...state, tweets: [...state.tweets, tweet] };
+    }
+    case ACTIONS.LIKE: {
+      let { id } = action.payload;
+
+      return {
+        ...state,
+        tweets: state.tweets.map((tweet) => {
+          if (tweet.id === id) {
+            return { ...tweet, likes: tweet.likes + 1 };
+          }
+
+          return tweet;
+        }),
+      };
+    }
+    case ACTIONS.UNLIKE: {
+      let { id } = action.payload;
+
+      return {
+        ...state,
+        tweets: state.tweets.map((tweet) => {
+          if (tweet.id === id) {
+            return { ...tweet, likes: tweet.likes - 1 };
+          }
+
+          return tweet;
+        }),
+      };
+    }
     default:
       return state;
   }
