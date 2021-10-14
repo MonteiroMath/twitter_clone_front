@@ -1,8 +1,9 @@
 import { render, screen, cleanup } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import Providers from "../Providers.js";
 
 import Feed from "./Feed.js";
-import userEvent from "@testing-library/user-event";
+
 
 afterEach(cleanup);
 
@@ -20,7 +21,7 @@ describe("Add new tweet", () => {
     let typedText = "Typed by the user";
     userEvent.type(textBox, typedText);
 
-    let tweetButton = screen.getByRole("button", { name: /tweet/i });
+    let tweetButton = screen.getByRole("button", { name: /^tweet$/i });
     expect(tweetButton).toBeInTheDocument();
 
     userEvent.click(tweetButton);

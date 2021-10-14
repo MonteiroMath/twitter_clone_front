@@ -17,9 +17,9 @@ function ToolBar({
     <Row className="align-items-center text-info pt-2" noGutters={true}>
       <Col>
         <UtilitiesBar
+          block={block}
           handleAttach={handleAttach}
           handlePoll={handlePoll}
-          block={block}
         />
       </Col>
 
