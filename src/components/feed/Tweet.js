@@ -29,7 +29,7 @@ function Tweet(props) {
   }
 
   return (
-    <Row className="border p-3" noGutters={true}>
+    <Row noGutters>
       <Col xs="2" md="1">
         <Avatar />
       </Col>

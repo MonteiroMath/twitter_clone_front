@@ -13,6 +13,7 @@ import InteractionBar from "./InteractionBar";
 import { ACTIONS } from "../../store/actions";
 
 import Tweet from "./Tweet";
+import { RetweetIcon } from "../svg/Svg";
 
 function Retweet(props) {
   let { retweet, user } = props;
@@ -33,8 +34,11 @@ function Retweet(props) {
   }
 
   return (
-    <Row className="border p-3" noGutters>
-      <Col xs={12}>You retweeted</Col>
+    <Row noGutters>
+      <Col className="ml-auto pb-1 cBold cfontSmall" xs={11}>
+        <RetweetIcon />
+        <span className="ml-2">You retweeted</span>
+      </Col>
       <Col className="mx-auto" xs={12}>
         <Tweet tweet={tweet} user={user} />
       </Col>
