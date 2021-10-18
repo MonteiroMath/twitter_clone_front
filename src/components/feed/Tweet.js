@@ -12,6 +12,7 @@ import Poll from "./Poll";
 import InteractionBar from "./InteractionBar";
 import { ACTIONS } from "../../store/actions";
 
+//! interaction bar is starting to get convoluted
 function Tweet(props) {
   let { tweet, user } = props;
   const [liked, setLiked] = useState(false);
@@ -43,6 +44,7 @@ function Tweet(props) {
         />
         <InteractionBar
           likes={tweet.likes}
+          liked={liked}
           handleLike={handleLike}
           retweets={tweet.retweets}
           comments={tweet.comments}

@@ -5,7 +5,7 @@ import { Button } from "reactstrap";
 import { CommentIcon, RetweetIcon, LikeIcon, ShareIcon } from "../svg/Svg.js";
 
 function InteractionBar(props) {
-  let { likes, retweets, comments, handleLike } = props;
+  let { likes, liked, retweets, comments, handleLike } = props;
 
   return (
     <div className="d-flex pt-2 small text-secondary">
@@ -46,7 +46,7 @@ function InteractionBar(props) {
           outline
           onClick={handleLike}
         >
-          <LikeIcon />
+          <LikeIcon filled={liked} />
         </Button>
         <span aria-label="number of likes" className="pl-2">
           {likes}

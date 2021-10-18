@@ -1,17 +1,20 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { ACTIONS } from "../../store/actions";
 
-import Tweet from "./Tweet";
+import TweetCard from "./TweetCard";
 
 function TweetList(props) {
   const { user } = props;
-
+  const dispatch = useDispatch();
   const tweets = [...useSelector((state) => state.tweets)].reverse();
+
+  useEffect(() => dispatch({ type: ACTIONS.INIT }), []);
 
   return (
     <ul className="mt-3 p-0">
       {tweets.map((tweet) => (
-        <Tweet key={tweet.id} tweet={tweet} user={user} />
+        <TweetCard key={tweet.id} tweet={tweet} user={user} />
       ))}
     </ul>
   );
