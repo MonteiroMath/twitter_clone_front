@@ -10,6 +10,18 @@ const tweets = [
     attach: "/images/phattach.jpeg",
     poll: false,
     pollSettings: {},
+    retweet: {
+      id: 0,
+      author: 1,
+      created: new Date().getTime(),
+      message: "This is my first tweet, hi everyone",
+      likes: 3,
+      retweets: 0,
+      comments: 0,
+      attach: "/images/phattach.jpeg",
+      poll: false,
+      pollSettings: {},
+    },
   },
   {
     id: 1,
@@ -22,6 +34,7 @@ const tweets = [
     attach: "",
     poll: false,
     pollSettings: {},
+    retweet: null,
   },
   {
     id: 2,
@@ -34,6 +47,18 @@ const tweets = [
     attach: "",
     poll: false,
     pollSettings: {},
+    retweet: {
+      id: 0,
+      author: 1,
+      created: new Date().getTime(),
+      message: "This is my first tweet, hi everyone",
+      likes: 3,
+      retweets: 0,
+      comments: 0,
+      attach: "/images/phattach.jpeg",
+      poll: false,
+      pollSettings: {},
+    },
   },
   {
     id: 3,
@@ -46,6 +71,7 @@ const tweets = [
     attach: "",
     poll: false,
     pollSettings: {},
+    retweet: null,
   },
   {
     id: 4,
@@ -68,6 +94,7 @@ const tweets = [
         minutes: 35,
       },
     },
+    retweet: null,
   },
 ];
 

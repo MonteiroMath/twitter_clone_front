@@ -17,7 +17,6 @@ import { RetweetIcon } from "../svg/Svg";
 
 function Retweet(props) {
   let { retweet, user } = props;
-  console.log(retweet.tweet);
   let { tweet } = retweet;
 
   const [liked, setLiked] = useState(false);

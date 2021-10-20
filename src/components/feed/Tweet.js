@@ -10,11 +10,13 @@ import InfoBar from "./InfoBar";
 import Message from "./Message";
 import Poll from "./Poll";
 import InteractionBar from "./InteractionBar";
+import RetweetBox from "./RetweetBox.js";
 import { ACTIONS } from "../../store/actions";
 
 //! interaction bar is starting to get convoluted
 function Tweet(props) {
   let { tweet, user } = props;
+  let { retweet } = tweet;
   const [liked, setLiked] = useState(false);
   let dispatch = useDispatch();
 
@@ -42,6 +44,7 @@ function Tweet(props) {
           pollSettings={tweet.pollSettings}
           start={tweet.created}
         />
+        {retweet ? <RetweetBox retweet={retweet} user={user} /> : null}
         <InteractionBar
           likes={tweet.likes}
           liked={liked}

@@ -9,10 +9,10 @@ function TweetCard(props) {
   return (
     <Row className="border p-3" noGutters>
       <Col xs={12}>
-        {tweet.tweet ? (
-          <Retweet retweet={tweet} user={user} />
-        ) : (
+        {tweet.message ? (
           <Tweet tweet={tweet} user={user} />
+        ) : (
+          <Retweet retweet={tweet} user={user} />
         )}
       </Col>
     </Row>
