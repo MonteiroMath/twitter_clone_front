@@ -11,7 +11,7 @@ function InfoBar(props) {
       <div className="text-secondary pl-2"> @{username}</div>
       <div className="text-secondary ml-auto">
         {" "}
-        {createdDate.toDateString()}
+        {createdDate.toDateString().match(/\w{3}\s\d{2}/)[0]}
       </div>
     </div>
   );
