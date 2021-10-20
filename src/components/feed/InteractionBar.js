@@ -8,7 +8,7 @@ function InteractionBar(props) {
   let { likes, liked, retweets, comments, handleLike } = props;
 
   return (
-    <div className="d-flex pt-2 small text-secondary">
+    <div className="d-flex pt-2 small text-secondary align-item">
       <div className="mr-5 d-flex align-items-center">
         <Button
           aria-label="Comment tweet"
@@ -24,7 +24,7 @@ function InteractionBar(props) {
         </span>
       </div>
 
-      <div className="mr-5">
+      <div className="mr-5 d-flex align-items-center">
         <Button
           aria-label="Retweet"
           className="p-1 cnoBorder"
@@ -38,7 +38,7 @@ function InteractionBar(props) {
         </span>
       </div>
 
-      <div className="mr-5">
+      <div className="mr-5 d-flex align-items-center">
         <Button
           aria-label="Like tweet"
           className="p-1 cnoBorder"
@@ -53,7 +53,7 @@ function InteractionBar(props) {
         </span>
       </div>
 
-      <div>
+      <div className="d-flex align-items-center">
         <Button
           aria-label="Share tweet"
           className="p-1 cnoBorder"
