@@ -73,3 +73,72 @@ describe("Like tests", () => {
     expect(updatedLikes - likesNum).toBe(0);
   });
 });
+
+test("Simple Retweet test", () => {
+  /*
+  - Get retweet button x
+  - Click retweet button x
+  - get simple retweet button x
+  - click simple retweet button x
+  - check that the menu has been closed
+  - try to get the simples retweet button - shouldn't be able to
+  - check if the retweet has been inserted
+  */
+
+  render(
+    <Providers>
+      <TweetList user={userMock} />
+    </Providers>
+  );
+
+  const retweetNum = screen.getAllByText(/you retweeted/i).length;
+
+  userEvent.click(screen.getAllByRole("button", { name: /^Retweet$/i })[0]);
+
+  userEvent.click(screen.getByRole("menuitem", /retweet/i));
+
+  expect(screen.queryByRole("menuitem", /retweet/i)).toBeNull();
+
+  const posRetweetNum = screen.getAllByText(/you retweeted/i).length;
+
+  expect(posRetweetNum - retweetNum).toBe(1);
+});
+
+test("Retweet with a quote test", () => {
+  /*
+  - Get retweet button
+  - Click retweet button
+  - get comment button
+  - click comment button
+  - check that the menu has been closed
+  - get the textArea field
+  - Type comment
+  - get Tweet Button
+  - Click tweet button
+  - Check that the modal is closed
+  - check if the retweet has been inserted
+  */
+
+  render(
+    <Providers>
+      <TweetList user={userMock} />
+    </Providers>
+  );
+
+  const retweetNum = screen.getAllByText(/you retweeted/i).length;
+
+  userEvent.click(screen.getAllByRole("button", { name: /^Retweet$/i })[0]);
+
+  userEvent.click(screen.getByRole("menuitem", /quote tweet/i));
+
+  userEvent.type(
+    screen.getByPlaceholderText(/that's happening/i),
+    "I retweeted this"
+  );
+
+  userEvent.click(screen.getByRole("button", /tweet/i));
+
+  const posRetweetNum = screen.getAllByText(/you retweeted/i).length;
+
+  expect(posRetweetNum - retweetNum).toBe(1);
+});
