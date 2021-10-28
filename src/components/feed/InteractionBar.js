@@ -1,15 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { Button } from "reactstrap";
+import {
+  Button,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
 
 import { CommentIcon, RetweetIcon, LikeIcon, ShareIcon } from "../svg/Svg.js";
 
 function InteractionBar(props) {
-  let { likes, liked, retweets, comments, handleLike } = props;
+  let {
+    likes,
+    liked,
+    retweeted,
+    retweets,
+    comments,
+    handleLike,
+    handleRetweet,
+  } = props;
+
+  let [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
     <div className="d-flex pt-2 small text-secondary align-item">
-      <div className="mr-5 d-flex align-items-center">
+      <div className="mr-3 d-flex align-items-center">
         <Button
           aria-label="Comment tweet"
           className="p-1 cnoBorder"
@@ -24,21 +40,36 @@ function InteractionBar(props) {
         </span>
       </div>
 
-      <div className="mr-5 d-flex align-items-center">
-        <Button
-          aria-label="Retweet"
-          className="p-1 cnoBorder"
-          color="info"
-          outline
+      <div className="mr-3 d-flex align-items-center">
+        <Dropdown
+          isOpen={dropdownOpen}
+          toggle={() => setDropdownOpen(!dropdownOpen)}
         >
-          <RetweetIcon />
-        </Button>
+          <DropdownToggle
+            aria-label="Retweet"
+            className="p-1 cnoBorder"
+            color="info"
+            outline
+          >
+            <RetweetIcon filled={retweeted} />
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem onClick={handleRetweet}>
+              <RetweetIcon /> <span>Retweet</span>
+            </DropdownItem>
+            <DropdownItem>
+              <CommentIcon />
+              <span> Quote Tweet</span>
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+
         <span aria-label="number of retweets" className="pl-2">
           {retweets}
         </span>
       </div>
 
-      <div className="mr-5 d-flex align-items-center">
+      <div className="mr-3 d-flex align-items-center">
         <Button
           aria-label="Like tweet"
           className="p-1 cnoBorder"

@@ -18,6 +18,7 @@ function Tweet(props) {
   let { tweet, user } = props;
   let { retweet } = tweet;
   const [liked, setLiked] = useState(false);
+  const [retweeted, setRetweeted] = useState(false);
   let dispatch = useDispatch();
 
   function handleLike() {
@@ -30,12 +31,21 @@ function Tweet(props) {
     setLiked(!liked);
   }
 
+  function handleRetweet() {
+    dispatch({
+      type: ACTIONS.RETWEET,
+      payload: { tweet },
+    });
+
+    setRetweeted(!retweeted);
+  }
+
   return (
     <Row noGutters>
       <Col xs="2" md="1">
         <Avatar />
       </Col>
-      <Col className="ml-2 ml-md-3">
+      <Col xs="9" md="10" className="ml-1 ml-md-3">
         <InfoBar username={user.username} created={tweet.created} />
         <Message message={tweet.message} />
         <Attachment url={tweet.attach} />
@@ -48,7 +58,9 @@ function Tweet(props) {
         <InteractionBar
           likes={tweet.likes}
           liked={liked}
+          retweeted={retweeted}
           handleLike={handleLike}
+          handleRetweet={handleRetweet}
           retweets={tweet.retweets}
           comments={tweet.comments}
         />

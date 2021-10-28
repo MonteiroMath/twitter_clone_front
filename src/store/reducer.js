@@ -62,6 +62,34 @@ export default function reducer(state = { tweets: [] }, action) {
         }),
       };
     }
+
+    case ACTIONS.RETWEET: {
+      let { tweet } = action.payload;
+
+      let updated_tweets = state.tweets.map((old_tweet) => {
+        if (old_tweet.id === tweet.id) {
+          return { ...old_tweet, retweets: old_tweet.retweets + 1 };
+        }
+
+        return old_tweet;
+      });
+
+      let retweet = {
+        id: 1001,
+        author: 1,
+        created: new Date().getTime(),
+        tweet,
+      };
+
+      return {
+        ...state,
+        tweets: [...updated_tweets, retweet],
+      };
+    }
+
+    case ACTIONS.RETWEET_COM:
+      return state;
+
     default:
       return state;
   }
