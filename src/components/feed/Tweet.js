@@ -34,7 +34,7 @@ function Tweet(props) {
   function handleRetweet() {
     dispatch({
       type: ACTIONS.RETWEET,
-      payload: { tweet },
+      payload: { tweetId: tweet.id },
     });
 
     setRetweeted(!retweeted);

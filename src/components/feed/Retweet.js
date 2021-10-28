@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+
+import { useSelector } from "react-redux";
 
 import { Row, Col } from "reactstrap";
 
@@ -19,7 +21,10 @@ import { RetweetIcon } from "../svg/Svg";
 */
 function Retweet(props) {
   let { retweet, user } = props;
-  let { tweet } = retweet;
+
+  let tweet = useSelector((state) => {
+    return state.tweets.find((tweet) => tweet.id === retweet.tweetId);
+  });
 
   return (
     <Row noGutters>

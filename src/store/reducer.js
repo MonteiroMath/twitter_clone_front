@@ -64,10 +64,10 @@ export default function reducer(state = { tweets: [] }, action) {
     }
 
     case ACTIONS.RETWEET: {
-      let { tweet } = action.payload;
+      let { tweetId } = action.payload;
 
       let updated_tweets = state.tweets.map((old_tweet) => {
-        if (old_tweet.id === tweet.id) {
+        if (old_tweet.id === tweetId) {
           return { ...old_tweet, retweets: old_tweet.retweets + 1 };
         }
 
@@ -78,7 +78,7 @@ export default function reducer(state = { tweets: [] }, action) {
         id: 1001,
         author: 1,
         created: new Date().getTime(),
-        tweet,
+        tweetId,
       };
 
       return {
