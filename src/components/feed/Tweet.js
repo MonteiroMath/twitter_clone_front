@@ -17,11 +17,10 @@ import { ACTIONS } from "../../store/actions";
 function Tweet(props) {
   let { tweet, user } = props;
   let { retweet } = tweet;
+  let retweeted = tweet.retweeted_by.includes(user.id);
 
   const [liked, setLiked] = useState(false);
-  const [retweeted, setRetweeted] = useState(
-    tweet.retweeted_by.includes(user.id)
-  );
+
   let dispatch = useDispatch();
 
   function handleLike() {
@@ -42,7 +41,7 @@ function Tweet(props) {
       payload: { tweetId: tweet.id, userId: user.id },
     });
 
-    setRetweeted(!retweeted);
+    //setRetweeted(!retweeted);
   }
 
   return (
