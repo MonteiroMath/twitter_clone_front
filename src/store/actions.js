@@ -4,5 +4,6 @@ export const ACTIONS = {
   LIKE: "like",
   UNLIKE: "unlike",
   RETWEET: "retweet",
+  UNDO_RETWEET: "undo retweet",
   RETWEET_COM: "retweet with comment",
 };

@@ -6,6 +6,8 @@ import Retweet from "./Retweet";
 function TweetCard(props) {
   let { tweet, user } = props;
 
+  console.log(tweet);
+
   return (
     <Row className="border p-3" noGutters>
       <Col xs={12}>

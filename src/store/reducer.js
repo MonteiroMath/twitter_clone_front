@@ -64,11 +64,15 @@ export default function reducer(state = { tweets: [] }, action) {
     }
 
     case ACTIONS.RETWEET: {
-      let { tweetId } = action.payload;
+      let { tweetId, userId } = action.payload;
 
       let updated_tweets = state.tweets.map((old_tweet) => {
         if (old_tweet.id === tweetId) {
-          return { ...old_tweet, retweets: old_tweet.retweets + 1 };
+          return {
+            ...old_tweet,
+            retweets: old_tweet.retweets + 1,
+            retweeted_by: [...old_tweet.retweeted_by, userId],
+          };
         }
 
         return old_tweet;
@@ -84,6 +88,30 @@ export default function reducer(state = { tweets: [] }, action) {
       return {
         ...state,
         tweets: [...updated_tweets, retweet],
+      };
+    }
+
+    case ACTIONS.UNDO_RETWEET: {
+      let { tweetId, userId } = action.payload;
+
+      let updated_tweets = state.tweets
+        .map((old_tweet) => {
+          if (old_tweet.id === tweetId) {
+            return {
+              ...old_tweet,
+              retweets: old_tweet.retweets - 1,
+              retweeted_by: old_tweet.retweeted_by.filter((id) => id !== userId),
+            };
+          }
+
+          return old_tweet;
+        })
+        .filter((tweet) => tweet.tweetId !== tweetId);
+
+      console.log(updated_tweets);
+      return {
+        ...state,
+        tweets: updated_tweets,
       };
     }
 
