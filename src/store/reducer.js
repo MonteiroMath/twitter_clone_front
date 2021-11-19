@@ -35,13 +35,17 @@ export default function reducer(state = { tweets: [] }, action) {
       return { ...state, tweets: [...state.tweets, tweet] };
     }
     case ACTIONS.LIKE: {
-      let { id } = action.payload;
+      let { id, userId } = action.payload;
 
       return {
         ...state,
         tweets: state.tweets.map((tweet) => {
           if (tweet.id === id) {
-            return { ...tweet, likes: tweet.likes + 1 };
+            return {
+              ...tweet,
+              likes: tweet.likes + 1,
+              liked_by: [...tweet.liked_by, userId],
+            };
           }
 
           return tweet;
@@ -49,13 +53,17 @@ export default function reducer(state = { tweets: [] }, action) {
       };
     }
     case ACTIONS.UNLIKE: {
-      let { id } = action.payload;
+      let { id, userId } = action.payload;
 
       return {
         ...state,
         tweets: state.tweets.map((tweet) => {
           if (tweet.id === id) {
-            return { ...tweet, likes: tweet.likes - 1 };
+            return {
+              ...tweet,
+              likes: tweet.likes - 1,
+              liked_by: tweet.liked_by.filter((id) => id !== userId),
+            };
           }
 
           return tweet;
@@ -100,7 +108,9 @@ export default function reducer(state = { tweets: [] }, action) {
             return {
               ...old_tweet,
               retweets: old_tweet.retweets - 1,
-              retweeted_by: old_tweet.retweeted_by.filter((id) => id !== userId),
+              retweeted_by: old_tweet.retweeted_by.filter(
+                (id) => id !== userId
+              ),
             };
           }
 

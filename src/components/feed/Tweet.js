@@ -18,8 +18,7 @@ function Tweet(props) {
   let { tweet, user } = props;
   let { retweet } = tweet;
   let retweeted = tweet.retweeted_by.includes(user.id);
-
-  const [liked, setLiked] = useState(false);
+  let liked = tweet.liked_by.includes(user.id);
 
   let dispatch = useDispatch();
 
@@ -27,10 +26,8 @@ function Tweet(props) {
     let type = liked ? ACTIONS.UNLIKE : ACTIONS.LIKE;
     dispatch({
       type,
-      payload: { id: tweet.id },
+      payload: { id: tweet.id, userId: user.id },
     });
-
-    setLiked(!liked);
   }
 
   function handleRetweet() {
