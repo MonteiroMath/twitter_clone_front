@@ -5,8 +5,9 @@ import { ACTIONS } from "../../store/actions";
 import TweetCard from "./TweetCard";
 
 function TweetList(props) {
-  const { user } = props;
+  const { user, toggleQuote } = props;
   const dispatch = useDispatch();
+
   const tweets = [...useSelector((state) => state.tweets)].reverse();
 
   useEffect(() => dispatch({ type: ACTIONS.INIT }), []);
@@ -14,7 +15,12 @@ function TweetList(props) {
   return (
     <ul className="mt-3 p-0">
       {tweets.map((tweet) => (
-        <TweetCard key={tweet.id} tweet={tweet} user={user} />
+        <TweetCard
+          key={tweet.id}
+          tweet={tweet}
+          user={user}
+          toggleQuote={() => toggleQuote(tweet)}
+        />
       ))}
     </ul>
   );

@@ -7,9 +7,11 @@ import { ACTIONS } from "../../store/actions";
 import Attachment from "../Attachment.js";
 import PollForm from "./PollForm";
 import ToolBar from "./ToolBar";
-import NewTweetFormDisplay from "./NewTweetFormDisplay";
+import NewTweetFormDisplay from "./NewTweetFormDisplay.js";
+import RetweetBox from "../feed/RetweetBox.js";
+import user from "../../placeholders/user.js";
 
-function NewTweetForm({ toggle }) {
+function NewTweetForm({ toggle, quote }) {
   const [tweetText, setTweetText] = useState("");
   const [attach, setAttach] = useState("");
   const [poll, setPoll] = useState(false);
@@ -127,6 +129,7 @@ function NewTweetForm({ toggle }) {
           message: tweetText,
           attach: attach,
           poll: poll,
+          retweet: quote ? quote : null,
           pollSettings: {
             choices,
             pollLen: pollLength,
@@ -172,6 +175,8 @@ function NewTweetForm({ toggle }) {
     />
   );
 
+  let quotePreview = quote ? <RetweetBox user={user} retweet={quote} /> : null;
+
   return (
     <NewTweetFormDisplay
       tweetText={tweetText}
@@ -179,6 +184,7 @@ function NewTweetForm({ toggle }) {
       attachPreview={attachPreview}
       pollForm={pollForm}
       toolBar={toolBar}
+      quotePreview={quotePreview}
     />
   );
 }

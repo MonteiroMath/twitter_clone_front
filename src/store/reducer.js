@@ -22,6 +22,9 @@ export default function reducer(state = { tweets: [] }, action) {
         message: newTweet.message,
         attach: newTweet.attach,
         poll: newTweet.poll,
+        retweet: newTweet.retweet,
+        retweeted_by: [],
+        liked_by: [],
         pollSettings: {
           choices: newTweet.pollSettings.choices,
           pollLen: newTweet.pollSettings.pollLen,

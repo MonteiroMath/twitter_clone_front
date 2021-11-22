@@ -19,6 +19,7 @@ function InteractionBar(props) {
     comments,
     handleLike,
     handleRetweet,
+    toggleQuote,
   } = props;
 
   let [dropdownOpen, setDropdownOpen] = useState(false);
@@ -55,9 +56,10 @@ function InteractionBar(props) {
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem onClick={handleRetweet}>
-              <RetweetIcon /> <span>Retweet</span>
+              <RetweetIcon />{" "}
+              <span>{retweeted ? "Undo Retweet" : "Retweet"}</span>
             </DropdownItem>
-            <DropdownItem>
+            <DropdownItem onClick={toggleQuote}>
               <CommentIcon />
               <span> Quote Tweet</span>
             </DropdownItem>

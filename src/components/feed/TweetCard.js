@@ -4,17 +4,15 @@ import Tweet from "./Tweet";
 import Retweet from "./Retweet";
 
 function TweetCard(props) {
-  let { tweet, user } = props;
-
-  console.log(tweet);
+  let { tweet, user, toggleQuote } = props;
 
   return (
     <Row className="border p-3" noGutters>
       <Col xs={12}>
         {tweet.message ? (
-          <Tweet tweet={tweet} user={user} />
+          <Tweet tweet={tweet} user={user} toggleQuote={toggleQuote} />
         ) : (
-          <Retweet retweet={tweet} user={user} />
+          <Retweet retweet={tweet} user={user} toggleQuote={toggleQuote} />
         )}
       </Col>
     </Row>

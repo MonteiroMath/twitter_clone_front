@@ -3,7 +3,7 @@ import { Row, Col } from "reactstrap";
 
 import NewTweetForm from "./NewTweetForm";
 
-function NewTweet({ toggle }) {
+function NewTweet({ toggle, quote }) {
   return (
     <Row className="w-100" noGutters={true}>
       <Col xs="2" md="1">
@@ -11,7 +11,7 @@ function NewTweet({ toggle }) {
       </Col>
 
       <Col className="ml-3">
-        <NewTweetForm toggle={toggle} />
+        <NewTweetForm toggle={toggle} quote={quote} />
       </Col>
     </Row>
   );

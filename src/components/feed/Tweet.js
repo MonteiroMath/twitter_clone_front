@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { useDispatch } from "react-redux";
 import { Row, Col } from "reactstrap";
@@ -15,7 +15,7 @@ import { ACTIONS } from "../../store/actions";
 
 //! interaction bar is starting to get convoluted
 function Tweet(props) {
-  let { tweet, user } = props;
+  let { tweet, user, toggleQuote } = props;
   let { retweet } = tweet;
   let retweeted = tweet.retweeted_by.includes(user.id);
   let liked = tweet.liked_by.includes(user.id);
@@ -64,6 +64,7 @@ function Tweet(props) {
           handleRetweet={handleRetweet}
           retweets={tweet.retweets}
           comments={tweet.comments}
+          toggleQuote={toggleQuote}
         />
       </Col>
     </Row>

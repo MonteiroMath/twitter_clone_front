@@ -2,8 +2,14 @@ import React from "react";
 import { Form, Input } from "reactstrap";
 
 function NewTweetFormDisplay(props) {
-  const { tweetText, attachPreview, handleTextChange, pollForm, toolBar } =
-    props;
+  const {
+    tweetText,
+    attachPreview,
+    handleTextChange,
+    pollForm,
+    toolBar,
+    quotePreview,
+  } = props;
 
   return (
     <div>
@@ -17,6 +23,7 @@ function NewTweetFormDisplay(props) {
 
         {attachPreview}
         {pollForm}
+        {quotePreview}
 
         <Input className="mt-3" type="select">
           <option>Everyone </option>
