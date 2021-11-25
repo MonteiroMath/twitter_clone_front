@@ -1,4 +1,4 @@
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Providers from "../Providers.js";
 
@@ -116,32 +116,23 @@ test("Simple Retweet test", () => {
   - check if the retweet has been inserted
   */
 
-/*
 test("Retweet with a quote test", () => {
-  
-
   render(
     <Providers>
       <TweetList user={userMock} />
     </Providers>
   );
 
-  const retweetNum = screen.getAllByText(/you retweeted/i).length;
-
   userEvent.click(screen.getAllByRole("button", { name: /^Retweet$/i })[0]);
 
-  userEvent.click(screen.getByRole("menuitem", /quote tweet/i));
+  userEvent.click(screen.getAllByRole("menuitem", /quote tweet/i)[0]);
 
-  userEvent.type(
-    screen.getByPlaceholderText(/that's happening/i),
-    "I retweeted this"
-  );
+  const tweetText =
+    "I'm a robot and I retweeted this as part of an automated test. Nobody is ever going to know about it.";
+
+  userEvent.type(screen.getByPlaceholderText(/what's happening/i), tweetText);
 
   userEvent.click(screen.getByRole("button", /tweet/i));
 
-  const posRetweetNum = screen.getAllByText(/you retweeted/i).length;
-
-  expect(posRetweetNum - retweetNum).toBe(1);
+  expect(screen.getByText(tweetText)).toBeInTheDocument();
 });
-
-*/

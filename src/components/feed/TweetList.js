@@ -19,7 +19,7 @@ function TweetList(props) {
           key={tweet.id}
           tweet={tweet}
           user={user}
-          toggleQuote={() => toggleQuote(tweet)}
+          toggleQuote={toggleQuote}
         />
       ))}
     </ul>

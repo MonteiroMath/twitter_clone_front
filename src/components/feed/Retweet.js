@@ -20,7 +20,7 @@ import { RetweetIcon } from "../svg/Svg";
 
 */
 function Retweet(props) {
-  let { retweet, user } = props;
+  let { retweet, user, toggleQuote } = props;
 
   let tweet = useSelector((state) => {
     return state.tweets.find((tweet) => tweet.id === retweet.tweetId);
@@ -37,7 +37,7 @@ function Retweet(props) {
         <span className="ml-2">You retweeted</span>
       </Col>
       <Col className="mx-auto" xs="12">
-        <Tweet tweet={tweet} user={user} />
+        <Tweet tweet={tweet} user={user} toggleQuote={toggleQuote} />
       </Col>
     </Row>
   );
