@@ -16,11 +16,7 @@ function TweetCard(props) {
             toggleQuote={() => toggleQuote(tweet)}
           />
         ) : (
-          <Retweet
-            retweet={tweet}
-            user={user}
-            toggleQuote={() => toggleQuote(tweet.message)}
-          />
+          <Retweet retweet={tweet} user={user} toggleQuote={toggleQuote} />
         )}
       </Col>
     </Row>

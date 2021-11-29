@@ -121,7 +121,6 @@ export default function reducer(state = { tweets: [] }, action) {
         })
         .filter((tweet) => tweet.tweetId !== tweetId);
 
-      console.log(updated_tweets);
       return {
         ...state,
         tweets: updated_tweets,
