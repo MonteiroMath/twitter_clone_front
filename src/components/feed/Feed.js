@@ -39,7 +39,7 @@ function Feed(props) {
       <Modal isOpen={modal} toggle={toggleQuote}>
         <ModalHeader toggle={toggleQuote} />
         <ModalBody>
-          <NewTweet toggle={toggleQuote} quote={quote} />
+          <NewTweet toggle={toggleQuote} quote={quote} placeholder="Add Comment" />
         </ModalBody>
       </Modal>
     </div>

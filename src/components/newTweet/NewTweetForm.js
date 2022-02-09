@@ -11,7 +11,7 @@ import NewTweetFormDisplay from "./NewTweetFormDisplay.js";
 import RetweetBox from "../feed/RetweetBox.js";
 import user from "../../placeholders/user.js";
 
-function NewTweetForm({ toggle, quote }) {
+function NewTweetForm({ toggle, quote, placeholder }) {
   const [tweetText, setTweetText] = useState("");
   const [attach, setAttach] = useState("");
   const [poll, setPoll] = useState(false);
@@ -185,6 +185,7 @@ function NewTweetForm({ toggle, quote }) {
       pollForm={pollForm}
       toolBar={toolBar}
       quotePreview={quotePreview}
+      placeholder={placeholder}
     />
   );
 }

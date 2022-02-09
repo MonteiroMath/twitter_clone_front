@@ -9,6 +9,7 @@ function NewTweetFormDisplay(props) {
     pollForm,
     toolBar,
     quotePreview,
+    placeholder
   } = props;
 
   return (
@@ -16,7 +17,7 @@ function NewTweetFormDisplay(props) {
       <Form>
         <Input
           type="textarea"
-          placeholder="What's happening?"
+          placeholder={placeholder ? placeholder : "What's happening?"}
           value={tweetText}
           onChange={handleTextChange}
         />
