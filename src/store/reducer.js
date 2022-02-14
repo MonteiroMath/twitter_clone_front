@@ -15,8 +15,10 @@ export default function reducer(state = { tweets: [] }, action) {
       let now = new Date().getTime();
       let { newTweet } = action.payload;
 
+      let tt_count = state.tweets.length
+
       let tweet = {
-        id: 5,
+        id: tt_count+1,
         author: 1,
         created: now,
         message: newTweet.message,
