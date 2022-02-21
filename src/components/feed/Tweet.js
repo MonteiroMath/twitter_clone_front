@@ -13,7 +13,6 @@ import InteractionBar from "./InteractionBar";
 import RetweetBox from "./RetweetBox.js";
 import { ACTIONS } from "../../store/actions";
 
-//! interaction bar is starting to get convoluted
 function Tweet(props) {
   let { tweet, user, toggleQuote } = props;
   let { retweet } = tweet;
@@ -37,8 +36,6 @@ function Tweet(props) {
       type,
       payload: { tweetId: tweet.id, userId: user.id },
     });
-
-    //setRetweeted(!retweeted);
   }
 
   return (
@@ -58,12 +55,12 @@ function Tweet(props) {
         {retweet ? <RetweetBox retweet={retweet} user={user} /> : null}
         <InteractionBar
           likes={tweet.likes}
+          retweets={tweet.retweets}
+          comments={tweet.comments}
           liked={liked}
           retweeted={retweeted}
           handleLike={handleLike}
           handleRetweet={handleRetweet}
-          retweets={tweet.retweets}
-          comments={tweet.comments}
           toggleQuote={toggleQuote}
         />
       </Col>

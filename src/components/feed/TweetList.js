@@ -1,16 +1,12 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { ACTIONS } from "../../store/actions";
+import React from "react";
+import { useSelector } from "react-redux";
 
 import TweetCard from "./TweetCard";
 
 function TweetList(props) {
   const { user, toggleQuote } = props;
-  const dispatch = useDispatch();
 
   const tweets = [...useSelector((state) => state.tweets)].reverse();
-
-  useEffect(() => dispatch({ type: ACTIONS.INIT }), []);
 
   return (
     <ul className="mt-3 p-0">

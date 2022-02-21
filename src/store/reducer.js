@@ -5,20 +5,25 @@ import retweetData from "../placeholders/retweets";
 export default function reducer(state = { tweets: [] }, action) {
   switch (action.type) {
     case ACTIONS.INIT:
-      let tweets = tweetData.concat(retweetData);
-      tweets = tweets.sort((tweet1, tweet2) => {
-        return -(tweet1.created - tweet2.created);
-      });
+      if (state.tweets.length === 0) {
+        let tweets = tweetData.concat(retweetData);
+        tweets = tweets.sort((tweet1, tweet2) => {
+          return -(tweet1.created - tweet2.created);
+        });
 
-      return { ...state, tweets };
+        return { ...state, tweets };
+      }
+
+      return state;
+
     case ACTIONS.POST_TWEET: {
       let now = new Date().getTime();
       let { newTweet } = action.payload;
 
-      let tt_count = state.tweets.length
+      let tt_count = state.tweets.length;
 
       let tweet = {
-        id: tt_count+1,
+        id: tt_count + 1,
         author: 1,
         created: now,
         message: newTweet.message,

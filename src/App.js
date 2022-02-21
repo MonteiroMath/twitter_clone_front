@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Row, Col } from "reactstrap";
 
@@ -8,7 +9,18 @@ import RightBar from "./components/rightBar/RightBar";
 import LeftBar from "./components/leftBar/LeftBar";
 import Compose from "./components/compose/Compose";
 
+import TweetPage from "./components/singleTweet/TweetPage";
+
+import { useDispatch } from "react-redux";
+import { ACTIONS } from "./store/actions";
+
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: ACTIONS.INIT });
+  }, []);
+
   return (
     <Router>
       <div color="white">
@@ -21,6 +33,10 @@ function App() {
               <Route path="/compose">
                 <Compose />
               </Route>
+              <Route path="/:id">
+                <TweetPage />
+              </Route>
+
               <Route path="/">
                 <Feed />
               </Route>
