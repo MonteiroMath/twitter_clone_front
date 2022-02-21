@@ -10,6 +10,8 @@ import {
 
 import { CommentIcon, RetweetIcon, LikeIcon, ShareIcon } from "../svg/Svg.js";
 
+import LikeButton from "./LikeButton.js";
+
 function InteractionBar(props) {
   let {
     likes,
@@ -71,20 +73,7 @@ function InteractionBar(props) {
         </span>
       </div>
 
-      <div className="mr-3 d-flex align-items-center">
-        <Button
-          aria-label="Like tweet"
-          className="p-1 cnoBorder"
-          color="info"
-          outline
-          onClick={handleLike}
-        >
-          <LikeIcon filled={liked} />
-        </Button>
-        <span aria-label="number of likes" className="pl-2">
-          {likes}
-        </span>
-      </div>
+      <LikeButton handleLike={handleLike} liked={liked} likes={likes} />
 
       <div className="d-flex align-items-center">
         <Button
