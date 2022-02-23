@@ -10,10 +10,11 @@ import NewTweetButton from "./NewTweetButton";
 import BottomBar from "./BottomBar";
 
 import userData from "../../placeholders/user";
+import NewTweetModal from "../NewTweetModal";
 
 function Feed(props) {
   let [user, setUser] = useState({});
-  const [modal, setModal] = useState(false);
+
   const [quote, setQuote] = useState(null);
 
   const tweetList = [...useSelector((state) => state.tweets)].reverse();
@@ -21,11 +22,6 @@ function Feed(props) {
   useEffect(() => {
     setUser(userData);
   }, []);
-
-  const toggleQuote = (tweet) => {
-    quote ? setQuote(null) : setQuote(tweet);
-    setModal(!modal);
-  };
 
   return (
     <div>
@@ -35,19 +31,9 @@ function Feed(props) {
       <Row className="border p-3 d-none d-md-flex" noGutters={true}>
         <NewTweet />
       </Row>
-      <TweetList user={user} toggleQuote={toggleQuote} tweetList={tweetList} />
+      <TweetList user={user} tweetList={tweetList} />
       <NewTweetButton />
       <BottomBar />
-      <Modal isOpen={modal} toggle={toggleQuote}>
-        <ModalHeader toggle={toggleQuote} />
-        <ModalBody>
-          <NewTweet
-            toggle={toggleQuote}
-            quote={quote}
-            placeholder="Add Comment"
-          />
-        </ModalBody>
-      </Modal>
     </div>
   );
 }

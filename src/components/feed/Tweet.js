@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useDispatch } from "react-redux";
 import { Row, Col } from "reactstrap";
@@ -13,12 +13,14 @@ import InteractionBar from "./InteractionBar";
 import RetweetBox from "./RetweetBox.js";
 import { ACTIONS } from "../../store/actions";
 import { Link } from "react-router-dom";
+import NewTweetModal from "../NewTweetModal";
 
-function Tweet(props) {
-  let { tweet, user, toggleQuote } = props;
+function Tweet({ tweet, user }) {
   let { retweet } = tweet;
   let retweeted = tweet.retweeted_by.includes(user.id);
   let liked = tweet.liked_by.includes(user.id);
+
+  const [modal, setModal] = useState(false);
 
   let dispatch = useDispatch();
 
@@ -38,6 +40,10 @@ function Tweet(props) {
       payload: { tweetId: tweet.id, userId: user.id },
     });
   }
+
+  const toggleQuote = () => {
+    setModal(!modal);
+  };
 
   return (
     <Row noGutters>
@@ -67,6 +73,7 @@ function Tweet(props) {
           toggleQuote={toggleQuote}
         />
       </Col>
+      <NewTweetModal modal={modal} toggleQuote={toggleQuote} quote={tweet} />
     </Row>
   );
 }
