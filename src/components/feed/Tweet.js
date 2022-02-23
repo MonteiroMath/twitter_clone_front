@@ -12,6 +12,7 @@ import Poll from "./Poll";
 import InteractionBar from "./InteractionBar";
 import RetweetBox from "./RetweetBox.js";
 import { ACTIONS } from "../../store/actions";
+import { Link } from "react-router-dom";
 
 function Tweet(props) {
   let { tweet, user, toggleQuote } = props;
@@ -45,7 +46,9 @@ function Tweet(props) {
       </Col>
       <Col xs="9" md="10" className="ml-1 ml-md-3">
         <InfoBar username={user.username} created={tweet.created} />
-        <Message message={tweet.message} />
+        <Link to={`/${tweet.id}`}>
+          <Message message={tweet.message} />
+        </Link>
         <Attachment url={tweet.attach} />
         <Poll
           poll={tweet.poll}

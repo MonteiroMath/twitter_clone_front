@@ -7,7 +7,7 @@ const tweets = [
     likes: 3,
     liked_by: [],
     retweeted_by: [],
-    comment_ids: [],
+    comment_ids: [1],
     retweets: 0,
     comments: 0,
     attach: "/images/phattach.jpeg",

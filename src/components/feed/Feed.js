@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { useSelector } from "react-redux";
 import { Row, Modal, ModalHeader, ModalBody } from "reactstrap";
 
 import NewTweet from "../newTweet/NewTweet";
@@ -15,6 +15,8 @@ function Feed(props) {
   let [user, setUser] = useState({});
   const [modal, setModal] = useState(false);
   const [quote, setQuote] = useState(null);
+
+  const tweetList = [...useSelector((state) => state.tweets)].reverse();
 
   useEffect(() => {
     setUser(userData);
@@ -33,7 +35,7 @@ function Feed(props) {
       <Row className="border p-3 d-none d-md-flex" noGutters={true}>
         <NewTweet />
       </Row>
-      <TweetList user={user} toggleQuote={toggleQuote} />
+      <TweetList user={user} toggleQuote={toggleQuote} tweetList={tweetList} />
       <NewTweetButton />
       <BottomBar />
       <Modal isOpen={modal} toggle={toggleQuote}>

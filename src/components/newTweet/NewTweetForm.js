@@ -138,6 +138,7 @@ function NewTweetForm({ toggle, quote, placeholder }) {
       },
     });
 
+    
     clearForm(toggle);
 
     history.push("/");
