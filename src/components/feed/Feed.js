@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Row, Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Row } from "reactstrap";
 
 import NewTweet from "../newTweet/NewTweet";
 
@@ -10,12 +10,9 @@ import NewTweetButton from "./NewTweetButton";
 import BottomBar from "./BottomBar";
 
 import userData from "../../placeholders/user";
-import NewTweetModal from "../NewTweetModal";
 
 function Feed(props) {
   let [user, setUser] = useState({});
-
-  const [quote, setQuote] = useState(null);
 
   const tweetList = [...useSelector((state) => state.tweets)].reverse();
 

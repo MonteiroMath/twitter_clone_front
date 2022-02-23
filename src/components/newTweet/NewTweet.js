@@ -2,8 +2,11 @@ import Avatar from "../Avatar";
 import { Row, Col } from "reactstrap";
 
 import NewTweetForm from "./NewTweetForm";
+import CommentForm from "../CommentForm";
 
-function NewTweet({ toggle, quote, placeholder }) {
+function NewTweet({ toggle, quote, placeholder, parent_id }) {
+  const Form = parent_id ? CommentForm : NewTweetForm;
+
   return (
     <Row className="w-100" noGutters={true}>
       <Col xs="2" md="1">
@@ -11,7 +14,12 @@ function NewTweet({ toggle, quote, placeholder }) {
       </Col>
 
       <Col className="ml-3">
-        <NewTweetForm toggle={toggle} quote={quote} placeholder={placeholder} />
+        <Form
+          toggle={toggle}
+          quote={quote}
+          placeholder={placeholder}
+          parent_id={parent_id}
+        />
       </Col>
     </Row>
   );

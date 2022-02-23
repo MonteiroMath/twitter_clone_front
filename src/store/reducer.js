@@ -138,6 +138,9 @@ export default function reducer(state = { tweets: [] }, action) {
     case ACTIONS.RETWEET_COM:
       return state;
 
+    case ACTIONS.COMMENT_TWEET:
+      return state;
+
     default:
       return state;
   }
