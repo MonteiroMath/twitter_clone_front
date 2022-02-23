@@ -40,6 +40,7 @@ export default function reducer(state = { tweets: [] }, action) {
         likes: 0,
         retweets: 0,
         comments: 0,
+        comment_ids: [],
       };
 
       return { ...state, tweets: [...state.tweets, tweet] };

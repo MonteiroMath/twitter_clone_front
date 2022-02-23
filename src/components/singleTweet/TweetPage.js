@@ -19,13 +19,14 @@ export default function TweetPage(props) {
   });
 
   let comments = useSelector((state) => {
-    return tweet.comment_ids.map((id) =>
-      state.tweets.find((tweet) => tweet.id === parseInt(id))
-    );
+    return tweet
+      ? tweet.comment_ids.map((id) =>
+          state.tweets.find((tweet) => tweet.id === parseInt(id))
+        )
+      : null;
   });
 
-
-  return (
+  return tweet ? (
     <div>
       <TopBar header="Tweet" />
       {tweet ? <TweetCard tweet={tweet} user={user} /> : null}
@@ -34,5 +35,5 @@ export default function TweetPage(props) {
       </Row>
       <TweetList user={user} tweetList={comments} />
     </div>
-  );
+  ) : null;
 }
