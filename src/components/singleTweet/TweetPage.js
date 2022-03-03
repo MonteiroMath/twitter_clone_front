@@ -31,7 +31,7 @@ export default function TweetPage(props) {
       <TopBar header="Tweet" />
       {tweet ? <TweetCard tweet={tweet} user={user} /> : null}
       <Row className="border p-3 d-none d-md-flex" noGutters={true}>
-        <CommentTweet parent_id={id} />
+        <CommentTweet parent_id={parseInt(id)} />
       </Row>
       <TweetList user={user} tweetList={comments} />
     </div>

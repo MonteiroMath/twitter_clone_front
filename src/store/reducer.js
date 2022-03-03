@@ -17,31 +17,11 @@ export default function reducer(state = { tweets: [] }, action) {
       return state;
 
     case ACTIONS.POST_TWEET: {
-      let now = new Date().getTime();
       let { newTweet } = action.payload;
 
       let tt_count = state.tweets.length;
 
-      let tweet = {
-        id: tt_count + 1,
-        author: 1,
-        created: now,
-        message: newTweet.message,
-        attach: newTweet.attach,
-        poll: newTweet.poll,
-        retweet: newTweet.retweet,
-        retweeted_by: [],
-        liked_by: [],
-        pollSettings: {
-          choices: newTweet.pollSettings.choices,
-          pollLen: newTweet.pollSettings.pollLen,
-          votes: [0, 0],
-        },
-        likes: 0,
-        retweets: 0,
-        comments: 0,
-        comment_ids: [],
-      };
+      let tweet = createNewTweet(tt_count + 1, newTweet);
 
       return { ...state, tweets: [...state.tweets, tweet] };
     }
@@ -138,10 +118,66 @@ export default function reducer(state = { tweets: [] }, action) {
     case ACTIONS.RETWEET_COM:
       return state;
 
-    case ACTIONS.COMMENT_TWEET:
-      return state;
+    case ACTIONS.COMMENT_TWEET: {
+      let { parent_id, newTweet } = action.payload;
+
+      /*
+
+      Create a new tweet, add the id to the parent comments property
+
+    */
+
+      let tt_count = state.tweets.length;
+
+      let comment = createNewTweet(tt_count + 1, newTweet);
+
+      let newState = {
+        ...state,
+        tweets: state.tweets.map((tweet) => {
+          if (tweet.id === parent_id) {
+            console.log("me rir");
+            return {
+              ...tweet,
+              comments: tweet.comments + 1,
+              comment_ids: [...tweet.comment_ids, comment.id],
+            };
+          }
+
+          return tweet;
+        }),
+      };
+
+      newState.tweets.push(comment);
+
+      return newState;
+    }
 
     default:
       return state;
   }
+}
+
+function createNewTweet(id, content) {
+  let now = new Date().getTime();
+
+  return {
+    id,
+    author: 1,
+    created: now,
+    message: content.message,
+    attach: content.attach,
+    poll: content.poll,
+    retweet: content.retweet,
+    retweeted_by: [],
+    liked_by: [],
+    pollSettings: {
+      choices: content.pollSettings.choices,
+      pollLen: content.pollSettings.pollLen,
+      votes: [0, 0],
+    },
+    likes: 0,
+    retweets: 0,
+    comments: 0,
+    comment_ids: [],
+  };
 }
