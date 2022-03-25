@@ -1,31 +1,14 @@
-import { render, screen, cleanup, within } from "@testing-library/react";
+import { screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Providers from "../Providers.js";
-import Feed from "./Feed.js";
-import TweetList from "./TweetList";
+import Feed from "./Feed";
+import tweets from "../../placeholders/tweets";
+import { renderWithRedux } from "../../renderWithRedux";
 
 afterEach(cleanup);
 
-const userMock = {
-  id: 1,
-  username: "Timóteo",
-  description: "This is a description",
-  webpage: "https://github.com/",
-  joined: new Date(),
-  birth: "28/05/1992",
-  avatar: "",
-  background: "",
-  following: [""],
-  followers: [""],
-};
-
 describe("Like tests", () => {
   test("Tweet get one more like", () => {
-    render(
-      <Providers>
-        <TweetList user={userMock} />
-      </Providers>
-    );
+    renderWithRedux(<Feed />, { initialState: { tweets } });
 
     const likesNum = parseInt(
       screen.getAllByLabelText("number of likes")[0].textContent
@@ -42,11 +25,7 @@ describe("Like tests", () => {
   });
 
   test("Unlike tweet", () => {
-    render(
-      <Providers>
-        <TweetList user={userMock} />
-      </Providers>
-    );
+    renderWithRedux(<Feed />, { initialState: { tweets } });
 
     const likesNum = parseInt(
       screen.getAllByLabelText("number of likes")[2].textContent
@@ -85,11 +64,7 @@ describe("Like tests", () => {
   */
 
 test("Simple Retweet test", () => {
-  render(
-    <Providers>
-      <TweetList user={userMock} />
-    </Providers>
-  );
+  renderWithRedux(<Feed />, { initialState: { tweets } });
 
   const retweetNum = screen.getAllByText(/you retweeted/i).length;
 
@@ -101,4 +76,3 @@ test("Simple Retweet test", () => {
 
   expect(posRetweetNum - retweetNum).toBe(1);
 });
-

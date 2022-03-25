@@ -111,6 +111,12 @@ const tweets = [
     },
     retweet: null,
   },
+  {
+    id: 101,
+    author: 1,
+    created: new Date().getTime(),
+    tweetId: 3,
+  },
 ];
 
 export default tweets;

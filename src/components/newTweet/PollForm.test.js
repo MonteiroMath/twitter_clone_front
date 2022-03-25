@@ -1,6 +1,7 @@
 import { render, screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
+import { renderWithRedux } from "../../renderWithRedux";
 import Providers from "../Providers";
 import NewTweet from "./NewTweet";
 
@@ -8,11 +9,7 @@ afterEach(cleanup);
 
 describe("Poll Form test", () => {
   test("Tweet button remains blocked until everything is filled", () => {
-    render(
-      <Providers>
-        <NewTweet />
-      </Providers>
-    );
+    renderWithRedux(<NewTweet />);
 
     const pollButton = screen.getByRole("button", { name: /add poll/i });
     const tweetButton = screen.getByRole("button", { name: /tweet/i });
@@ -47,11 +44,7 @@ describe("Poll Form test", () => {
   });
 
   test("Remove poll clears poll form", () => {
-    render(
-      <Providers>
-        <NewTweet />
-      </Providers>
-    );
+    renderWithRedux(<NewTweet />);
 
     const pollButton = screen.getByRole("button", { name: /add poll/i });
 
@@ -83,11 +76,7 @@ describe("Poll Form test", () => {
   });
 
   test("Tweeting clears poll form", () => {
-    render(
-      <Providers>
-        <NewTweet />
-      </Providers>
-    );
+    renderWithRedux(<NewTweet />);
 
     const pollButton = screen.getByRole("button", { name: /add poll/i });
 

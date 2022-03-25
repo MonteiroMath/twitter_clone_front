@@ -1,18 +1,14 @@
 import { render, screen, cleanup, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-
-import Providers from "../Providers";
+import tweets from "../../placeholders/tweets";
+import { renderWithRedux } from "../../renderWithRedux";
 import NewTweet from "./NewTweet.js";
 
 afterEach(cleanup);
 
 describe("Rendering test", () => {
   test("Renders correctly", () => {
-    render(
-      <Providers>
-        <NewTweet />
-      </Providers>
-    );
+    renderWithRedux(<NewTweet />, { initialState: { tweets } });
 
     let button = screen.getByText("Tweet");
     let newTweet = screen.getByPlaceholderText(/What's happening?/);
@@ -25,11 +21,7 @@ describe("Rendering test", () => {
 
 describe("Field Interaction", () => {
   test("Adds text to the field when typed", () => {
-    render(
-      <Providers>
-        <NewTweet />
-      </Providers>
-    );
+    renderWithRedux(<NewTweet />);
 
     let button = screen.getByText("Tweet");
     let newTweet = screen.getByPlaceholderText(/What's happening?/);
@@ -42,11 +34,7 @@ describe("Field Interaction", () => {
   });
 
   test("Empties input when tweet is clicked", () => {
-    render(
-      <Providers>
-        <NewTweet />
-      </Providers>
-    );
+    renderWithRedux(<NewTweet />);
 
     let button = screen.getByText("Tweet");
     let newTweet = screen.getByPlaceholderText(/What's happening?/);

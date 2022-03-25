@@ -1,6 +1,7 @@
-import { render, screen, cleanup } from "@testing-library/react";
+import { screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Providers from "../Providers.js";
+import tweets from "../../placeholders/tweets";
+import { renderWithRedux } from "../../renderWithRedux";
 
 import Feed from "./Feed.js";
 
@@ -9,11 +10,7 @@ afterEach(cleanup);
 
 describe("Add new tweet", () => {
   test("Add a tweet to the top of the feed", () => {
-    render(
-      <Providers>
-        <Feed />
-      </Providers>
-    );
+    renderWithRedux(<Feed />, { initialState: { tweets } });
 
     let textBox = screen.getByPlaceholderText(/What's happening?/);
     expect(textBox).toBeInTheDocument();

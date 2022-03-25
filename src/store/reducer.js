@@ -1,12 +1,11 @@
 import { ACTIONS } from "./actions.js";
 import tweetData from "../placeholders/tweets";
-import retweetData from "../placeholders/retweets";
 
 export default function reducer(state = { tweets: [] }, action) {
   switch (action.type) {
     case ACTIONS.INIT:
       if (state.tweets.length === 0) {
-        let tweets = tweetData.concat(retweetData);
+        let tweets = tweetData;
         tweets = tweets.sort((tweet1, tweet2) => {
           return -(tweet1.created - tweet2.created);
         });
