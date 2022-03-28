@@ -11,7 +11,14 @@ import NewTweetFormDisplay from "./NewTweetFormDisplay.js";
 import RetweetBox from "../feed/RetweetBox.js";
 import user from "../../placeholders/user.js";
 
-function NewTweetForm({ toggle, quote, placeholder, parent_id, redirect }) {
+function NewTweetForm({
+  toggle,
+  quote,
+  placeholder,
+  parent_id,
+  redirect,
+  noPoll,
+}) {
   const [tweetText, setTweetText] = useState("");
   const [attach, setAttach] = useState("");
   const [poll, setPoll] = useState(false);
@@ -176,6 +183,7 @@ function NewTweetForm({ toggle, quote, placeholder, parent_id, redirect }) {
       handlePoll={handlePoll}
       isDisabled={isDisabled}
       handleSubmit={handleSubmit}
+      noPoll={noPoll}
     />
   );
 

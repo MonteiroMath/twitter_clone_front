@@ -6,6 +6,7 @@ export default function CommentForm({ parent_id }) {
     <NewTweetForm
       placeholder={"Answer this tweet"}
       parent_id={parent_id}
+      noPoll={true}
     />
   );
 }

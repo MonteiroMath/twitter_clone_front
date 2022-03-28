@@ -12,6 +12,7 @@ function ToolBar({
   handlePoll,
   isDisabled,
   handleSubmit,
+  noPoll,
 }) {
   return (
     <Row className="align-items-center text-info pt-2" noGutters={true}>
@@ -20,6 +21,7 @@ function ToolBar({
           block={block}
           handleAttach={handleAttach}
           handlePoll={handlePoll}
+          noPoll={noPoll}
         />
       </Col>
 

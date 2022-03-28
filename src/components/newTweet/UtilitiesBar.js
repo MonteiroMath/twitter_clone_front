@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { Input, Label, Tooltip, Button } from "reactstrap";
+import { Input, Label, Tooltip } from "reactstrap";
 
 import {
   AddImageIcon,
   AddMediaIcon,
-  PollIcon,
   EmoticonIcon,
   CalendarIcon,
 } from "../svg/Svg";
+import PollButton from "./PollButton";
 
 function UtilitiesBar(props) {
-  const { handleAttach, handlePoll, block } = props;
+  const { handleAttach, handlePoll, block, noPoll } = props;
 
   const [tooltipOpen, setTooltipOpen] = useState({
     img: false,
@@ -47,7 +47,6 @@ function UtilitiesBar(props) {
           Image
         </Tooltip>
       </div>
-
       <div className="mr-3">
         <Input
           className="cutitilyBarDisable"
@@ -74,33 +73,17 @@ function UtilitiesBar(props) {
           GIF
         </Tooltip>
       </div>
-
-      <div className="mr-3">
-        <Button
-          aria-label="add poll"
-          className="cpointer cutitilyBarDisable p-0 cnoBorder"
-          color="info"
-          outline={true}
-          id="pollButton"
-          onClick={handlePoll}
-          disabled={block}
-        >
-          <PollIcon />
-        </Button>
-        <Tooltip
-          placement="right"
-          isOpen={tooltipOpen.poll}
-          target="pollButton"
+      {!noPoll && (
+        <PollButton
+          handlePoll={handlePoll}
+          block={block}
+          tooltipOpen={tooltipOpen.poll}
           toggle={() => toggle("poll")}
-        >
-          Poll
-        </Tooltip>
-      </div>
-
+        />
+      )}
       <div className="mr-3">
         <EmoticonIcon />
       </div>
-
       <div>
         <CalendarIcon />
       </div>
