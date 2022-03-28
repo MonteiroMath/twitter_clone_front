@@ -1,11 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Router } from "react-router-dom";
+import { createMemoryHistory } from "history";
 import { Provider } from "react-redux";
-import { store } from "../store/store";
 
-function Providers({ store, children }) {
+function Providers({ store, history, children }) {
   return (
-    <Router>
+    <Router history={history ? history : createMemoryHistory()}>
       <Provider store={store}>{children}</Provider>
     </Router>
   );

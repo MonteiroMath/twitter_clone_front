@@ -7,7 +7,7 @@ import {
   EmoticonIcon,
   CalendarIcon,
 } from "../svg/Svg";
-import PollButton from "./PollButton";
+import PollButton from "./PollButton.js";
 
 function UtilitiesBar(props) {
   const { handleAttach, handlePoll, block, noPoll } = props;
