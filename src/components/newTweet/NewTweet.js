@@ -19,6 +19,7 @@ function NewTweet({ toggle, quote, placeholder, parent_id }) {
           quote={quote}
           placeholder={placeholder}
           parent_id={parent_id}
+          redirect="/"
         />
       </Col>
     </Row>

@@ -11,7 +11,7 @@ import NewTweetFormDisplay from "./NewTweetFormDisplay.js";
 import RetweetBox from "../feed/RetweetBox.js";
 import user from "../../placeholders/user.js";
 
-function NewTweetForm({ toggle, quote, placeholder, parent_id }) {
+function NewTweetForm({ toggle, quote, placeholder, parent_id, redirect }) {
   const [tweetText, setTweetText] = useState("");
   const [attach, setAttach] = useState("");
   const [poll, setPoll] = useState(false);
@@ -144,7 +144,7 @@ function NewTweetForm({ toggle, quote, placeholder, parent_id }) {
 
     clearForm(toggle);
 
-    history.push("/");
+    redirect && history.push("/");
   }
 
   let attachPreview = (
