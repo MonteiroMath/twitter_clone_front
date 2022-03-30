@@ -15,6 +15,7 @@ function NewTweetForm({
   toggle,
   quote,
   placeholder,
+  submit_text,
   parent_id,
   redirect,
   noPoll,
@@ -184,6 +185,7 @@ function NewTweetForm({
       isDisabled={isDisabled}
       handleSubmit={handleSubmit}
       noPoll={noPoll}
+      submit_text={submit_text}
     />
   );
 

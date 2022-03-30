@@ -20,7 +20,7 @@ describe("Comment tests", () => {
       screen.getByText(/This is my second tweet lol getting good at this/i)
     ).toBeInTheDocument();
 
-    let button = screen.getByRole("button", { name: /^tweet$/i });
+    let button = screen.getByRole("button", { name: /^comment$/i });
     expect(button).toBeDisabled();
 
     let commentBox = screen.getByPlaceholderText(/Answer this tweet/);
@@ -32,6 +32,6 @@ describe("Comment tests", () => {
 
     userEvent.click(button);
     expect(commentBox.value).toBe("");
-    expect(screen.getByText(/git gud/i)).toBeInTheDocument();
+    expect(screen.getByText(typedText)).toBeInTheDocument();
   });
 });

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "reactstrap";
 
-function TweetButton({ handleClick, disabled }) {
+function TweetButton({ handleClick, disabled, btn_text }) {
   return (
     <Button
       className="croundSides px-4"
@@ -9,7 +9,7 @@ function TweetButton({ handleClick, disabled }) {
       color="info"
       onClick={handleClick}
     >
-      Tweet
+      {btn_text}
     </Button>
   );
 }

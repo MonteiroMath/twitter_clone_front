@@ -13,6 +13,7 @@ function ToolBar({
   isDisabled,
   handleSubmit,
   noPoll,
+  submit_text,
 }) {
   return (
     <Row className="align-items-center text-info pt-2" noGutters={true}>
@@ -26,7 +27,11 @@ function ToolBar({
       </Col>
 
       <Col className="d-flex justify-content-end mr-3">
-        <TweetButton disabled={isDisabled()} handleClick={handleSubmit} />
+        <TweetButton
+          disabled={isDisabled()}
+          handleClick={handleSubmit}
+          btn_text={submit_text || "Tweet"}
+        />
       </Col>
     </Row>
   );
