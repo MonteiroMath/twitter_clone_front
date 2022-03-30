@@ -4,7 +4,7 @@ import { Button } from "reactstrap";
 
 import { CommentIcon } from "../svg/Svg.js";
 
-export default function CommentButton({ comments }) {
+export default function CommentButton({ comments, toggle }) {
   return (
     <div className="mr-3 d-flex align-items-center">
       <Button
@@ -12,6 +12,7 @@ export default function CommentButton({ comments }) {
         className="p-1 cnoBorder"
         color="info"
         outline
+        onClick={toggle}
       >
         <CommentIcon />
       </Button>

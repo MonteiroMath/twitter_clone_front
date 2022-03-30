@@ -14,11 +14,12 @@ function InteractionBar(props) {
     handleLike,
     handleRetweet,
     toggleQuote,
+    toggleAnswer,
   } = props;
 
   return (
     <div className="d-flex pt-2 small text-secondary align-item">
-      <CommentButton comments={comments} />
+      <CommentButton comments={comments} toggle={toggleAnswer} />
       <RetweetButton
         retweeted={retweeted}
         handleRetweet={handleRetweet}

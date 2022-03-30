@@ -14,6 +14,7 @@ import RetweetBox from "./RetweetBox.js";
 import { ACTIONS } from "../../store/actions";
 import { Link } from "react-router-dom";
 import NewTweetModal from "../NewTweetModal";
+import AnswerModal from "../AnswerModal";
 
 function Tweet({ tweet, user }) {
   let { retweet } = tweet;
@@ -21,6 +22,7 @@ function Tweet({ tweet, user }) {
   let liked = tweet.liked_by.includes(user.id);
 
   const [modal, setModal] = useState(false);
+  const [answerModal, setAnswerModal] = useState(false);
 
   let dispatch = useDispatch();
 
@@ -43,6 +45,10 @@ function Tweet({ tweet, user }) {
 
   const toggleQuote = () => {
     setModal(!modal);
+  };
+
+  const toggleAnswer = () => {
+    setAnswerModal(!answerModal);
   };
 
   return (
@@ -71,9 +77,11 @@ function Tweet({ tweet, user }) {
           handleLike={handleLike}
           handleRetweet={handleRetweet}
           toggleQuote={toggleQuote}
+          toggleAnswer={toggleAnswer}
         />
       </Col>
       <NewTweetModal modal={modal} toggleQuote={toggleQuote} quote={tweet} />
+      <AnswerModal modal={answerModal} toggle={toggleAnswer} parent={tweet} />
     </Row>
   );
 }

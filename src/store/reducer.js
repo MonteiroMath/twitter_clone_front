@@ -134,7 +134,7 @@ export default function reducer(state = { tweets: [] }, action) {
         ...state,
         tweets: state.tweets.map((tweet) => {
           if (tweet.id === parent_id) {
-            console.log("me rir");
+
             return {
               ...tweet,
               comments: tweet.comments + 1,
