@@ -1,12 +1,7 @@
 import React, { useState } from "react";
-import { Input, Label, Tooltip } from "reactstrap";
-
-import {
-  AddImageIcon,
-  AddMediaIcon,
-  EmoticonIcon,
-  CalendarIcon,
-} from "../svg/Svg";
+import AttachButton from "./AttachButton";
+import AddMediaButton from "./AddMediaButton";
+import { EmoticonIcon, CalendarIcon } from "../svg/Svg";
 import PollButton from "./PollButton.js";
 
 function UtilitiesBar(props) {
@@ -25,53 +20,20 @@ function UtilitiesBar(props) {
   return (
     <div className="d-flex">
       <div className="mr-3">
-        <Input
-          className="cutitilyBarDisable"
-          type="file"
-          id="imgAttach"
-          data-testid="imgAttach"
-          name="imgAttach"
-          accept="image/png, image/jpeg"
-          onChange={handleAttach}
-          disabled={block}
+        <AttachButton
+          handleAttach={handleAttach}
+          block={block}
+          toggle={toggle}
+          tooltipOpen={tooltipOpen.img}
         />
-        <Label className="cpointer" id="imgAttachLabel" for="imgAttach">
-          <AddImageIcon />
-        </Label>
-        <Tooltip
-          placement="right"
-          isOpen={tooltipOpen.img}
-          target="imgAttachLabel"
-          toggle={() => toggle("img")}
-        >
-          Image
-        </Tooltip>
       </div>
       <div className="mr-3">
-        <Input
-          className="cutitilyBarDisable"
-          type="file"
-          id="gifAttach"
-          name="gifAttach"
-          accept="image/gif"
-          onChange={handleAttach}
-          disabled={block}
+        <AddMediaButton
+          handleAttach={handleAttach}
+          block={block}
+          toggle={toggle}
+          tooltipOpen={tooltipOpen.gif}
         />
-        <Label
-          className="cpointer cutitilyBarDisable"
-          id="gifAttachLabel"
-          for="gifAttach"
-        >
-          <AddMediaIcon />
-        </Label>
-        <Tooltip
-          placement="right"
-          isOpen={tooltipOpen.gif}
-          target="gifAttachLabel"
-          toggle={() => toggle("gif")}
-        >
-          GIF
-        </Tooltip>
       </div>
       {!noPoll && (
         <PollButton

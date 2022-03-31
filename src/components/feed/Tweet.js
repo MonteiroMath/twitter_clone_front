@@ -58,7 +58,7 @@ function Tweet({ tweet, user }) {
       </Col>
       <Col xs="9" md="10" className="ml-1 ml-md-3">
         <InfoBar username={user.username} created={tweet.created} />
-        <Link to={`/${tweet.id}`}>
+        <Link to={`/tweet/${tweet.id}`}>
           <Message message={tweet.message} />
         </Link>
         <Attachment url={tweet.attach} />

@@ -33,7 +33,7 @@ function App() {
               <Route path="/compose">
                 <Compose />
               </Route>
-              <Route path="/:id">
+              <Route path="/tweet/:id">
                 <TweetPage />
               </Route>
 

@@ -10,7 +10,10 @@ export default function AnswerModal({ modal, toggle, parent }) {
       <ModalHeader toggle={toggle} />
       <ModalBody>
         <RetweetBox user={user} retweet={parent} />
-        <CommentTweet toggle={toggle} parent_id={parseInt(parent.id)} />
+
+        <div className="pt-3">
+          <CommentTweet toggle={toggle} parent_id={parseInt(parent.id)} />
+        </div>
       </ModalBody>
     </Modal>
   );

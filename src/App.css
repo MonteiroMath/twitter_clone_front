@@ -8,6 +8,11 @@
 
 a {
   text-decoration: none;
+  color: black !important;
+}
+
+a:hover {
+  text-decoration: none !important;
 }
 
 body {
@@ -86,7 +91,7 @@ textarea {
   border-radius: 100%;
 }
 
-.cutitilyBarDisable:disabled + label {
+.cutitilyBarDisable:disabled+label {
   opacity: 0.5;
 }
 
