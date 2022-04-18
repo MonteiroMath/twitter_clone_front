@@ -1,4 +1,9 @@
-import { createStore } from "redux";
-import reducer from "./reducer.js";
+import { configureStore } from "@reduxjs/toolkit";
+import tweetsSlice from "./tweetsSlice";
 
-export let store = createStore(reducer);
+export default configureStore({
+  reducer: {
+    tweets: tweetsSlice,
+  },
+});
+

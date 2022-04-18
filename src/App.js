@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Row, Col } from "reactstrap";
 
@@ -11,15 +11,7 @@ import Compose from "./components/compose/Compose";
 
 import TweetPage from "./components/singleTweet/TweetPage";
 
-import { useDispatch } from "react-redux";
-import { ACTIONS } from "./store/actions";
-
 function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch({ type: ACTIONS.INIT });
-  }, []);
 
   return (
     <Router>

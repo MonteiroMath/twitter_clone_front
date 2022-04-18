@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { actions } from "../../store/tweetsSlice";
+
 import { Row, Col } from "reactstrap";
 
 import Attachment from "../Attachment";
@@ -11,8 +13,6 @@ import Message from "./Message";
 import Poll from "./Poll";
 import InteractionBar from "./InteractionBar";
 import RetweetBox from "./RetweetBox.js";
-import { ACTIONS } from "../../store/actions";
-import { Link } from "react-router-dom";
 import NewTweetModal from "../NewTweetModal";
 import AnswerModal from "../AnswerModal";
 
@@ -27,20 +27,14 @@ function Tweet({ tweet, user }) {
   let dispatch = useDispatch();
 
   function handleLike() {
-    let type = liked ? ACTIONS.UNLIKE : ACTIONS.LIKE;
-    dispatch({
-      type,
-      payload: { id: tweet.id, userId: user.id },
-    });
+    let action = liked ? actions.unlike : actions.like;
+    dispatch(action({ id: tweet.id, userId: user.id }));
   }
 
   function handleRetweet() {
-    let type = retweeted ? ACTIONS.UNDO_RETWEET : ACTIONS.RETWEET;
+    let action = retweeted ? actions.undoRetweet : actions.retweet;
 
-    dispatch({
-      type,
-      payload: { tweetId: tweet.id, userId: user.id },
-    });
+    dispatch(action({ tweetId: tweet.id, userId: user.id }));
   }
 
   const toggleQuote = () => {

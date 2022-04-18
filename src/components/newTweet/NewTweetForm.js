@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
-import { ACTIONS } from "../../store/actions";
+import { actions } from "../../store/tweetsSlice";
 
 import Attachment from "../Attachment.js";
 import PollForm from "./PollForm";
@@ -130,7 +129,7 @@ function NewTweetForm({
       return { text: choice, votes: 0 };
     });
 
-    let type = parent_id ? ACTIONS.COMMENT_TWEET : ACTIONS.POST_TWEET;
+    let action = parent_id ? actions.commentTweet : actions.postTweet;
     let newTweet = {
       message: tweetText,
       attach: attach,
@@ -142,13 +141,12 @@ function NewTweetForm({
       },
     };
 
-    dispatch({
-      type,
-      payload: {
+    dispatch(
+      action({
         newTweet,
         parent_id,
-      },
-    });
+      })
+    );
 
     clearForm(toggle);
 

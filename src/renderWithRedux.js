@@ -1,12 +1,19 @@
 import { render } from "@testing-library/react";
-import { createStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { Switch, Route } from "react-router-dom";
 import Providers from "./components/Providers.js";
-import reducer from "./store/reducer.js";
+
+import tweetsSlice from "./store/tweetsSlice.js";
 
 export const renderWithRedux = (
   component,
-  { initialState, store = createStore(reducer, initialState) } = {}
+  {
+    initialState,
+    store = configureStore({
+      reducer: { tweets: tweetsSlice },
+      preloadedState: initialState,
+    }),
+  } = {}
 ) => {
   return {
     ...render(<Providers store={store}>{component}</Providers>),
@@ -18,7 +25,13 @@ export const renderWithHistory = (
   component,
   history,
   path,
-  { initialState, store = createStore(reducer, initialState) } = {}
+  {
+    initialState,
+    store = configureStore({
+      reducer: { tweets: tweetsSlice },
+      preloadedState: initialState,
+    }),
+  } = {}
 ) => {
   return {
     ...render(
