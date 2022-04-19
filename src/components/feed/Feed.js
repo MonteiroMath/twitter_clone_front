@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Row } from "reactstrap";
 
 import NewTweet from "../newTweet/NewTweet";
@@ -9,18 +9,24 @@ import TweetList from "./TweetList";
 import NewTweetButton from "./NewTweetButton";
 import BottomBar from "./BottomBar";
 
-import { selectAllTweets } from "../../store/tweetsSlice";
+import { selectAllTweets, fetchTweets } from "../../store/tweetsSlice";
 import userData from "../../placeholders/user";
 
 function Feed(props) {
   let [user, setUser] = useState({});
+  const dispatch = useDispatch();
 
+  const tweetStatus = useSelector((state) => state.tweets.status);
   const tweetList = [...useSelector(selectAllTweets)].reverse();
 
   useEffect(() => {
     setUser(userData);
+    if (tweetStatus === "idle") {
+      dispatch(fetchTweets(1));
+    }
   }, []);
 
+  console.log(tweetStatus);
   return (
     <div>
       <Row className="sticky-top border bg-white" noGutters>

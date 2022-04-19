@@ -1,11 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
-import tweetData from "../placeholders/tweets";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   status: "idle",
   error: null,
   tweets: [],
 };
+
+export const fetchTweets = createAsyncThunk(
+  "tweets/fetchTweets",
+  async (id) => {
+    const response = await fetch(`http://localhost:5000/tweets/user/1`);
+
+    if (response.ok) {
+      const data = await response.json();
+      return data.tweets;
+    }
+  }
+);
 
 const tweetsSlice = createSlice({
   name: "tweets",
@@ -67,6 +78,21 @@ const tweetsSlice = createSlice({
       console.log(commentedTweet.comment_ids);
       state.push(comment);
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchTweets.pending, (state, action) => {
+        state.status = "pending";
+      })
+      .addCase(fetchTweets.fulfilled, (state, action) => {
+        state.status = "fullfiled";
+        state.tweets = action.payload;
+      })
+      .addCase(fetchTweets.rejected, (state, action) => {
+        state.status = "rejected";
+        console.log(action);
+        state.error = action.error.message;
+      });
   },
 });
 
