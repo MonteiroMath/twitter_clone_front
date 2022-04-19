@@ -1,7 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import tweetData from "../placeholders/tweets";
 
-const initialState = tweetData;
+const initialState = {
+  status: "idle",
+  error: null,
+  tweets: [],
+};
 
 const tweetsSlice = createSlice({
   name: "tweets",
@@ -91,5 +95,15 @@ function createNewTweet(id, content) {
   };
 }
 
-export const actions = tweetsSlice.actions;
+//reducer
 export default tweetsSlice.reducer;
+
+//actions
+export const actions = tweetsSlice.actions;
+
+//selectors
+export const selectTweetById = (state, id) =>
+  state.tweets.tweets.find((tweet) => tweet.id === id);
+export const selectAllTweets = (state) => state.tweets.tweets;
+export const selectSomeTweets = (state, listOfIds) =>
+  listOfIds.map((id) => state.tweets.tweets.find((tweet) => tweet.id === id));

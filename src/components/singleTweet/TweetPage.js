@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-
+import { selectTweetById, selectSomeTweets } from "../../store/tweetsSlice";
 import { Row } from "reactstrap";
 
 import user from "../../placeholders/user";
@@ -14,16 +14,10 @@ import CommentTweet from "../CommentTweet";
 export default function TweetPage(props) {
   let { id } = useParams();
 
-  let tweet = useSelector((state) => {
-    return state.tweets.find((tweet) => tweet.id === parseInt(id));
-  });
+  let tweet = useSelector((state) => selectTweetById(state, parseInt(id)));
 
   let comments = useSelector((state) => {
-    return tweet
-      ? tweet.comment_ids.map((id) =>
-          state.tweets.find((tweet) => tweet.id === parseInt(id))
-        )
-      : null;
+    return tweet ? selectSomeTweets(state, tweet.comment_ids) : null;
   });
 
   return tweet ? (

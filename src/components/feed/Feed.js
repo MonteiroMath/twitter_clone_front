@@ -9,12 +9,13 @@ import TweetList from "./TweetList";
 import NewTweetButton from "./NewTweetButton";
 import BottomBar from "./BottomBar";
 
+import { selectAllTweets } from "../../store/tweetsSlice";
 import userData from "../../placeholders/user";
 
 function Feed(props) {
   let [user, setUser] = useState({});
 
-  const tweetList = [...useSelector((state) => state.tweets)].reverse();
+  const tweetList = [...useSelector(selectAllTweets)].reverse();
 
   useEffect(() => {
     setUser(userData);
