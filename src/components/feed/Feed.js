@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Row } from "reactstrap";
+import { Row, Spinner } from "reactstrap";
 
 import NewTweet from "../newTweet/NewTweet";
 
@@ -17,6 +17,7 @@ function Feed(props) {
   const dispatch = useDispatch();
 
   const tweetStatus = useSelector((state) => state.tweets.status);
+  const error = useSelector((state) => state.tweets.error);
   const tweetList = [...useSelector(selectAllTweets)].reverse();
 
   useEffect(() => {
@@ -26,7 +27,16 @@ function Feed(props) {
     }
   }, []);
 
-  console.log(tweetStatus);
+  let content;
+
+  if (tweetStatus === "fullfiled") {
+    content = <TweetList user={user} tweetList={tweetList} />;
+  } else if (tweetStatus === "pending") {
+    content = <Spinner color="info" />;
+  } else if (tweetStatus === "rejected") {
+    content = <div>{error}</div>;
+  }
+
   return (
     <div>
       <Row className="sticky-top border bg-white" noGutters>
@@ -35,7 +45,7 @@ function Feed(props) {
       <Row className="border p-3 d-none d-md-flex" noGutters={true}>
         <NewTweet />
       </Row>
-      <TweetList user={user} tweetList={tweetList} />
+      {content}
       <NewTweetButton />
       <BottomBar />
     </div>

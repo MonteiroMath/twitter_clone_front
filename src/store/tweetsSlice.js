@@ -9,7 +9,7 @@ const initialState = {
 export const fetchTweets = createAsyncThunk(
   "tweets/fetchTweets",
   async (id) => {
-    const response = await fetch(`http://localhost:5000/tweets/user/1`);
+    const response = await fetch(`http://localhost:5000/tweets/user/${id}`);
 
     if (response.ok) {
       const data = await response.json();
