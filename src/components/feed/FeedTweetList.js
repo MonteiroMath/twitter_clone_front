@@ -15,7 +15,7 @@ function FeedTweetList({ user }) {
     if (tweetStatus === "idle") {
       dispatch(fetchTweets(1));
     }
-  }, []);
+  }, [dispatch, tweetStatus]);
 
   let content = null;
 
