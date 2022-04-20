@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { actions, addLike } from "../../store/tweetsSlice";
+import { actions, updateLike } from "../../store/tweetsSlice";
 
 import { Row, Col } from "reactstrap";
 
@@ -27,9 +27,7 @@ function Tweet({ tweet, user }) {
   let dispatch = useDispatch();
 
   async function handleLike() {
-    let action = liked ? addLike : addLike;
-
-    dispatch(action({ id: tweet.id, userId: user.id }));
+    dispatch(updateLike({ id: tweet.id, userId: user.id, like: !liked }));
   }
 
   function handleRetweet() {
@@ -65,8 +63,8 @@ function Tweet({ tweet, user }) {
         {retweet ? <RetweetBox retweet={retweet} user={user} /> : null}
         <InteractionBar
           likes={tweet.liked_by.length}
-          retweets={tweet.retweets}
-          comments={tweet.comments}
+          retweets={tweet.retweeted_by.length}
+          comments={tweet.comment_ids.length}
           liked={liked}
           retweeted={retweeted}
           handleLike={handleLike}
