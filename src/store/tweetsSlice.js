@@ -18,6 +18,24 @@ export const fetchTweets = createAsyncThunk(
   }
 );
 
+export const addLike = createAsyncThunk("tweets/addLike", async (params) => {
+  let { id, userId } = params;
+
+  const response = await fetch(`http://localhost:5000/tweets/${id}/like`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    mode: "cors",
+    body: JSON.stringify({ userId: userId }),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    return data.tweet;
+  }
+});
+
 const tweetsSlice = createSlice({
   name: "tweets",
   initialState,
@@ -60,7 +78,9 @@ const tweetsSlice = createSlice({
     undoRetweet(state, action) {
       let { tweetId, userId } = action.payload;
       let rtTweet = state.tweets.find((tweet) => tweet.id === tweetId);
-      let retweetIndex = state.tweets.findIndex((tweet) => tweet.tweetId === tweetId);
+      let retweetIndex = state.tweets.findIndex(
+        (tweet) => tweet.tweetId === tweetId
+      );
 
       rtTweet.retweets -= 1;
       rtTweet.retweeted_by = rtTweet.retweeted_by.filter((id) => id !== userId);
@@ -90,8 +110,15 @@ const tweetsSlice = createSlice({
       })
       .addCase(fetchTweets.rejected, (state, action) => {
         state.status = "rejected";
-        console.log(action);
         state.error = action.error.message;
+      })
+      .addCase(addLike.fulfilled, (state, action) => {
+        let updatedTweet = action.payload;
+        let index = state.tweets.findIndex(
+          (tweet) => tweet.id === updatedTweet.id
+        );
+
+        state.tweets[index] = updatedTweet;
       });
   },
 });
