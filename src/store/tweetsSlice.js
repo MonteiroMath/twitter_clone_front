@@ -20,7 +20,8 @@ export const fetchTweets = createAsyncThunk(
 
 export const postTweet = createAsyncThunk(
   "tweets/postTweets",
-  async ({ newTweet }) => {
+  async (params) => {
+    const { newTweet } = params;
     const response = await fetch("http://localhost:5000/tweets", {
       method: "POST",
       headers: {
@@ -58,24 +59,36 @@ export const updateLike = createAsyncThunk(
   }
 );
 
+export const addRetweet = createAsyncThunk("tweets/addRt", async (params) => {
+  const { tweetId, userId } = params;
+
+  const response = await fetch(
+    `http://localhost:5000/tweets/${tweetId}/retweet`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      mode: "cors",
+      body: JSON.stringify({ userId }),
+    }
+  );
+
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  }
+});
+
+export const removeRetweet = createAsyncThunk(
+  "tweets/deleteRt",
+  async (params) => {
+    return;
+  }
+);
+
 const tweetsSlice = createSlice({
   name: "tweets",
   initialState,
   reducers: {
-    like(state, action) {
-      let { id, userId } = action.payload;
-      let likedTweet = state.tweets.find((tweet) => tweet.id === id);
-
-      likedTweet.likes += 1;
-      likedTweet.liked_by.push(userId);
-    },
-    unlike(state, action) {
-      let { id, userId } = action.payload;
-      let likedTweet = state.tweets.find((tweet) => tweet.id === id);
-
-      likedTweet.likes -= 1;
-      likedTweet.liked_by = likedTweet.liked_by.filter((id) => id !== userId);
-    },
     retweet(state, action) {
       let { tweetId, userId } = action.payload;
       let rtTweet = state.tweets.find((tweet) => tweet.id === tweetId);
@@ -142,6 +155,22 @@ const tweetsSlice = createSlice({
         );
 
         state.tweets[index] = updatedTweet;
+      })
+      .addCase(updateLike.rejected, (state, action) => {
+        console.log(action.error.message);
+      })
+      .addCase(addRetweet.fulfilled, (state, action) => {
+        let { updatedTweet, retweet } = action.payload;
+
+        let index = state.tweets.findIndex(
+          (tweet) => tweet.id === updatedTweet.id
+        );
+        state.tweets[index] = updatedTweet;
+
+        state.tweets.push(retweet);
+      })
+      .addCase(addRetweet.rejected, (state, action) => {
+        console.log(action.error.message);
       });
   },
 });

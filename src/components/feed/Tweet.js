@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { actions, updateLike } from "../../store/tweetsSlice";
+import { updateLike, addRetweet, removeRetweet } from "../../store/tweetsSlice";
 
 import { Row, Col } from "reactstrap";
 
@@ -31,7 +31,7 @@ function Tweet({ tweet, user }) {
   }
 
   function handleRetweet() {
-    let action = retweeted ? actions.undoRetweet : actions.retweet;
+    let action = retweeted ? removeRetweet : addRetweet;
 
     dispatch(action({ tweetId: tweet.id, userId: user.id }));
   }
