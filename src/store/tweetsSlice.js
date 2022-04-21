@@ -81,7 +81,22 @@ export const addRetweet = createAsyncThunk("tweets/addRt", async (params) => {
 export const removeRetweet = createAsyncThunk(
   "tweets/deleteRt",
   async (params) => {
-    return;
+    const { tweetId, userId } = params;
+
+    const response = await fetch(
+      `http://localhost:5000/tweets/${tweetId}/retweet`,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        mode: "cors",
+        body: JSON.stringify({ userId }),
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      return data.updatedTweet;
+    }
   }
 );
 
@@ -89,32 +104,6 @@ const tweetsSlice = createSlice({
   name: "tweets",
   initialState,
   reducers: {
-    retweet(state, action) {
-      let { tweetId, userId } = action.payload;
-      let rtTweet = state.tweets.find((tweet) => tweet.id === tweetId);
-
-      let retweet = {
-        id: 1001,
-        author: 1,
-        created: new Date().getTime(),
-        tweetId,
-      };
-
-      rtTweet.retweets += 1;
-      rtTweet.retweeted_by.push(userId);
-      state.tweets.push(retweet);
-    },
-    undoRetweet(state, action) {
-      let { tweetId, userId } = action.payload;
-      let rtTweet = state.tweets.find((tweet) => tweet.id === tweetId);
-      let retweetIndex = state.tweets.findIndex(
-        (tweet) => tweet.tweetId === tweetId
-      );
-
-      rtTweet.retweets -= 1;
-      rtTweet.retweeted_by = rtTweet.retweeted_by.filter((id) => id !== userId);
-      state.tweets.splice(retweetIndex, 1);
-    },
     /*commentTweet(state, action) {
       let { parent_id, newTweet } = action.payload;
       let commentedTweet = state.tweets.find((tweet) => tweet.id === parent_id);
@@ -171,6 +160,20 @@ const tweetsSlice = createSlice({
       })
       .addCase(addRetweet.rejected, (state, action) => {
         console.log(action.error.message);
+      })
+      .addCase(removeRetweet.fulfilled, (state, action) => {
+        const updatedTweet = action.payload;
+
+        let index = state.tweets.findIndex(
+          (tweet) => tweet.id === updatedTweet.id
+        );
+
+        let retweetIndex = state.tweets.findIndex(
+          (tweet) => tweet.tweetId === updatedTweet.id
+        );
+
+        state.tweets[index] = updatedTweet;
+        state.tweets.splice(retweetIndex, 1);
       });
   },
 });
