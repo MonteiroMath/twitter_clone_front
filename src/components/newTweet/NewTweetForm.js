@@ -129,7 +129,6 @@ function NewTweetForm({
       return { text: choice, votes: 0 };
     });
 
-    let action = parent_id ? postTweet : postTweet;
     let newTweet = {
       message: tweetText,
       attach: attach,
@@ -142,7 +141,7 @@ function NewTweetForm({
     };
 
     dispatch(
-      action({
+      postTweet({
         newTweet,
         parent_id,
       })

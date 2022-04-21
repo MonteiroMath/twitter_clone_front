@@ -100,6 +100,28 @@ export const removeRetweet = createAsyncThunk(
   }
 );
 
+export const addComment = createAsyncThunk(
+  "tweets/addComment",
+  async (params) => {
+    const { newTweet, parent_id } = params;
+
+    const response = await fetch(
+      `http://localhost:5000/tweets/${parent_id}/comment`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        mode: "cors",
+        body: JSON.stringify({ newTweet }),
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      return data.newTweet;
+    }
+  }
+);
+
 const tweetsSlice = createSlice({
   name: "tweets",
   initialState,
