@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { actions } from "../../store/tweetsSlice";
+import { postTweet } from "../../store/tweetsSlice";
 
 import Attachment from "../Attachment.js";
 import PollForm from "./PollForm";
@@ -129,7 +129,7 @@ function NewTweetForm({
       return { text: choice, votes: 0 };
     });
 
-    let action = parent_id ? actions.commentTweet : actions.postTweet;
+    let action = parent_id ? postTweet : postTweet;
     let newTweet = {
       message: tweetText,
       attach: attach,

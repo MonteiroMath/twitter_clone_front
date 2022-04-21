@@ -18,6 +18,25 @@ export const fetchTweets = createAsyncThunk(
   }
 );
 
+export const postTweet = createAsyncThunk(
+  "tweets/postTweets",
+  async ({ newTweet }) => {
+    const response = await fetch("http://localhost:5000/tweets", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
+      body: JSON.stringify({ newTweet }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data.tweet;
+    }
+  }
+);
+
 export const updateLike = createAsyncThunk(
   "tweets/updateLike",
   async (params) => {
@@ -43,12 +62,6 @@ const tweetsSlice = createSlice({
   name: "tweets",
   initialState,
   reducers: {
-    postTweet(state, action) {
-      let { newTweet } = action.payload;
-      let tt_count = state.tweets.length;
-      let tweet = createNewTweet(tt_count + 1, newTweet);
-      state.tweets.push(tweet);
-    },
     like(state, action) {
       let { id, userId } = action.payload;
       let likedTweet = state.tweets.find((tweet) => tweet.id === id);
@@ -89,7 +102,7 @@ const tweetsSlice = createSlice({
       rtTweet.retweeted_by = rtTweet.retweeted_by.filter((id) => id !== userId);
       state.tweets.splice(retweetIndex, 1);
     },
-    commentTweet(state, action) {
+    /*commentTweet(state, action) {
       let { parent_id, newTweet } = action.payload;
       let commentedTweet = state.tweets.find((tweet) => tweet.id === parent_id);
 
@@ -100,7 +113,7 @@ const tweetsSlice = createSlice({
       commentedTweet.comment_ids.push(comment.id);
       console.log(commentedTweet.comment_ids);
       state.tweets.push(comment);
-    },
+    },*/
   },
   extraReducers(builder) {
     builder
@@ -115,6 +128,13 @@ const tweetsSlice = createSlice({
         state.status = "rejected";
         state.error = action.error.message;
       })
+      .addCase(postTweet.fulfilled, (state, action) => {
+        let tweet = action.payload;
+        state.tweets.push(tweet);
+      })
+      .addCase(postTweet.rejected, (state, action) => {
+        console.log(action.error.message);
+      })
       .addCase(updateLike.fulfilled, (state, action) => {
         let updatedTweet = action.payload;
         let index = state.tweets.findIndex(
@@ -125,31 +145,6 @@ const tweetsSlice = createSlice({
       });
   },
 });
-
-function createNewTweet(id, content) {
-  let now = new Date().getTime();
-
-  return {
-    id,
-    author: 1,
-    created: now,
-    message: content.message,
-    attach: content.attach,
-    poll: content.poll,
-    retweet: content.retweet,
-    retweeted_by: [],
-    liked_by: [],
-    pollSettings: {
-      choices: content.pollSettings.choices,
-      pollLen: content.pollSettings.pollLen,
-      votes: [0, 0],
-    },
-    likes: 0,
-    retweets: 0,
-    comments: 0,
-    comment_ids: [],
-  };
-}
 
 //reducer
 export default tweetsSlice.reducer;
