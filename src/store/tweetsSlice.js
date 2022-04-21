@@ -103,10 +103,10 @@ export const removeRetweet = createAsyncThunk(
 export const addComment = createAsyncThunk(
   "tweets/addComment",
   async (params) => {
-    const { newTweet, parent_id } = params;
+    const { newTweet, parentId } = params;
 
     const response = await fetch(
-      `http://localhost:5000/tweets/${parent_id}/comment`,
+      `http://localhost:5000/tweets/${parentId}/comment`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -117,7 +117,7 @@ export const addComment = createAsyncThunk(
 
     if (response.ok) {
       const data = await response.json();
-      return data.newTweet;
+      return data;
     }
   }
 );
@@ -125,20 +125,6 @@ export const addComment = createAsyncThunk(
 const tweetsSlice = createSlice({
   name: "tweets",
   initialState,
-  reducers: {
-    /*commentTweet(state, action) {
-      let { parent_id, newTweet } = action.payload;
-      let commentedTweet = state.tweets.find((tweet) => tweet.id === parent_id);
-
-      let tt_count = state.tweets.length;
-      let comment = createNewTweet(tt_count + 1, newTweet);
-
-      commentedTweet.comments += 1;
-      commentedTweet.comment_ids.push(comment.id);
-      console.log(commentedTweet.comment_ids);
-      state.tweets.push(comment);
-    },*/
-  },
   extraReducers(builder) {
     builder
       .addCase(fetchTweets.pending, (state, action) => {
@@ -196,6 +182,19 @@ const tweetsSlice = createSlice({
 
         state.tweets[index] = updatedTweet;
         state.tweets.splice(retweetIndex, 1);
+      })
+      .addCase(addComment.fulfilled, (state, action) => {
+        const { updatedTweet, comment } = action.payload;
+
+        let index = state.tweets.findIndex(
+          (tweet) => tweet.id === updatedTweet.id
+        );
+
+        state.tweets[index] = updatedTweet;
+        state.tweets.push(comment);
+      })
+      .addCase(addComment.rejected, (state, action) => {
+        console.log(action.error.message);
       });
   },
 });
