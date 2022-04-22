@@ -57,6 +57,10 @@ export const addComment = createAsyncThunk(
   }
 );
 
+function isActionRejected(action) {
+  return action.type.endsWith("/rejected");
+}
+
 const tweetsSlice = createSlice({
   name: "tweets",
   initialState,
@@ -77,9 +81,6 @@ const tweetsSlice = createSlice({
         let tweet = action.payload;
         state.tweets.push(tweet);
       })
-      .addCase(postTweet.rejected, (state, action) => {
-        console.log(action.error.message);
-      })
       .addCase(updateLike.fulfilled, (state, action) => {
         let updatedTweet = action.payload;
         let index = state.tweets.findIndex(
@@ -87,9 +88,6 @@ const tweetsSlice = createSlice({
         );
 
         state.tweets[index] = updatedTweet;
-      })
-      .addCase(updateLike.rejected, (state, action) => {
-        console.log(action.error.message);
       })
       .addCase(addRetweet.fulfilled, (state, action) => {
         let { updatedTweet, retweet } = action.payload;
@@ -100,9 +98,6 @@ const tweetsSlice = createSlice({
         state.tweets[index] = updatedTweet;
 
         state.tweets.push(retweet);
-      })
-      .addCase(addRetweet.rejected, (state, action) => {
-        console.log(action.error.message);
       })
       .addCase(removeRetweet.fulfilled, (state, action) => {
         const updatedTweet = action.payload;
@@ -128,7 +123,7 @@ const tweetsSlice = createSlice({
         state.tweets[index] = updatedTweet;
         state.tweets.push(comment);
       })
-      .addCase(addComment.rejected, (state, action) => {
+      .addMatcher(isActionRejected, (state, action) => {
         console.log(action.error.message);
       });
   },
