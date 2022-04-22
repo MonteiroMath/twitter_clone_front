@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { client } from "../api/client";
 
 const initialState = {
   status: "idle",
@@ -9,12 +10,8 @@ const initialState = {
 export const fetchTweets = createAsyncThunk(
   "tweets/fetchTweets",
   async (id) => {
-    const response = await fetch(`http://localhost:5000/tweets/user/${id}`);
-
-    if (response.ok) {
-      const data = await response.json();
-      return data.tweets;
-    }
+    const data = await client.get(`/tweets/user/${id}`);
+    return data.tweets;
   }
 );
 
@@ -22,81 +19,32 @@ export const postTweet = createAsyncThunk(
   "tweets/postTweets",
   async (params) => {
     const { newTweet } = params;
-    const response = await fetch("http://localhost:5000/tweets", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      mode: "cors",
-      body: JSON.stringify({ newTweet }),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      return data.tweet;
-    }
+    const data = await client.post("/tweets", { newTweet });
+    return data.tweet;
   }
 );
 
 export const updateLike = createAsyncThunk(
   "tweets/updateLike",
   async (params) => {
-    let { id, userId, like } = params;
-
-    const response = await fetch(`http://localhost:5000/tweets/${id}/likes`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      mode: "cors",
-      body: JSON.stringify({ userId, like }),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      return data.tweet;
-    }
+    const { id, userId, like } = params;
+    const data = await client.put(`/tweets/${id}/likes`, { userId, like });
+    return data.tweet;
   }
 );
 
 export const addRetweet = createAsyncThunk("tweets/addRt", async (params) => {
   const { tweetId, userId } = params;
-
-  const response = await fetch(
-    `http://localhost:5000/tweets/${tweetId}/retweet`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      mode: "cors",
-      body: JSON.stringify({ userId }),
-    }
-  );
-
-  if (response.ok) {
-    const data = await response.json();
-    return data;
-  }
+  const data = await client.post(`/tweets/${tweetId}/retweet`, { userId });
+  return data;
 });
 
 export const removeRetweet = createAsyncThunk(
   "tweets/deleteRt",
   async (params) => {
     const { tweetId, userId } = params;
-
-    const response = await fetch(
-      `http://localhost:5000/tweets/${tweetId}/retweet`,
-      {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        mode: "cors",
-        body: JSON.stringify({ userId }),
-      }
-    );
-
-    if (response.ok) {
-      const data = await response.json();
-      return data.updatedTweet;
-    }
+    const data = await client.delete(`/tweets/${tweetId}/retweet`, { userId });
+    return data.updatedTweet;
   }
 );
 
@@ -104,21 +52,8 @@ export const addComment = createAsyncThunk(
   "tweets/addComment",
   async (params) => {
     const { newTweet, parentId } = params;
-
-    const response = await fetch(
-      `http://localhost:5000/tweets/${parentId}/comment`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        mode: "cors",
-        body: JSON.stringify({ newTweet }),
-      }
-    );
-
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-    }
+    const data = await client.post(`/tweets/${parentId}/comment`, { newTweet });
+    return data;
   }
 );
 
