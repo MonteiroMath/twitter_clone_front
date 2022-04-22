@@ -61,6 +61,12 @@ function isActionRejected(action) {
   return action.type.endsWith("/rejected");
 }
 
+function updateTweet(state, updatedTweet) {
+  let index = state.tweets.findIndex((tweet) => tweet.id === updatedTweet.id);
+
+  state.tweets[index] = updatedTweet;
+}
+
 const tweetsSlice = createSlice({
   name: "tweets",
   initialState,
@@ -83,44 +89,28 @@ const tweetsSlice = createSlice({
       })
       .addCase(updateLike.fulfilled, (state, action) => {
         let updatedTweet = action.payload;
-        let index = state.tweets.findIndex(
-          (tweet) => tweet.id === updatedTweet.id
-        );
 
-        state.tweets[index] = updatedTweet;
+        updateTweet(state, updatedTweet);
       })
       .addCase(addRetweet.fulfilled, (state, action) => {
         let { updatedTweet, retweet } = action.payload;
 
-        let index = state.tweets.findIndex(
-          (tweet) => tweet.id === updatedTweet.id
-        );
-        state.tweets[index] = updatedTweet;
-
+        updateTweet(state, updatedTweet);
         state.tweets.push(retweet);
       })
       .addCase(removeRetweet.fulfilled, (state, action) => {
         const updatedTweet = action.payload;
 
-        let index = state.tweets.findIndex(
-          (tweet) => tweet.id === updatedTweet.id
-        );
-
         let retweetIndex = state.tweets.findIndex(
           (tweet) => tweet.tweetId === updatedTweet.id
         );
-
-        state.tweets[index] = updatedTweet;
         state.tweets.splice(retweetIndex, 1);
+        updateTweet(state, updatedTweet);
       })
       .addCase(addComment.fulfilled, (state, action) => {
         const { updatedTweet, comment } = action.payload;
 
-        let index = state.tweets.findIndex(
-          (tweet) => tweet.id === updatedTweet.id
-        );
-
-        state.tweets[index] = updatedTweet;
+        updateTweet(state, updatedTweet);
         state.tweets.push(comment);
       })
       .addMatcher(isActionRejected, (state, action) => {
