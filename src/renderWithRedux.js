@@ -15,8 +15,6 @@ export const renderWithRedux = (
     }),
   } = {}
 ) => {
-  console.log(initialState);
-  console.log(store.getState());
   return {
     ...render(<Providers store={store}>{component}</Providers>),
     store,

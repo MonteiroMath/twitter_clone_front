@@ -54,6 +54,7 @@ export const addComment = createAsyncThunk(
   async (params) => {
     const { newTweet, parentId } = params;
     const data = await client.post(`/tweets/${parentId}/comment`, { newTweet });
+
     return data;
   }
 );

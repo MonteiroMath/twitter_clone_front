@@ -5,7 +5,7 @@ import { client } from "../../api/client";
 import Feed from "./Feed.js";
 
 const initialState = {
-  status: "idle",
+  status: "fullfiled",
   error: null,
   tweets: [],
 };
@@ -33,7 +33,6 @@ describe("Add new tweet", () => {
       },
     };
 
-    client.get.mockResolvedValue({ tweets: [] });
     client.post.mockResolvedValue(resp);
 
     renderWithRedux(<Feed />, { initialState: { tweets: initialState } });
