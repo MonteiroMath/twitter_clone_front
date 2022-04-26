@@ -32,9 +32,11 @@ describe("Add new tweet", () => {
         pollSettings: {},
       },
     };
-    client.get.mockResolvedValue({ ...initialState, status: "fullfiled" });
+
+    client.get.mockResolvedValue({ tweets: [] });
     client.post.mockResolvedValue(resp);
-    renderWithRedux(<Feed />, { tweets: { initialState } });
+
+    renderWithRedux(<Feed />, { initialState: { tweets: initialState } });
 
     let textBox = screen.getByPlaceholderText(/What's happening?/);
     expect(textBox).toBeInTheDocument();

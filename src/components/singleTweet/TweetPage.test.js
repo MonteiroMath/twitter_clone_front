@@ -6,6 +6,12 @@ import TweetPage from "./TweetPage";
 import tweets from "../../placeholders/tweets";
 import { renderWithHistory } from "../../renderWithRedux";
 
+const tweetsInitialState = {
+  status: "idle",
+  error: null,
+  tweets: [],
+};
+
 afterEach(cleanup);
 
 describe("Comment tests", () => {
@@ -14,7 +20,7 @@ describe("Comment tests", () => {
     history.push("/1");
 
     renderWithHistory(<TweetPage />, history, "/:id", {
-      initialState: { tweets },
+      initialState: { tweets: tweetsInitialState },
     });
     expect(
       screen.getByText(/This is my second tweet lol getting good at this/i)

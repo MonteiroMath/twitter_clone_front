@@ -1,4 +1,4 @@
-import { render, screen, cleanup, fireEvent } from "@testing-library/react";
+import {  screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import tweets from "../../placeholders/tweets";
 import { renderWithRedux } from "../../renderWithRedux";
