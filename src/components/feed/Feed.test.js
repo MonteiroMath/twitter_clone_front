@@ -1,21 +1,44 @@
 import { screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import tweets from "../../placeholders/tweets";
 import { renderWithRedux } from "../../renderWithRedux";
-
+import { client } from "../../api/client";
 import Feed from "./Feed.js";
 
+const initialState = {
+  status: "idle",
+  error: null,
+  tweets: [],
+};
 
 afterEach(cleanup);
+jest.mock("../../api/client");
 
 describe("Add new tweet", () => {
-  test("Add a tweet to the top of the feed", () => {
-    renderWithRedux(<Feed />, { initialState: { tweets } });
+  test("Add a tweet to the top of the feed", async () => {
+    const typedText = "Typed by the user";
+    const resp = {
+      success: true,
+      tweet: {
+        id: 1111,
+        author: 1,
+        created: new Date().getTime(),
+        message: typedText,
+        attach: "",
+        poll: false,
+        retweet: null,
+        retweeted_by: [],
+        liked_by: [],
+        comment_ids: [],
+        pollSettings: {},
+      },
+    };
+    client.get.mockResolvedValue({ ...initialState, status: "fullfiled" });
+    client.post.mockResolvedValue(resp);
+    renderWithRedux(<Feed />, { tweets: { initialState } });
 
     let textBox = screen.getByPlaceholderText(/What's happening?/);
     expect(textBox).toBeInTheDocument();
 
-    let typedText = "Typed by the user";
     userEvent.type(textBox, typedText);
 
     let tweetButton = screen.getByRole("button", { name: /^tweet$/i });
@@ -23,7 +46,7 @@ describe("Add new tweet", () => {
 
     userEvent.click(tweetButton);
 
+    expect(await screen.findByText(typedText)).toBeInTheDocument();
     expect(textBox).toHaveDisplayValue("");
-    expect(screen.getByText(typedText)).toBeInTheDocument();
   });
 });

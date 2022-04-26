@@ -20,6 +20,7 @@ export const postTweet = createAsyncThunk(
   async (params) => {
     const { newTweet } = params;
     const data = await client.post("/tweets", { newTweet });
+
     return data.tweet;
   }
 );
