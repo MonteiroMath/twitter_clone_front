@@ -1,4 +1,4 @@
-import { screen, cleanup } from "@testing-library/react";
+import { screen, cleanup, findByLabelText } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Feed from "./Feed";
 import tweets from "../../placeholders/tweets";
@@ -49,30 +49,38 @@ describe("Like tests", () => {
     expect(updatedLikes - likesNum).toBe(1);
   });
 
-  test("Unlike tweet", () => {
-    renderWithRedux(<Feed />, { initialState: { tweets } });
+  test("Unlike tweet", async () => {
+    client.put
+      .mockImplementationOnce(() => {
+        return {
+          success: true,
+          tweet: { ...initialState.tweets[0], liked_by: [1] },
+        };
+      })
+      .mockImplementationOnce(() => {
+        return {
+          success: true,
+          tweet: { ...initialState.tweets[0], liked_by: [] },
+        };
+      });
+
+    renderWithRedux(<Feed />, { initialState: { tweets: initialState } });
 
     const likesNum = parseInt(
-      screen.getAllByLabelText("number of likes")[2].textContent
+      screen.getByLabelText("number of likes").textContent
     );
 
-    userEvent.click(
-      screen.getAllByRole("button", { name: /^like tweet$/i })[2]
-    );
+    userEvent.click(screen.getByRole("button", { name: /^like tweet$/i }));
 
-    let updatedLikes = parseInt(
-      screen.getAllByLabelText("number of likes")[2].textContent
-    );
+    let likesLabel = await screen.findByLabelText("number of likes");
+    let updatedLikes = parseInt(likesLabel.textContent);
 
     expect(updatedLikes - likesNum).toBe(1);
 
-    userEvent.click(
-      screen.getAllByRole("button", { name: /^like tweet$/i })[2]
-    );
+    userEvent.click(screen.getByRole("button", { name: /^like tweet$/i }));
 
-    updatedLikes = parseInt(
-      screen.getAllByLabelText("number of likes")[2].textContent
-    );
+    likesLabel = await screen.findByLabelText("number of likes");
+    updatedLikes = parseInt(likesLabel.textContent);
 
     expect(updatedLikes - likesNum).toBe(0);
   });
