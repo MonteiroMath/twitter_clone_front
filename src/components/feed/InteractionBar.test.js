@@ -3,42 +3,48 @@ import userEvent from "@testing-library/user-event";
 import Feed from "./Feed";
 import tweets from "../../placeholders/tweets";
 import { renderWithRedux } from "../../renderWithRedux";
+import { client } from "../../api/client";
 
-let tweets_mock = [
-  {
-    id: 1,
-    author: 1,
-    created: new Date().getTime(),
-    message: "This is my second tweet lol getting good at this",
-    likes: 3,
-    retweets: 0,
-    liked_by: [],
-    retweeted_by: [],
-    comment_ids: [],
-    comments: 0,
-    attach: "",
-    poll: false,
-    pollSettings: {},
-    retweet: null,
-  },
-];
+jest.mock("../../api/client");
+
+const initialState = {
+  status: "fullfiled",
+  error: null,
+  tweets: [
+    {
+      id: 1,
+      author: 1,
+      created: new Date().getTime(),
+      message: "This is my second tweet lol getting good at this",
+      liked_by: [],
+      retweeted_by: [],
+      comment_ids: [],
+      attach: "",
+      poll: false,
+      pollSettings: {},
+      retweet: null,
+    },
+  ],
+};
 
 afterEach(cleanup);
 
 describe("Like tests", () => {
-  test("Tweet get one more like", () => {
-    renderWithRedux(<Feed />, { initialState: { tweets } });
+  test("Tweet get one more like", async () => {
+    client.put.mockResolvedValue({
+      success: true,
+      tweet: { ...initialState.tweets[0], liked_by: [1] },
+    });
+
+    renderWithRedux(<Feed />, { initialState: { tweets: initialState } });
 
     const likesNum = parseInt(
-      screen.getAllByLabelText("number of likes")[0].textContent
+      screen.getByLabelText("number of likes").textContent
     );
-    userEvent.click(
-      screen.getAllByRole("button", { name: /^like tweet$/i })[0]
-    );
+    userEvent.click(screen.getByRole("button", { name: /^like tweet$/i }));
 
-    let updatedLikes = parseInt(
-      screen.getAllByLabelText("number of likes")[0].textContent
-    );
+    let likesLabel = await screen.findByLabelText("number of likes");
+    let updatedLikes = parseInt(likesLabel.textContent);
 
     expect(updatedLikes - likesNum).toBe(1);
   });
