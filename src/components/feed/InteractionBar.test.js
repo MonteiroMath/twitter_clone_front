@@ -96,16 +96,28 @@ describe("Like tests", () => {
   - check if the retweet has been inserted
   */
 
-test("Simple Retweet test", () => {
-  renderWithRedux(<Feed />, { initialState: { tweets } });
+test("Simple Retweet test", async () => {
+  client.post.mockResolvedValue({
+    success: true,
+    updatedTweet: { ...initialState.tweets[0], retweeted_by: [1] },
+    retweet: {
+      id: 1005,
+      author: 1,
+      created: new Date().getTime(),
+      tweetId: initialState.tweets[0].id,
+    },
+  });
 
-  const retweetNum = screen.getAllByText(/you retweeted/i).length;
+  renderWithRedux(<Feed />, { initialState: { tweets: initialState } });
 
-  userEvent.click(screen.getAllByRole("button", { name: /^Retweet$/i })[0]);
+  const retweetNum = screen.queryAllByText(/you retweeted/i).length;
+
+  userEvent.click(screen.getByRole("button", { name: /^Retweet$/i }));
 
   userEvent.click(screen.getByRole("menuitem", { name: /retweet/i }));
 
-  const posRetweetNum = screen.getAllByText(/you retweeted/i).length;
+  let youRetweetedList = await screen.findAllByText(/you retweeted/i);
+  const posRetweetNum = youRetweetedList.length;
 
   expect(posRetweetNum - retweetNum).toBe(1);
 });
