@@ -1,9 +1,9 @@
-import { screen, cleanup, findByLabelText } from "@testing-library/react";
+import { screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Feed from "./Feed";
-import tweets from "../../placeholders/tweets";
 import { renderWithRedux } from "../../renderWithRedux";
 import { client } from "../../api/client";
+import { retweet } from "../../../../twitter_b/controllers/tweets";
 
 jest.mock("../../api/client");
 
@@ -35,6 +35,7 @@ afterEach(cleanup);
 
 describe("Like tests", () => {
   test("Tweet get one more like", async () => {
+    //mock api response to liking a tweet
     client.put.mockResolvedValue({
       success: true,
       tweet: { ...mockTweet(), liked_by: [1] },
@@ -42,19 +43,24 @@ describe("Like tests", () => {
 
     renderWithRedux(<Feed />, { initialState });
 
+    //check number of likes the tweet has
     const likesNum = parseInt(
       screen.getByLabelText("number of likes").textContent
     );
+    expect(likesNum).toBe(0);
+
+    //click the like button
     userEvent.click(screen.getByRole("button", { name: /^like tweet$/i }));
 
-    let likesLabel = await screen.findByLabelText("number of likes");
-    let updatedLikes = parseInt(likesLabel.textContent);
-
-    expect(updatedLikes - likesNum).toBe(1);
+    //check number of likes the tweet has after the click
+    const likesLabel = await screen.findByLabelText("number of likes");
+    const updatedLikes = parseInt(likesLabel.textContent);
+    expect(updatedLikes).toBe(1);
   });
 
   test("Unlike tweet", async () => {
     const oldTweet = mockTweet();
+    //mock api response to liking and unliking a tweet
     client.put
       .mockImplementationOnce(() => {
         return {
@@ -71,23 +77,27 @@ describe("Like tests", () => {
 
     renderWithRedux(<Feed />, { initialState });
 
+    //check number of likes the tweet has
     const likesNum = parseInt(
       screen.getByLabelText("number of likes").textContent
     );
+    expect(likesNum).toBe(0);
 
+    //click the like button
     userEvent.click(screen.getByRole("button", { name: /^like tweet$/i }));
 
+    //check number of likes the tweet has after the first click
     let likesLabel = await screen.findByLabelText("number of likes");
     let updatedLikes = parseInt(likesLabel.textContent);
+    expect(updatedLikes).toBe(1);
 
-    expect(updatedLikes - likesNum).toBe(1);
-
+    //click Like button again
     userEvent.click(screen.getByRole("button", { name: /^like tweet$/i }));
 
+    //check number of likes the tweet has after the second click
     likesLabel = await screen.findByLabelText("number of likes");
     updatedLikes = parseInt(likesLabel.textContent);
-
-    expect(updatedLikes - likesNum).toBe(0);
+    expect(updatedLikes).toBe(0);
   });
 });
 
@@ -103,7 +113,7 @@ describe("Like tests", () => {
 
 test("Simple Retweet test", async () => {
   const oldTweet = mockTweet();
-
+  //mock api response to retweet
   client.post.mockResolvedValue({
     success: true,
     updatedTweet: { ...oldTweet, retweeted_by: [1] },
@@ -117,16 +127,24 @@ test("Simple Retweet test", async () => {
 
   renderWithRedux(<Feed />, { initialState });
 
-  const retweetNum = screen.queryAllByText(/you retweeted/i).length;
-
+  //click retweet button
   userEvent.click(screen.getByRole("button", { name: /^Retweet$/i }));
-
+  //click simple retweet button
   userEvent.click(screen.getByRole("menuitem", { name: /retweet/i }));
 
-  let youRetweetedList = await screen.findAllByText(/you retweeted/i);
-  const posRetweetNum = youRetweetedList.length;
+  //check if a new retweet is on the page
+  let youRetweeted = await screen.findByText(/you retweeted/i);
+  expect(youRetweeted).toBeInTheDocument();
 
-  expect(posRetweetNum - retweetNum).toBe(1);
+  //check if retweet number is updated
+
+  let retweetCounters = screen
+    .getAllByLabelText("number of retweets")
+    .map((counter) => parseInt(counter.textContent));
+
+  console.log(retweetCounters);
+  expect(retweetCounters[0]).toBe(retweetCounters[1]);
+  expect(retweetCounters[0]).toBe(1);
 });
 
 test("Comment tweet with button", async () => {
