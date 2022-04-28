@@ -7,24 +7,28 @@ import { client } from "../../api/client";
 
 jest.mock("../../api/client");
 
+function mockTweet() {
+  return {
+    id: 1,
+    author: 1,
+    created: new Date().getTime(),
+    message: "This is my second tweet lol getting good at this",
+    liked_by: [],
+    retweeted_by: [],
+    comment_ids: [],
+    attach: "",
+    poll: false,
+    pollSettings: {},
+    retweet: null,
+  };
+}
+
 const initialState = {
-  status: "fullfiled",
-  error: null,
-  tweets: [
-    {
-      id: 1,
-      author: 1,
-      created: new Date().getTime(),
-      message: "This is my second tweet lol getting good at this",
-      liked_by: [],
-      retweeted_by: [],
-      comment_ids: [],
-      attach: "",
-      poll: false,
-      pollSettings: {},
-      retweet: null,
-    },
-  ],
+  tweets: {
+    status: "fullfiled",
+    error: null,
+    tweets: [mockTweet()],
+  },
 };
 
 afterEach(cleanup);
@@ -33,10 +37,10 @@ describe("Like tests", () => {
   test("Tweet get one more like", async () => {
     client.put.mockResolvedValue({
       success: true,
-      tweet: { ...initialState.tweets[0], liked_by: [1] },
+      tweet: { ...mockTweet(), liked_by: [1] },
     });
 
-    renderWithRedux(<Feed />, { initialState: { tweets: initialState } });
+    renderWithRedux(<Feed />, { initialState });
 
     const likesNum = parseInt(
       screen.getByLabelText("number of likes").textContent
@@ -50,21 +54,22 @@ describe("Like tests", () => {
   });
 
   test("Unlike tweet", async () => {
+    const oldTweet = mockTweet();
     client.put
       .mockImplementationOnce(() => {
         return {
           success: true,
-          tweet: { ...initialState.tweets[0], liked_by: [1] },
+          tweet: { ...oldTweet, liked_by: [1] },
         };
       })
       .mockImplementationOnce(() => {
         return {
           success: true,
-          tweet: { ...initialState.tweets[0], liked_by: [] },
+          tweet: { ...oldTweet, liked_by: [] },
         };
       });
 
-    renderWithRedux(<Feed />, { initialState: { tweets: initialState } });
+    renderWithRedux(<Feed />, { initialState });
 
     const likesNum = parseInt(
       screen.getByLabelText("number of likes").textContent
@@ -97,18 +102,20 @@ describe("Like tests", () => {
   */
 
 test("Simple Retweet test", async () => {
+  const oldTweet = mockTweet();
+
   client.post.mockResolvedValue({
     success: true,
-    updatedTweet: { ...initialState.tweets[0], retweeted_by: [1] },
+    updatedTweet: { ...oldTweet, retweeted_by: [1] },
     retweet: {
       id: 1005,
       author: 1,
       created: new Date().getTime(),
-      tweetId: initialState.tweets[0].id,
+      tweetId: oldTweet.id,
     },
   });
 
-  renderWithRedux(<Feed />, { initialState: { tweets: initialState } });
+  renderWithRedux(<Feed />, { initialState });
 
   const retweetNum = screen.queryAllByText(/you retweeted/i).length;
 
@@ -121,23 +128,44 @@ test("Simple Retweet test", async () => {
 
   expect(posRetweetNum - retweetNum).toBe(1);
 });
-/*
-test("Comment tweet with button", () => {
-  
 
-    //render tweet
-    //get button
-    //click button
-    //check if modal open
-    //get box
-    //write comment
-    //click tweet button
-    //check modal closed
-    //check tweet on screen
+test("Comment tweet with button", async () => {
+  //render tweet
+  //get button
+  //click button
+  //check if modal open
+  //get box
+  //write comment
+  //click tweet button
+  //check modal closed
+  //check tweet on screen
 
-  
+  const typedText = "I'm testing this comment stuff";
+  const oldTweet = mockTweet();
 
-  renderWithRedux(<Feed />, { initialState: { tweets: initialState } });
+  client.post.mockResolvedValue({
+    success: true,
+    updatedTweet: { ...oldTweet, commen_ids: [1005] },
+    comment: {
+      id: 1005,
+      author: 1,
+      created: new Date().getTime(),
+      message: typedText,
+      attach: "",
+      poll: false,
+      retweet: null,
+      retweeted_by: [],
+      liked_by: [],
+      comment_ids: [],
+      pollSettings: {
+        choices: null,
+        pollLen: null,
+        votes: [0, 0],
+      },
+    },
+  });
+
+  renderWithRedux(<Feed />, { initialState });
 
   const tweet = screen.getByText(
     /This is my second tweet lol getting good at this/i
@@ -150,7 +178,6 @@ test("Comment tweet with button", () => {
   expect(button).toBeDisabled();
 
   const commentBox = screen.getByPlaceholderText(/Answer this tweet/);
-  const typedText = "I'm testing this comment stuff";
 
   userEvent.type(commentBox, typedText);
 
@@ -159,6 +186,7 @@ test("Comment tweet with button", () => {
 
   userEvent.click(button);
   expect(commentBox.value).toBe("");
-  expect(screen.getByText(typedText)).toBeInTheDocument();
+
+  const newComment = await screen.findByText(typedText);
+  expect(newComment).toBeInTheDocument();
 });
-*/
