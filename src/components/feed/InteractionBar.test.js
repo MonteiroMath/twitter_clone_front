@@ -1,4 +1,4 @@
-import { screen, cleanup } from "@testing-library/react";
+import { screen, cleanup, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Feed from "./Feed";
 import { renderWithRedux } from "../../renderWithRedux";
@@ -113,7 +113,7 @@ describe("Like tests", () => {
 
 test("Simple Retweet test", async () => {
   const oldTweet = mockTweet();
-  //mock api response to retweet
+  //mock api response to post retweet
   client.post.mockResolvedValue({
     success: true,
     updatedTweet: { ...oldTweet, retweeted_by: [1] },
@@ -137,14 +137,62 @@ test("Simple Retweet test", async () => {
   expect(youRetweeted).toBeInTheDocument();
 
   //check if retweet number is updated
-
   let retweetCounters = screen
     .getAllByLabelText("number of retweets")
     .map((counter) => parseInt(counter.textContent));
-
-  console.log(retweetCounters);
   expect(retweetCounters[0]).toBe(retweetCounters[1]);
   expect(retweetCounters[0]).toBe(1);
+});
+
+test("Undo retweet", async () => {
+  const oldTweet = mockTweet();
+  //mock api response to post and delete retweet
+  client.post.mockResolvedValue({
+    success: true,
+    updatedTweet: { ...oldTweet, retweeted_by: [1] },
+    retweet: {
+      id: 1005,
+      author: 1,
+      created: new Date().getTime(),
+      tweetId: oldTweet.id,
+    },
+  });
+
+  client.delete.mockResolvedValue({
+    success: true,
+    updatedTweet: { ...oldTweet, retweeted_by: [] },
+  });
+
+  renderWithRedux(<Feed />, { initialState });
+
+  //click retweet button
+  userEvent.click(screen.getByRole("button", { name: /^Retweet$/i }));
+  //click simple retweet button
+  userEvent.click(screen.getByRole("menuitem", { name: /retweet/i }));
+
+  //check if a new retweet is on the page
+  let youRetweeted = await screen.findByText(/you retweeted/i);
+  expect(youRetweeted).toBeInTheDocument();
+
+  //click retweet button
+  userEvent.click(screen.getAllByRole("button", { name: /^Retweet$/i })[0]);
+  //click undo retweet button
+  userEvent.click(screen.getByRole("menuitem", { name: /undo retweet/i }));
+
+  //check if no retweets are left in the screen
+  //let notRetweeted = await waitForElementToBeRemoved(() =>
+  //  screen.queryByText(/you retweeted/i)
+  //);
+  //expect(notRetweeted).toBe(true);
+  await waitFor(() => {
+    expect(screen.queryByText(/you retweeted/i)).not.toBeInTheDocument();
+  });
+
+  //check if retweet number is updated
+  let retweetCounters = parseInt(
+    screen.getByLabelText("number of retweets").textContent
+  );
+  expect(retweetCounters).toBe(0);
 });
 
 test("Comment tweet with button", async () => {
