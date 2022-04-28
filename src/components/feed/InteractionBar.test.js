@@ -121,23 +121,23 @@ test("Simple Retweet test", async () => {
 
   expect(posRetweetNum - retweetNum).toBe(1);
 });
-
+/*
 test("Comment tweet with button", () => {
-  /*
+  
 
-    render tweet
-    get button
-    click button
-    check if modal open
-    get box
-    write comment
-    click tweet button
-    check modal closed
-    check tweet on screen
+    //render tweet
+    //get button
+    //click button
+    //check if modal open
+    //get box
+    //write comment
+    //click tweet button
+    //check modal closed
+    //check tweet on screen
 
-  */
+  
 
-  renderWithRedux(<Feed />, { initialState: { tweets: tweets_mock } });
+  renderWithRedux(<Feed />, { initialState: { tweets: initialState } });
 
   const tweet = screen.getByText(
     /This is my second tweet lol getting good at this/i
@@ -161,3 +161,4 @@ test("Comment tweet with button", () => {
   expect(commentBox.value).toBe("");
   expect(screen.getByText(typedText)).toBeInTheDocument();
 });
+*/
