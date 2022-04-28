@@ -5,9 +5,11 @@ import { client } from "../../api/client";
 import Feed from "./Feed.js";
 
 const initialState = {
-  status: "fullfiled",
-  error: null,
-  tweets: [],
+  tweets: {
+    status: "fullfiled",
+    error: null,
+    tweets: [],
+  },
 };
 
 afterEach(cleanup);
@@ -35,7 +37,7 @@ describe("Add new tweet", () => {
 
     client.post.mockResolvedValue(resp);
 
-    renderWithRedux(<Feed />, { initialState: { tweets: initialState } });
+    renderWithRedux(<Feed />, { initialState });
 
     let textBox = screen.getByPlaceholderText(/What's happening?/);
     expect(textBox).toBeInTheDocument();

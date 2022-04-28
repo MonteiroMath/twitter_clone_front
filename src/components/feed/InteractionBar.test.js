@@ -3,7 +3,6 @@ import userEvent from "@testing-library/user-event";
 import Feed from "./Feed";
 import { renderWithRedux } from "../../renderWithRedux";
 import { client } from "../../api/client";
-import { retweet } from "../../../../twitter_b/controllers/tweets";
 
 jest.mock("../../api/client");
 

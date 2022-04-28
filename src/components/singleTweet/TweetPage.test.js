@@ -5,27 +5,29 @@ import { createMemoryHistory } from "history";
 import TweetPage from "./TweetPage";
 import { renderWithHistory } from "../../renderWithRedux";
 
-const tweetsInitialState = {
-  status: "fullfiled",
-  error: null,
-  tweets: [
-    {
-      id: 1,
-      author: 1,
-      created: new Date().getTime(),
-      message: "This is my second tweet lol getting good at this",
-      likes: 3,
-      retweets: 0,
-      liked_by: [],
-      retweeted_by: [],
-      comment_ids: [],
-      comments: 0,
-      attach: "",
-      poll: false,
-      pollSettings: {},
-      retweet: null,
-    },
-  ],
+const mockedTweet = {
+  id: 1,
+  author: 1,
+  created: new Date().getTime(),
+  message: "This is my second tweet lol getting good at this",
+  likes: 3,
+  retweets: 0,
+  liked_by: [],
+  retweeted_by: [],
+  comment_ids: [],
+  comments: 0,
+  attach: "",
+  poll: false,
+  pollSettings: {},
+  retweet: null,
+};
+
+const initialState = {
+  tweets: {
+    status: "fullfiled",
+    error: null,
+    tweets: [mockedTweet],
+  },
 };
 
 jest.mock("../../api/client");
@@ -38,8 +40,6 @@ describe("Comment tests", () => {
     history.push("/1");
 
     const typedText = "git gud";
-    const updatedTweet = { ...tweetsInitialState.tweets[0], comment_ids: [] };
-    updatedTweet.comment_ids.push(1400);
     const comment = {
       id: 1400,
       author: 1,
@@ -61,16 +61,16 @@ describe("Comment tests", () => {
       },
     };
 
+    //mock api response to post comment
     const resp = {
       success: true,
-      updatedTweet,
+      updatedTweet: { ...mockedTweet, comment_ids: [comment.id] },
       comment,
     };
-
     client.post.mockResolvedValue(resp);
 
     renderWithHistory(<TweetPage />, history, "/:id", {
-      initialState: { tweets: tweetsInitialState },
+      initialState,
     });
 
     expect(
@@ -82,12 +82,15 @@ describe("Comment tests", () => {
 
     let commentBox = screen.getByPlaceholderText(/Answer this tweet/);
 
+    //type new comment
     userEvent.type(commentBox, typedText);
 
     expect(commentBox.value).toBe(typedText);
     expect(button).not.toBeDisabled();
 
+    //click sent comment button
     userEvent.click(button);
+    //check if new comment was sent
     expect(await screen.findByText(typedText)).toBeInTheDocument();
     expect(commentBox.value).toBe("");
   });
