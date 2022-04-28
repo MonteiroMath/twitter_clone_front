@@ -179,11 +179,6 @@ test("Undo retweet", async () => {
   //click undo retweet button
   userEvent.click(screen.getByRole("menuitem", { name: /undo retweet/i }));
 
-  //check if no retweets are left in the screen
-  //let notRetweeted = await waitForElementToBeRemoved(() =>
-  //  screen.queryByText(/you retweeted/i)
-  //);
-  //expect(notRetweeted).toBe(true);
   await waitFor(() => {
     expect(screen.queryByText(/you retweeted/i)).not.toBeInTheDocument();
   });
@@ -196,19 +191,9 @@ test("Undo retweet", async () => {
 });
 
 test("Comment tweet with button", async () => {
-  //render tweet
-  //get button
-  //click button
-  //check if modal open
-  //get box
-  //write comment
-  //click tweet button
-  //check modal closed
-  //check tweet on screen
-
   const typedText = "I'm testing this comment stuff";
   const oldTweet = mockTweet();
-
+  //mock api response to post cmment
   client.post.mockResolvedValue({
     success: true,
     updatedTweet: { ...oldTweet, commen_ids: [1005] },
@@ -238,21 +223,24 @@ test("Comment tweet with button", async () => {
   );
   expect(tweet).toBeInTheDocument();
 
+  //click comment button
   userEvent.click(screen.getByRole("button", { name: /^comment tweet$/i }));
 
   let button = screen.getByRole("button", { name: /^comment$/i });
   expect(button).toBeDisabled();
 
+  //type new comment
   const commentBox = screen.getByPlaceholderText(/Answer this tweet/);
-
   userEvent.type(commentBox, typedText);
 
   expect(commentBox.value).toBe(typedText);
   expect(button).not.toBeDisabled();
 
+  //click button to send comment
   userEvent.click(button);
   expect(commentBox.value).toBe("");
 
+  //check if comment was sent
   const newComment = await screen.findByText(typedText);
   expect(newComment).toBeInTheDocument();
 });
