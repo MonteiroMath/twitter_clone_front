@@ -10,7 +10,7 @@ function mockTweet() {
   return {
     id: 1,
     author: 1,
-    created: new Date().getTime(),
+    created_at: new Date().getTime(),
     message: "This is my second tweet lol getting good at this",
     liked_by: [],
     retweeted_by: [],
@@ -119,7 +119,7 @@ test("Simple Retweet test", async () => {
     retweet: {
       id: 1005,
       author: 1,
-      created: new Date().getTime(),
+      created_at: new Date().getTime(),
       tweetId: oldTweet.id,
     },
   });
@@ -152,7 +152,7 @@ test("Undo retweet", async () => {
     retweet: {
       id: 1005,
       author: 1,
-      created: new Date().getTime(),
+      created_at: new Date().getTime(),
       tweetId: oldTweet.id,
     },
   });
@@ -199,7 +199,7 @@ test("Comment tweet with button", async () => {
     comment: {
       id: 1005,
       author: 1,
-      created: new Date().getTime(),
+      created_at: new Date().getTime(),
       message: typedText,
       attach: "",
       poll: false,

@@ -17,7 +17,7 @@ function RetweetBox(props) {
           <Row noGutters>
             <Avatar size="15px" />
             <div className="ml-2">
-              <InfoBar username={user.username} created={retweet.created} />
+              <InfoBar username={user.username} created={retweet.created_at} />
             </div>
           </Row>
         </Col>

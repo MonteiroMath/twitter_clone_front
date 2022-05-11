@@ -23,7 +23,7 @@ describe("Add new tweet", () => {
       tweet: {
         id: 1111,
         author: 1,
-        created: new Date().getTime(),
+        created_at: new Date().getTime(),
         message: typedText,
         attach: "",
         poll: false,

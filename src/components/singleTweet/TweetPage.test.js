@@ -8,7 +8,7 @@ import { renderWithHistory } from "../../renderWithRedux";
 const mockedTweet = {
   id: 1,
   author: 1,
-  created: new Date().getTime(),
+  created_at: new Date().getTime(),
   message: "This is my second tweet lol getting good at this",
   likes: 3,
   retweets: 0,
@@ -43,7 +43,7 @@ describe("Comment tests", () => {
     const comment = {
       id: 1400,
       author: 1,
-      created: 1650983974062,
+      created_at: 1650983974062,
       message: typedText,
       attach: "",
       poll: false,
