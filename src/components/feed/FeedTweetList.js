@@ -9,7 +9,7 @@ function FeedTweetList({ user }) {
 
   const tweetStatus = useSelector((state) => state.tweets.status);
   const error = useSelector((state) => state.tweets.error);
-  const tweetList = [...useSelector(selectAllTweets)].reverse();
+  const tweetList = useSelector(selectAllTweets);
 
   useEffect(() => {
     if (tweetStatus === "idle") {

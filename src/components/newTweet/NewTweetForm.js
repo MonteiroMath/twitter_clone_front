@@ -143,6 +143,7 @@ function NewTweetForm({
 
     dispatch(
       action({
+        userId: 1,
         newTweet,
         parentId: parent_id,
       })

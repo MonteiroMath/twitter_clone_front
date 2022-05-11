@@ -50,7 +50,7 @@ function Tweet({ tweet, user }) {
         <Avatar />
       </Col>
       <Col xs="9" md="10" className="ml-1 ml-md-3">
-        <InfoBar username={user.username} created={tweet.created} />
+        <InfoBar username={user.username} created={tweet.created_at} />
         <Link to={`/tweet/${tweet.id}`}>
           <Message message={tweet.message} />
         </Link>
