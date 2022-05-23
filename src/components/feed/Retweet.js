@@ -9,8 +9,8 @@ import { RetweetIcon } from "../svg/Svg";
 function Retweet(props) {
   let { retweet, user, toggleQuote } = props;
 
-  let tweet = useSelector((state) => selectTweetById(state, retweet.tweetId));
-
+  let { tweet } = retweet;
+  
   return (
     <Row noGutters>
       <Col
