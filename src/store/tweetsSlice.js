@@ -98,13 +98,13 @@ const tweetsSlice = createSlice({
         let { updatedTweet, retweet } = action.payload;
 
         updateTweet(state, updatedTweet);
-        state.tweets.push(retweet);
+        state.tweets.unshift(retweet);
       })
       .addCase(removeRetweet.fulfilled, (state, action) => {
         const updatedTweet = action.payload;
 
         let retweetIndex = state.tweets.findIndex(
-          (tweet) => tweet.tweetId === updatedTweet.id
+          (tweet) => tweet.tweet && tweet.tweet.id === updatedTweet.id
         );
         state.tweets.splice(retweetIndex, 1);
         updateTweet(state, updatedTweet);
