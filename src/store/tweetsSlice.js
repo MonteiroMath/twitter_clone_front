@@ -5,13 +5,14 @@ const initialState = {
   status: "idle",
   error: null,
   tweets: [],
+  tweetContent: [],
 };
 
 export const fetchTweets = createAsyncThunk(
   "tweets/fetchTweets",
   async (id) => {
     const data = await client.get(`/tweets/user/${id}`);
-    return data.tweets;
+    return data;
   }
 );
 
@@ -79,7 +80,8 @@ const tweetsSlice = createSlice({
       })
       .addCase(fetchTweets.fulfilled, (state, action) => {
         state.status = "fullfiled";
-        state.tweets = action.payload;
+        state.tweets = action.payload.tweets;
+        state.tweetContent = action.payload.tweetContent;
       })
       .addCase(fetchTweets.rejected, (state, action) => {
         state.status = "rejected";
@@ -130,6 +132,10 @@ export const actions = tweetsSlice.actions;
 //selectors
 export const selectTweetById = (state, id) =>
   state.tweets.tweets.find((tweet) => tweet.id === id);
+export const selectTweetContent = (state, contentId) =>
+  state.tweets.tweetContent.find(
+    (tweetContent) => tweetContent.id === contentId
+  );
 export const selectAllTweets = (state) => state.tweets.tweets;
 export const selectSomeTweets = (state, listOfIds) =>
   listOfIds.map((id) => state.tweets.tweets.find((tweet) => tweet.id === id));

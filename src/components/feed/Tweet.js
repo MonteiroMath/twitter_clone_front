@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { updateLike, addRetweet, removeRetweet } from "../../store/tweetsSlice";
+import {
+  updateLike,
+  addRetweet,
+  removeRetweet,
+  selectTweetContent,
+} from "../../store/tweetsSlice";
 
 import { Row, Col } from "reactstrap";
 
@@ -17,9 +22,13 @@ import NewTweetModal from "../NewTweetModal";
 import AnswerModal from "../AnswerModal";
 
 function Tweet({ tweet, user }) {
+  const tweetContent = useSelector((state) =>
+    selectTweetContent(state, tweet.content)
+  );
+
   let { retweet } = tweet;
-  let retweeted = tweet.retweeted_by.includes(user.id);
-  let liked = tweet.liked_by.includes(user.id);
+  let retweeted = tweetContent.retweeted_by.includes(user.id);
+  let liked = tweetContent.liked_by.includes(user.id);
 
   const [modal, setModal] = useState(false);
   const [answerModal, setAnswerModal] = useState(false);
@@ -27,13 +36,15 @@ function Tweet({ tweet, user }) {
   let dispatch = useDispatch();
 
   async function handleLike() {
-    dispatch(updateLike({ id: tweet.id, userId: user.id, like: !liked }));
+    dispatch(
+      updateLike({ id: tweetContent.id, userId: user.id, like: !liked })
+    );
   }
 
   function handleRetweet() {
     let action = retweeted ? removeRetweet : addRetweet;
 
-    dispatch(action({ tweetId: tweet.id, userId: user.id }));
+    dispatch(action({ tweetId: tweetContent.id, userId: user.id }));
   }
 
   const toggleQuote = () => {
@@ -50,21 +61,21 @@ function Tweet({ tweet, user }) {
         <Avatar />
       </Col>
       <Col xs="9" md="10" className="ml-1 ml-md-3">
-        <InfoBar username={user.username} created={tweet.created_at} />
+        <InfoBar username={user.username} created={tweetContent.created_at} />
         <Link to={`/tweet/${tweet.id}`}>
-          <Message message={tweet.message} />
+          <Message message={tweetContent.message} />
         </Link>
-        <Attachment url={tweet.attach} />
+        <Attachment url={tweetContent.attach} />
         <Poll
-          poll={tweet.poll}
-          pollSettings={tweet.pollSettings}
-          start={tweet.created}
+          poll={tweetContent.poll}
+          pollSettings={tweetContent.pollSettings}
+          start={tweetContent.created}
         />
         {retweet ? <RetweetBox retweet={retweet} user={user} /> : null}
         <InteractionBar
-          likes={tweet.liked_by.length}
-          retweets={tweet.retweeted_by.length}
-          comments={tweet.comment_ids.length}
+          likes={tweetContent.liked_by.length}
+          retweets={tweetContent.retweeted_by.length}
+          comments={tweetContent.comment_ids.length}
           liked={liked}
           retweeted={retweeted}
           handleLike={handleLike}
