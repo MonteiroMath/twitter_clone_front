@@ -20,9 +20,12 @@ export const postTweet = createAsyncThunk(
   "tweets/postTweets",
   async (params) => {
     const { userId, newTweet } = params;
-    const data = await client.post("/tweets", { userId, newTweet });
+    const { tweet, tweetContent } = await client.post("/tweets", {
+      userId,
+      newTweet,
+    });
 
-    return data.tweet;
+    return { tweet, tweetContent };
   }
 );
 
@@ -88,8 +91,9 @@ const tweetsSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(postTweet.fulfilled, (state, action) => {
-        let tweet = action.payload;
+        const { tweet, tweetContent } = action.payload;
         state.tweets.unshift(tweet);
+        state.tweetContent.push(tweetContent);
       })
       .addCase(updateLike.fulfilled, (state, action) => {
         let updatedTweet = action.payload;
