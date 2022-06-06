@@ -37,14 +37,14 @@ function Tweet({ tweet, user }) {
 
   async function handleLike() {
     dispatch(
-      updateLike({ id: tweetContent.id, userId: user.id, like: !liked })
+      updateLike({ id: tweet.id, userId: user.id, like: !liked })
     );
   }
 
   function handleRetweet() {
     let action = retweeted ? removeRetweet : addRetweet;
 
-    dispatch(action({ tweetId: tweetContent.id, userId: user.id }));
+    dispatch(action({ tweetId: tweet.id, userId: user.id }));
   }
 
   const toggleQuote = () => {

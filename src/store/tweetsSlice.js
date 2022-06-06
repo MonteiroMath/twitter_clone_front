@@ -34,7 +34,8 @@ export const updateLike = createAsyncThunk(
   async (params) => {
     const { id, userId, like } = params;
     const data = await client.put(`/tweets/${id}/likes`, { userId, like });
-    return data.tweet;
+
+    return data.updatedTweet;
   }
 );
 
@@ -68,9 +69,11 @@ function isActionRejected(action) {
 }
 
 function updateTweet(state, updatedTweet) {
-  let index = state.tweets.findIndex((tweet) => tweet.id === updatedTweet.id);
+  let index = state.tweetContent.findIndex(
+    (tweet) => tweet.id === updatedTweet.id
+  );
 
-  state.tweets[index] = updatedTweet;
+  state.tweetContent[index] = updatedTweet;
 }
 
 const tweetsSlice = createSlice({
