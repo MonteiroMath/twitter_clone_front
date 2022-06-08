@@ -26,7 +26,9 @@ function Tweet({ tweet, user }) {
     selectTweetContent(state, tweet.content)
   );
 
-  let { retweet } = tweet;
+  console.log(tweetContent);
+
+  let { comment } = tweetContent;
   let retweeted = tweetContent.retweeted_by.includes(user.id);
   let liked = tweetContent.liked_by.includes(user.id);
 
@@ -36,9 +38,7 @@ function Tweet({ tweet, user }) {
   let dispatch = useDispatch();
 
   async function handleLike() {
-    dispatch(
-      updateLike({ id: tweet.id, userId: user.id, like: !liked })
-    );
+    dispatch(updateLike({ id: tweet.id, userId: user.id, like: !liked }));
   }
 
   function handleRetweet() {
@@ -71,7 +71,7 @@ function Tweet({ tweet, user }) {
           pollSettings={tweetContent.pollSettings}
           start={tweetContent.created}
         />
-        {retweet ? <RetweetBox retweet={retweet} user={user} /> : null}
+        {comment ? <RetweetBox retweet={comment} user={user} /> : null}
         <InteractionBar
           likes={tweetContent.liked_by.length}
           retweets={tweetContent.retweeted_by.length}

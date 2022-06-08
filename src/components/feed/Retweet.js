@@ -9,8 +9,6 @@ import { RetweetIcon } from "../svg/Svg";
 function Retweet(props) {
   let { retweet, user, toggleQuote } = props;
 
-  let { tweet } = retweet;
-  
   return (
     <Row noGutters>
       <Col
@@ -23,9 +21,9 @@ function Retweet(props) {
       </Col>
       <Col className="mx-auto" xs="12">
         <Tweet
-          tweet={tweet}
+          tweet={retweet}
           user={user}
-          toggleQuote={() => toggleQuote(tweet)}
+          toggleQuote={() => toggleQuote(retweet)}
         />
       </Col>
     </Row>

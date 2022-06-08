@@ -104,10 +104,10 @@ const tweetsSlice = createSlice({
         updateTweet(state, updatedTweet);
       })
       .addCase(addRetweet.fulfilled, (state, action) => {
-        let { updatedTweet, retweet } = action.payload;
+        let { tweet, tweetContent } = action.payload;
 
-        updateTweet(state, updatedTweet);
-        state.tweets.unshift(retweet);
+        updateTweet(state, tweetContent);
+        state.tweets.unshift(tweet);
       })
       .addCase(removeRetweet.fulfilled, (state, action) => {
         const updatedTweet = action.payload;
