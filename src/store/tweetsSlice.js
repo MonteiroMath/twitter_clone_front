@@ -50,7 +50,7 @@ export const removeRetweet = createAsyncThunk(
   async (params) => {
     const { tweetId, userId } = params;
     const data = await client.delete(`/tweets/${tweetId}/retweet`, { userId });
-    return data.updatedTweet;
+    return { tweetId, updatedTweet: data.updatedTweet };
   }
 );
 
@@ -110,11 +110,12 @@ const tweetsSlice = createSlice({
         state.tweets.unshift(tweet);
       })
       .addCase(removeRetweet.fulfilled, (state, action) => {
-        const updatedTweet = action.payload;
+        const { tweetId, updatedTweet } = action.payload;
 
         let retweetIndex = state.tweets.findIndex(
-          (tweet) => tweet.tweet && tweet.tweet.id === updatedTweet.id
+          (tweet) => tweet.id === tweetId
         );
+        
         state.tweets.splice(retweetIndex, 1);
         updateTweet(state, updatedTweet);
       })
