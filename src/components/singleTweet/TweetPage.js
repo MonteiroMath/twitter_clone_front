@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { selectTweetById } from "../../store/tweetsSlice";
+import { selectTweetById, selectTweetContent } from "../../store/tweetsSlice";
 import { Row } from "reactstrap";
 
 import user from "../../placeholders/user";
@@ -16,8 +16,6 @@ export default function TweetPage(props) {
 
   let tweet = useSelector((state) => selectTweetById(state, parseInt(id)));
 
-
-
   return tweet ? (
     <div>
       <TopBar header="Tweet" />
@@ -25,7 +23,7 @@ export default function TweetPage(props) {
       <Row className="border p-3 d-none d-md-flex" noGutters={true}>
         <CommentTweet parent_id={parseInt(id)} />
       </Row>
-      <SubsetTweetList user={user} ids={tweet.comment_ids} />
+      <SubsetTweetList user={user} ids={tweet.comment} />
     </div>
   ) : null;
 }

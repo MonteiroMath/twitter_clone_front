@@ -86,8 +86,10 @@ const tweetsSlice = createSlice({
       })
       .addCase(fetchTweets.fulfilled, (state, action) => {
         state.status = "fullfiled";
-        state.tweets = action.payload.tweets;
-        state.tweetContent = action.payload.tweetContent;
+        if (action.payload.success) {
+          state.tweets = action.payload.tweets;
+          state.tweetContent = action.payload.tweetContent;
+        }
       })
       .addCase(fetchTweets.rejected, (state, action) => {
         state.status = "rejected";
@@ -115,7 +117,7 @@ const tweetsSlice = createSlice({
         let retweetIndex = state.tweets.findIndex(
           (tweet) => tweet.id === tweetId
         );
-        
+
         state.tweets.splice(retweetIndex, 1);
         updateTweet(state, updatedTweet);
       })

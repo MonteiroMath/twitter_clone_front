@@ -26,9 +26,10 @@ function Tweet({ tweet, user }) {
     selectTweetContent(state, tweet.content)
   );
 
-  console.log(tweetContent);
+  const commentedContent = useSelector((state) =>
+    selectTweetContent(state, tweetContent.comment)
+  );
 
-  let { comment } = tweetContent;
   let retweeted = tweetContent.retweeted_by.includes(user.id);
   let liked = tweetContent.liked_by.includes(user.id);
 
@@ -71,7 +72,9 @@ function Tweet({ tweet, user }) {
           pollSettings={tweetContent.pollSettings}
           start={tweetContent.created}
         />
-        {comment ? <RetweetBox retweet={comment} user={user} /> : null}
+        {commentedContent ? (
+          <RetweetBox retweet={commentedContent} user={user} />
+        ) : null}
         <InteractionBar
           likes={tweetContent.liked_by.length}
           retweets={tweetContent.retweeted_by.length}
@@ -84,7 +87,11 @@ function Tweet({ tweet, user }) {
           toggleAnswer={toggleAnswer}
         />
       </Col>
-      <NewTweetModal modal={modal} toggleQuote={toggleQuote} quote={tweet} />
+      <NewTweetModal
+        modal={modal}
+        toggleQuote={toggleQuote}
+        quote={tweetContent}
+      />
       <AnswerModal modal={answerModal} toggle={toggleAnswer} parent={tweet} />
     </Row>
   );

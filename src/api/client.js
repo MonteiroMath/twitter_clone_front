@@ -15,10 +15,8 @@ export async function client(endpoint, method, body) {
 
   const response = await fetch(baseUrl + endpoint, config);
 
-  if (response.ok) {
-    const data = await response.json();
-    return data;
-  }
+  const data = await response.json();
+  return data;
 }
 
 client.get = async function (endpoint) {

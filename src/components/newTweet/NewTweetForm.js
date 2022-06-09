@@ -134,7 +134,7 @@ function NewTweetForm({
       message: tweetText,
       attach: attach,
       poll: poll,
-      retweet: quote ? quote : null,
+      comment: quote ? quote.id : null,
       pollSettings: {
         choices,
         pollLen: pollLength,

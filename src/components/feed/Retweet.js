@@ -1,7 +1,5 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
-import { useSelector } from "react-redux";
-import { selectTweetById } from "../../store/tweetsSlice";
 
 import Tweet from "./Tweet";
 import { RetweetIcon } from "../svg/Svg";
