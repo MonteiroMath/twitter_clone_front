@@ -4,17 +4,13 @@ import { client } from "../api/client";
 const initialState = {
   status: "idle",
   error: null,
-  tweets: [],
-  tweetContent: [],
+  data: [],
 };
 
-export const fetchTweets = createAsyncThunk(
-  "tweets/fetchTweets",
-  async (id) => {
-    const data = await client.get(`/tweets/user/${id}`);
-    return data;
-  }
-);
+export const fetchTweets = createAsyncThunk("tweets/fetch", async (id) => {
+  const data = await client.get(`/tweets/user/${id}`);
+  return data;
+});
 
 export const postTweet = createAsyncThunk(
   "tweets/postTweets",
@@ -26,16 +22,6 @@ export const postTweet = createAsyncThunk(
     });
 
     return { tweet, tweetContent };
-  }
-);
-
-export const updateLike = createAsyncThunk(
-  "tweets/updateLike",
-  async (params) => {
-    const { id, userId, like } = params;
-    const data = await client.put(`/tweets/${id}/likes`, { userId, like });
-
-    return data.updatedTweet;
   }
 );
 
@@ -68,14 +54,6 @@ function isActionRejected(action) {
   return action.type.endsWith("/rejected");
 }
 
-function updateTweet(state, updatedTweet) {
-  let index = state.tweetContent.findIndex(
-    (tweet) => tweet.id === updatedTweet.id
-  );
-
-  state.tweetContent[index] = updatedTweet;
-}
-
 const tweetsSlice = createSlice({
   name: "tweets",
   initialState,
@@ -87,8 +65,7 @@ const tweetsSlice = createSlice({
       .addCase(fetchTweets.fulfilled, (state, action) => {
         state.status = "fullfiled";
         if (action.payload.success) {
-          state.tweets = action.payload.tweets;
-          state.tweetContent = action.payload.tweetContent;
+          state.data = action.payload.tweets;
         }
       })
       .addCase(fetchTweets.rejected, (state, action) => {
@@ -96,36 +73,27 @@ const tweetsSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(postTweet.fulfilled, (state, action) => {
-        const { tweet, tweetContent } = action.payload;
-        state.tweets.unshift(tweet);
-        state.tweetContent.push(tweetContent);
-      })
-      .addCase(updateLike.fulfilled, (state, action) => {
-        let updatedTweet = action.payload;
-
-        updateTweet(state, updatedTweet);
+        const { tweet } = action.payload;
+        state.data.unshift(tweet);
       })
       .addCase(addRetweet.fulfilled, (state, action) => {
-        let { tweet, tweetContent } = action.payload;
+        let { tweet } = action.payload;
 
-        updateTweet(state, tweetContent);
-        state.tweets.unshift(tweet);
+        state.data.unshift(tweet);
       })
       .addCase(removeRetweet.fulfilled, (state, action) => {
-        const { tweetId, updatedTweet } = action.payload;
+        const { tweetId } = action.payload;
 
-        let retweetIndex = state.tweets.findIndex(
+        let retweetIndex = state.data.findIndex(
           (tweet) => tweet.id === tweetId
         );
 
-        state.tweets.splice(retweetIndex, 1);
-        updateTweet(state, updatedTweet);
+        state.data.splice(retweetIndex, 1);
       })
       .addCase(addComment.fulfilled, (state, action) => {
-        const { updatedTweet, comment } = action.payload;
+        const { comment } = action.payload;
 
-        updateTweet(state, updatedTweet);
-        state.tweets.push(comment);
+        state.data.push(comment);
       })
       .addMatcher(isActionRejected, (state, action) => {
         console.log(action.error.message);
@@ -141,11 +109,7 @@ export const actions = tweetsSlice.actions;
 
 //selectors
 export const selectTweetById = (state, id) =>
-  state.tweets.tweets.find((tweet) => tweet.id === id);
-export const selectTweetContent = (state, contentId) =>
-  state.tweets.tweetContent.find(
-    (tweetContent) => tweetContent.id === contentId
-  );
-export const selectAllTweets = (state) => state.tweets.tweets;
+  state.tweets.data.find((tweet) => tweet.id === id);
+export const selectAllTweets = (state) => state.tweets.data;
 export const selectSomeTweets = (state, listOfIds) =>
-  listOfIds.map((id) => state.tweets.tweets.find((tweet) => tweet.id === id));
+  listOfIds.map((id) => state.tweets.data.find((tweet) => tweet.id === id));
