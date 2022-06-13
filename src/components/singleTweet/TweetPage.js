@@ -1,5 +1,5 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { selectTweetById } from "../../store/tweetsSlice";
 import { Row } from "reactstrap";
@@ -10,14 +10,20 @@ import TopBar from "../TopBar";
 import SubsetTweetList from "../SubsetTweetList";
 import TweetCard from "../feed/TweetCard";
 import CommentTweet from "../CommentTweet";
-import { selectAnswers } from "../../store/PageSlice";
+import { fetchAnswers, selectAnswers } from "../../store/PageSlice";
 
 export default function TweetPage(props) {
+  const dispatch = useDispatch();
+  const pageStatus = useSelector((state) => state.page.status);
   let { id } = useParams();
 
   let tweet = useSelector((state) => selectTweetById(state, parseInt(id)));
 
   const tweetList = [...useSelector((state) => selectAnswers(state))].reverse();
+
+  useEffect(() => {
+    dispatch(fetchAnswers(id));
+  }, [dispatch, pageStatus, id]);
 
   return tweet ? (
     <div>

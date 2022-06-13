@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { client } from "../api/client";
+import { postAnswer } from "./PageSlice";
 
 const initialState = {
   status: "idle",
@@ -73,6 +74,10 @@ const tweetsSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(postTweet.fulfilled, (state, action) => {
+        const { tweet } = action.payload;
+        state.data.unshift(tweet);
+      })
+      .addCase(postAnswer.fulfilled, (state, action) => {
         const { tweet } = action.payload;
         state.data.unshift(tweet);
       })

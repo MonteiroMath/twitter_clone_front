@@ -12,6 +12,20 @@ export const fetchAnswers = createAsyncThunk("page/fetch", async (parentId) => {
   return data;
 });
 
+export const postAnswer = createAsyncThunk(
+  "page/postAnswer",
+  async (params) => {
+    const { userId, newTweet, parentId } = params;
+    const { tweet, tweetContent } = await client.post("/tweets", {
+      userId,
+      newTweet,
+      parentId,
+    });
+
+    return { tweet, tweetContent };
+  }
+);
+
 const pageSlice = createSlice({
   name: "page",
   initialState,
@@ -29,6 +43,10 @@ const pageSlice = createSlice({
       .addCase(fetchAnswers.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.error.message;
+      })
+      .addCase(postAnswer.fulfilled, (state, action) => {
+        const { tweet } = action.payload;
+        state.data.unshift(tweet);
       });
   },
 });

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addComment, postTweet } from "../../store/tweetsSlice";
+import { postTweet } from "../../store/tweetsSlice";
+import { postAnswer } from "../../store/PageSlice";
 
 import Attachment from "../Attachment.js";
 import PollForm from "./PollForm";
@@ -125,7 +126,7 @@ function NewTweetForm({
 
   //handles submission of tweet
   function handleSubmit(evt) {
-    let action = parent_id ? addComment : postTweet;
+    let action = parent_id ? postAnswer : postTweet;
     let choices = pollChoices.map((choice) => {
       return { text: choice, votes: 0 };
     });

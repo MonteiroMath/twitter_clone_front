@@ -7,7 +7,7 @@ import {
   addComment,
 } from "./tweetsSlice";
 
-import { fetchAnswers } from "./PageSlice";
+import { fetchAnswers, postAnswer } from "./PageSlice";
 
 import { client } from "../api/client";
 
@@ -51,6 +51,10 @@ const tweetContentSlice = createSlice({
         state.status = "rejected";
       })
       .addCase(postTweet.fulfilled, (state, action) => {
+        const { tweetContent } = action.payload;
+        state.data.push(tweetContent);
+      })
+      .addCase(postAnswer.fulfilled, (state, action) => {
         const { tweetContent } = action.payload;
         state.data.push(tweetContent);
       })
