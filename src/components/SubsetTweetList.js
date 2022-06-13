@@ -2,14 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Spinner } from "reactstrap";
 import TweetList from "./feed/TweetList";
-import { selectSomeTweets } from "../store/tweetsSlice";
 
-function SubsetTweetList({ user, ids }) {
+
+function SubsetTweetList({ user, tweetList }) {
   const tweetStatus = useSelector((state) => state.tweets.status);
   const error = useSelector((state) => state.tweets.error);
-  const tweetList = [
-    ...useSelector((state) => selectSomeTweets(state, ids)),
-  ].reverse();
 
   let content = null;
 

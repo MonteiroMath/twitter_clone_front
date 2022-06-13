@@ -6,6 +6,9 @@ import {
   removeRetweet,
   addComment,
 } from "./tweetsSlice";
+
+import { fetchAnswers } from "./PageSlice";
+
 import { client } from "../api/client";
 
 const initialState = {
@@ -70,6 +73,10 @@ const tweetContentSlice = createSlice({
         const { updatedTweet } = action.payload;
 
         updateTweet(state.data, updatedTweet);
+      })
+      .addCase(fetchAnswers.fulfilled, (state, action) => {
+        const { tweetContent } = action.payload;
+        state.data.push(...tweetContent);
       });
   },
 });

@@ -10,8 +10,6 @@ import Poll from "./Poll";
 function RetweetBox(props) {
   let { retweet, user } = props;
 
-  console.log(retweet);
-
   return (
     <div>
       <Row className="border croundCorners p-3 mt-2" noGutters>

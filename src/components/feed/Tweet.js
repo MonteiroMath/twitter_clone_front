@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  updateLike,
-  addRetweet,
-  removeRetweet,
-  selectTweetContent,
-} from "../../store/tweetsSlice";
+import { addRetweet, removeRetweet } from "../../store/tweetsSlice";
+import { updateLike } from "../../store/tweetContentSlice";
+
+import { selectTweetContent } from "../../store/tweetContentSlice";
 
 import { Row, Col } from "reactstrap";
 
