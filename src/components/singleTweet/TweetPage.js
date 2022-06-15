@@ -10,7 +10,7 @@ import TopBar from "../TopBar";
 import SubsetTweetList from "../SubsetTweetList";
 import TweetCard from "../feed/TweetCard";
 import CommentTweet from "../CommentTweet";
-import { fetchAnswers, selectAnswers } from "../../store/PageSlice";
+import { fetchAnswers, selectAnswers, closePage } from "../../store/PageSlice";
 
 export default function TweetPage(props) {
   const dispatch = useDispatch();
@@ -22,8 +22,12 @@ export default function TweetPage(props) {
   const tweetList = [...useSelector((state) => selectAnswers(state))].reverse();
 
   useEffect(() => {
-    dispatch(fetchAnswers(id));
-  }, [dispatch, pageStatus, id]);
+    if (pageStatus === "idle") {
+      dispatch(fetchAnswers(id));
+    }
+
+    return () => dispatch(closePage());
+  }, [dispatch]);
 
   return tweet ? (
     <div>

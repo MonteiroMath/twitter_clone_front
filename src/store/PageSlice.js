@@ -29,6 +29,11 @@ export const postAnswer = createAsyncThunk(
 const pageSlice = createSlice({
   name: "page",
   initialState,
+  reducers: {
+    closePage(state, action) {
+      return { ...initialState };
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchAnswers.pending, (state, action) => {
@@ -55,7 +60,7 @@ const pageSlice = createSlice({
 export default pageSlice.reducer;
 
 //actions
-export const actions = pageSlice.actions;
+export const { closePage } = pageSlice.actions;
 
 //selectors
 export const selectAnswers = (state) => state.page.data;
