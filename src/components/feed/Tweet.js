@@ -90,7 +90,12 @@ function Tweet({ tweet, user }) {
         toggleQuote={toggleQuote}
         quote={tweetContent}
       />
-      <AnswerModal modal={answerModal} toggle={toggleAnswer} parent={tweet} />
+      <AnswerModal
+        modal={answerModal}
+        toggle={toggleAnswer}
+        parent={tweet}
+        parentContent={tweetContent}
+      />
     </Row>
   );
 }
