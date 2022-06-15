@@ -40,7 +40,7 @@ const pageSlice = createSlice({
         state.status = "pending";
       })
       .addCase(fetchAnswers.fulfilled, (state, action) => {
-        state.status = "fullfiled";
+        state.status = "fulfilled";
         if (action.payload.success) {
           state.data = action.payload.tweets;
         }

@@ -24,7 +24,7 @@ function mockTweet() {
 
 const initialState = {
   tweets: {
-    status: "fullfiled",
+    status: "fulfilled",
     error: null,
     tweets: [mockTweet()],
   },

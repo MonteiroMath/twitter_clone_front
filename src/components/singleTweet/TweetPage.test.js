@@ -8,25 +8,47 @@ import { renderWithHistory } from "../../renderWithRedux";
 const mockedTweet = {
   id: 1,
   author: 1,
-  created_at: new Date().getTime(),
+  retweet: 0,
+  content: 1000,
+  parent: null,
+};
+
+const mockedTweetContent = {
+  id: 1000,
+  author: 1,
   message: "This is my second tweet lol getting good at this",
-  likes: 3,
-  retweets: 0,
+  attach: null,
+  created_at: new Date().getTime(),
+  poll: 0,
+  comment: null,
   liked_by: [],
   retweeted_by: [],
   comment_ids: [],
-  comments: 0,
-  attach: "",
-  poll: false,
-  pollSettings: {},
-  retweet: null,
+  pollSettings: {
+    choices: ["hi", "ho"],
+    pollLen: {
+      days: 1,
+      hours: 3,
+      minutes: 35,
+    },
+  },
 };
 
 const initialState = {
   tweets: {
-    status: "fullfiled",
+    status: "fulfilled",
     error: null,
-    tweets: [mockedTweet],
+    data: [mockedTweet],
+  },
+  tweetContent: {
+    status: "fulfilled",
+    error: null,
+    data: [mockedTweetContent],
+  },
+  page: {
+    status: "fulfilled",
+    error: null,
+    data: [],
   },
 };
 
@@ -40,33 +62,39 @@ describe("Comment tests", () => {
     history.push("/1");
 
     const typedText = "git gud";
-    const comment = {
-      id: 1400,
-      author: 1,
-      created_at: 1650983974062,
-      message: typedText,
-      attach: "",
-      poll: false,
-      retweet: null,
-      retweeted_by: [],
-      liked_by: [],
-      comment_ids: [],
-      pollSettings: {
-        choices: [
-          { text: "", votes: 0 },
-          { text: "", votes: 0 },
-        ],
-        pollLen: { days: 0, hours: 0, minutes: 0 },
-        votes: [0, 0],
+    const resp = {
+      success: true,
+      tweet: {
+        id: 1111,
+        author: 1,
+        retweet: 0,
+        content: 1001,
+        parent: 1,
+      },
+      tweetContent: {
+        id: 1001,
+        author: 1,
+        message: typedText,
+        attach: null,
+        created_at: new Date().getTime(),
+        poll: 0,
+        comment: null,
+        liked_by: [],
+        retweeted_by: [],
+        comment_ids: [],
+        pollSettings: {
+          choices: ["hi", "ho"],
+          pollLen: {
+            days: 1,
+            hours: 3,
+            minutes: 35,
+          },
+        },
       },
     };
 
     //mock api response to post comment
-    const resp = {
-      success: true,
-      updatedTweet: { ...mockedTweet, comment_ids: [comment.id] },
-      comment,
-    };
+
     client.post.mockResolvedValue(resp);
 
     renderWithHistory(<TweetPage />, history, "/:id", {

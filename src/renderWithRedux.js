@@ -4,13 +4,19 @@ import { Switch, Route } from "react-router-dom";
 import Providers from "./components/Providers.js";
 
 import tweetsSlice from "./store/tweetsSlice.js";
+import tweetContentSlice from "./store/tweetContentSlice.js";
+import PageSlice from "./store/PageSlice.js";
 
 export const renderWithRedux = (
   component,
   {
     initialState,
     store = configureStore({
-      reducer: { tweets: tweetsSlice },
+      reducer: {
+        tweets: tweetsSlice,
+        tweetContent: tweetContentSlice,
+        page: PageSlice,
+      },
       preloadedState: initialState,
     }),
   } = {}
@@ -28,7 +34,11 @@ export const renderWithHistory = (
   {
     initialState,
     store = configureStore({
-      reducer: { tweets: tweetsSlice },
+      reducer: {
+        tweets: tweetsSlice,
+        tweetContent: tweetContentSlice,
+        page: PageSlice,
+      },
       preloadedState: initialState,
     }),
   } = {}

@@ -42,7 +42,7 @@ const tweetContentSlice = createSlice({
         state.status = "pending";
       })
       .addCase(fetchTweets.fulfilled, (state, action) => {
-        state.status = "fullfiled";
+        state.status = "fulfilled";
         if (action.payload.success) {
           state.data = action.payload.tweetContent;
         }

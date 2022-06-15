@@ -6,9 +6,14 @@ import Feed from "./Feed.js";
 
 const initialState = {
   tweets: {
-    status: "fullfiled",
+    status: "fulfilled",
     error: null,
-    tweets: [],
+    data: [],
+  },
+  tweetContent: {
+    status: "fulfilled",
+    error: null,
+    data: [],
   },
 };
 
@@ -23,15 +28,29 @@ describe("Add new tweet", () => {
       tweet: {
         id: 1111,
         author: 1,
-        created_at: new Date().getTime(),
+        retweet: 0,
+        content: 1000,
+        parent: null,
+      },
+      tweetContent: {
+        id: 1000,
+        author: 1,
         message: typedText,
-        attach: "",
-        poll: false,
-        retweet: null,
-        retweeted_by: [],
+        attach: null,
+        created_at: "2022-06-15T14:04:48.000Z",
+        poll: 0,
+        comment: null,
         liked_by: [],
+        retweeted_by: [],
         comment_ids: [],
-        pollSettings: {},
+        pollSettings: {
+          choices: ["hi", "ho"],
+          pollLen: {
+            days: 1,
+            hours: 3,
+            minutes: 35,
+          },
+        },
       },
     };
 

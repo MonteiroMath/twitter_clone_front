@@ -19,7 +19,7 @@ function FeedTweetList({ user }) {
 
   let content = null;
 
-  if (tweetStatus === "fullfiled") {
+  if (tweetStatus === "fulfilled") {
     content = <TweetList user={user} tweetList={tweetList} />;
   } else if (tweetStatus === "pending") {
     content = <Spinner color="info" />;
