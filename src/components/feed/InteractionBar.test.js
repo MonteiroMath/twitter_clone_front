@@ -10,15 +10,32 @@ function mockTweet() {
   return {
     id: 1,
     author: 1,
-    created_at: new Date().getTime(),
+    retweet: 0,
+    content: 1000,
+    parent: null,
+  };
+}
+
+function mockTweetContent() {
+  return {
+    id: 1000,
+    author: 1,
     message: "This is my second tweet lol getting good at this",
+    attach: null,
+    created_at: new Date().getTime(),
+    poll: 0,
+    comment: null,
     liked_by: [],
     retweeted_by: [],
     comment_ids: [],
-    attach: "",
-    poll: false,
-    pollSettings: {},
-    retweet: null,
+    pollSettings: {
+      choices: ["hi", "ho"],
+      pollLen: {
+        days: 1,
+        hours: 3,
+        minutes: 35,
+      },
+    },
   };
 }
 
@@ -26,7 +43,17 @@ const initialState = {
   tweets: {
     status: "fulfilled",
     error: null,
-    tweets: [mockTweet()],
+    data: [mockTweet()],
+  },
+  tweetContent: {
+    status: "fulfilled",
+    error: null,
+    data: [mockTweetContent()],
+  },
+  page: {
+    status: "idle",
+    error: null,
+    data: [],
   },
 };
 
@@ -37,7 +64,7 @@ describe("Like tests", () => {
     //mock api response to liking a tweet
     client.put.mockResolvedValue({
       success: true,
-      tweet: { ...mockTweet(), liked_by: [1] },
+      updatedTweet: { ...mockTweetContent(), liked_by: [1] },
     });
 
     renderWithRedux(<Feed />, { initialState });
@@ -58,19 +85,19 @@ describe("Like tests", () => {
   });
 
   test("Unlike tweet", async () => {
-    const oldTweet = mockTweet();
+    const oldTweet = mockTweetContent();
     //mock api response to liking and unliking a tweet
     client.put
       .mockImplementationOnce(() => {
         return {
           success: true,
-          tweet: { ...oldTweet, liked_by: [1] },
+          updatedTweet: { ...oldTweet, liked_by: [1] },
         };
       })
       .mockImplementationOnce(() => {
         return {
           success: true,
-          tweet: { ...oldTweet, liked_by: [] },
+          updatedTweet: { ...oldTweet, liked_by: [] },
         };
       });
 
@@ -111,16 +138,17 @@ describe("Like tests", () => {
   */
 
 test("Simple Retweet test", async () => {
-  const oldTweet = mockTweet();
+  const oldTweetContent = mockTweetContent();
   //mock api response to post retweet
   client.post.mockResolvedValue({
     success: true,
-    updatedTweet: { ...oldTweet, retweeted_by: [1] },
-    retweet: {
-      id: 1005,
+    tweetContent: { ...oldTweetContent, retweeted_by: [1] },
+    tweet: {
+      id: 10055,
       author: 1,
-      created_at: new Date().getTime(),
-      tweetId: oldTweet.id,
+      retweet: 1,
+      content: oldTweetContent.id,
+      parent: null,
     },
   });
 
@@ -144,22 +172,23 @@ test("Simple Retweet test", async () => {
 });
 
 test("Undo retweet", async () => {
-  const oldTweet = mockTweet();
+  const oldTweetContent = mockTweetContent();
   //mock api response to post and delete retweet
   client.post.mockResolvedValue({
     success: true,
-    updatedTweet: { ...oldTweet, retweeted_by: [1] },
-    retweet: {
-      id: 1005,
+    tweetContent: { ...oldTweetContent, retweeted_by: [1] },
+    tweet: {
+      id: 10055,
       author: 1,
-      created_at: new Date().getTime(),
-      tweetId: oldTweet.id,
+      retweet: 1,
+      content: oldTweetContent.id,
+      parent: null,
     },
   });
 
   client.delete.mockResolvedValue({
     success: true,
-    updatedTweet: { ...oldTweet, retweeted_by: [] },
+    updatedTweet: { ...oldTweetContent, retweeted_by: [] },
   });
 
   renderWithRedux(<Feed />, { initialState });
@@ -192,26 +221,16 @@ test("Undo retweet", async () => {
 test("Comment tweet with button", async () => {
   const typedText = "I'm testing this comment stuff";
   const oldTweet = mockTweet();
+  const oldTweetContent = mockTweetContent();
   //mock api response to post cmment
   client.post.mockResolvedValue({
     success: true,
-    updatedTweet: { ...oldTweet, commen_ids: [1005] },
-    comment: {
-      id: 1005,
-      author: 1,
-      created_at: new Date().getTime(),
-      message: typedText,
-      attach: "",
+    updatedTweet: { ...oldTweet, comment_ids: [1005] },
+    tweet: {
+      message: "Typed by the user",
+      attach: null,
       poll: false,
-      retweet: null,
-      retweeted_by: [],
-      liked_by: [],
-      comment_ids: [],
-      pollSettings: {
-        choices: null,
-        pollLen: null,
-        votes: [0, 0],
-      },
+      comment: null,
     },
   });
 
