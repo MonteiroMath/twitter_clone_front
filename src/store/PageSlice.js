@@ -16,13 +16,15 @@ export const postAnswer = createAsyncThunk(
   "page/postAnswer",
   async (params) => {
     const { userId, newTweet, parentId } = params;
-    const { tweet, tweetContent } = await client.post("/tweets", {
-      userId,
-      newTweet,
-      parentId,
-    });
+    const { tweet, tweetContent, updatedTweet } = await client.post(
+      `/tweets/answers/${parentId}`,
+      {
+        userId,
+        newTweet,
+      }
+    );
 
-    return { tweet, tweetContent };
+    return { tweet, tweetContent, updatedTweet };
   }
 );
 

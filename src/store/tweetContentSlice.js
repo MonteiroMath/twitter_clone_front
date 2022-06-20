@@ -55,8 +55,9 @@ const tweetContentSlice = createSlice({
         state.data.push(tweetContent);
       })
       .addCase(postAnswer.fulfilled, (state, action) => {
-        const { tweetContent } = action.payload;
+        const { tweetContent, updatedTweet } = action.payload;
         state.data.push(tweetContent);
+        updateTweet(state.data, updatedTweet.tweetContent);
       })
       .addCase(updateLike.fulfilled, (state, action) => {
         let updatedTweet = action.payload;
