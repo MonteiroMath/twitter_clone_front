@@ -90,7 +90,9 @@ const tweetsSlice = createSlice({
         const { tweetId } = action.payload;
 
         let retweetIndex = state.data.findIndex(
-          (tweet) => tweet.id === tweetId
+          (tweet) =>
+            (tweet.id === tweetId && tweet.original !== null) ||
+            tweet.original === tweetId
         );
 
         state.data.splice(retweetIndex, 1);
