@@ -62,17 +62,23 @@ describe("Comment tests", () => {
     history.push("/1");
 
     const typedText = "git gud";
+
     const resp = {
       success: true,
+      updatedTweet: {
+        tweet: mockedTweet,
+        tweetContent: { ...mockedTweetContent, comment_ids: [1005] },
+      },
       tweet: {
-        id: 1111,
+        id: 1999,
         author: 1,
         retweet: 0,
-        content: 1001,
-        parent: 1,
+        content: 99999,
+        parent: mockedTweet.id,
+        original: null,
       },
       tweetContent: {
-        id: 1001,
+        id: 99999,
         author: 1,
         message: typedText,
         attach: null,
