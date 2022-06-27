@@ -13,6 +13,7 @@ function mockTweet() {
     retweet: 0,
     content: 1000,
     parent: null,
+    original: null,
   };
 }
 
@@ -219,18 +220,43 @@ test("Undo retweet", async () => {
 });
 
 test("Comment tweet with button", async () => {
-  const typedText = "I'm testing this comment stuff";
+  const typedText = "I'm testing this answer stuff";
   const oldTweet = mockTweet();
   const oldTweetContent = mockTweetContent();
   //mock api response to post cmment
   client.post.mockResolvedValue({
     success: true,
-    updatedTweet: { ...oldTweet, comment_ids: [1005] },
+    updatedTweet: {
+      tweet: oldTweet,
+      tweetContent: { ...oldTweetContent, comment_ids: [1005] },
+    },
     tweet: {
-      message: "Typed by the user",
+      id: 1999,
+      author: 1,
+      retweet: 0,
+      content: 99999,
+      parent: oldTweet.id,
+      original: null,
+    },
+    tweetContent: {
+      id: 99999,
+      author: 1,
+      message: typedText,
       attach: null,
-      poll: false,
+      created_at: new Date().getTime(),
+      poll: 0,
       comment: null,
+      liked_by: [],
+      retweeted_by: [],
+      comment_ids: [],
+      pollSettings: {
+        choices: ["hi", "ho"],
+        pollLen: {
+          days: 1,
+          hours: 3,
+          minutes: 35,
+        },
+      },
     },
   });
 
