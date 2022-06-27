@@ -19,7 +19,7 @@ import RetweetBox from "./RetweetBox.js";
 import NewTweetModal from "../NewTweetModal";
 import AnswerModal from "../AnswerModal";
 
-function Tweet({ tweet, user }) {
+function Tweet({ tweet, user, originalId }) {
   const tweetContent = useSelector((state) =>
     selectTweetContent(state, tweet.content)
   );
@@ -61,7 +61,7 @@ function Tweet({ tweet, user }) {
       </Col>
       <Col xs="9" md="10" className="ml-1 ml-md-3">
         <InfoBar username={user.username} created={tweetContent.created_at} />
-        <Link to={`/tweet/${tweet.id}`}>
+        <Link to={`/tweet/${originalId}`}>
           <Message message={tweetContent.message} />
         </Link>
         <Attachment url={tweetContent.attach} />

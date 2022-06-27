@@ -1,11 +1,10 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
 
-import Tweet from "./Tweet";
 import { RetweetIcon } from "../svg/Svg";
 
 function Retweet(props) {
-  let { retweet, user, toggleQuote } = props;
+  let { children } = props;
 
   return (
     <Row noGutters>
@@ -18,11 +17,7 @@ function Retweet(props) {
         <span className="ml-2">You retweeted</span>
       </Col>
       <Col className="mx-auto" xs="12">
-        <Tweet
-          tweet={retweet}
-          user={user}
-          toggleQuote={() => toggleQuote(retweet)}
-        />
+        {children}
       </Col>
     </Row>
   );
