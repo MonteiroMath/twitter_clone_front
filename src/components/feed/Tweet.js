@@ -93,7 +93,7 @@ function Tweet({ tweet, user, originalId }) {
       <AnswerModal
         modal={answerModal}
         toggle={toggleAnswer}
-        parent={tweet}
+        parentId={originalId}
         parentContent={tweetContent}
       />
     </Row>

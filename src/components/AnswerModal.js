@@ -4,7 +4,12 @@ import CommentTweet from "./CommentTweet";
 import RetweetBox from "./feed/RetweetBox";
 import user from "../placeholders/user";
 
-export default function AnswerModal({ modal, toggle, parent, parentContent }) {
+export default function AnswerModal({
+  modal,
+  toggle,
+  parentId,
+  parentContent,
+}) {
   return (
     <Modal isOpen={modal} toggle={toggle}>
       <ModalHeader toggle={toggle} />
@@ -12,7 +17,7 @@ export default function AnswerModal({ modal, toggle, parent, parentContent }) {
         <RetweetBox user={user} retweet={parentContent} />
 
         <div className="pt-3">
-          <CommentTweet toggle={toggle} parent_id={parseInt(parent.id)} />
+          <CommentTweet toggle={toggle} parent_id={parseInt(parentId)} />
         </div>
       </ModalBody>
     </Modal>
