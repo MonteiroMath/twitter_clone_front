@@ -3,60 +3,21 @@ import userEvent from "@testing-library/user-event";
 import Feed from "./Feed";
 import { renderWithRedux } from "../../renderWithRedux";
 import { client } from "../../api/client";
+import mocker from "../../testUtilities/mockers";
 
 jest.mock("../../api/client");
 
-function mockTweet() {
-  return {
-    id: 1,
-    author: 1,
-    retweet: 0,
-    content: 1000,
-    parent: null,
-    original: null,
-  };
-}
+const mockedTweet = mocker.mockTweet();
+const mockedTweetContent = mocker.mockTweetContent();
 
-function mockTweetContent() {
-  return {
-    id: 1000,
-    author: 1,
-    message: "This is my second tweet lol getting good at this",
-    attach: null,
-    created_at: new Date().getTime(),
-    poll: 0,
-    comment: null,
-    liked_by: [],
-    retweeted_by: [],
-    comment_ids: [],
-    pollSettings: {
-      choices: ["hi", "ho"],
-      pollLen: {
-        days: 1,
-        hours: 3,
-        minutes: 35,
-      },
-    },
-  };
-}
-
-const initialState = {
-  tweets: {
-    status: "fulfilled",
-    error: null,
-    data: [mockTweet()],
-  },
-  tweetContent: {
-    status: "fulfilled",
-    error: null,
-    data: [mockTweetContent()],
-  },
-  page: {
-    status: "idle",
-    error: null,
-    data: [],
-  },
-};
+const initialState = mocker.mockInitialState({
+  tweets: mocker.mockInitialSlice({
+    data: [mockedTweet],
+  }),
+  tweetContent: mocker.mockInitialSlice({
+    data: [mockedTweetContent],
+  }),
+});
 
 afterEach(cleanup);
 
@@ -65,7 +26,7 @@ describe("Like tests", () => {
     //mock api response to liking a tweet
     client.put.mockResolvedValue({
       success: true,
-      updatedTweet: { ...mockTweetContent(), liked_by: [1] },
+      updatedTweet: { ...mockedTweetContent, liked_by: [1] },
     });
 
     renderWithRedux(<Feed />, { initialState });
@@ -86,19 +47,18 @@ describe("Like tests", () => {
   });
 
   test("Unlike tweet", async () => {
-    const oldTweet = mockTweetContent();
     //mock api response to liking and unliking a tweet
     client.put
       .mockImplementationOnce(() => {
         return {
           success: true,
-          updatedTweet: { ...oldTweet, liked_by: [1] },
+          updatedTweet: { ...mockedTweetContent, liked_by: [1] },
         };
       })
       .mockImplementationOnce(() => {
         return {
           success: true,
-          updatedTweet: { ...oldTweet, liked_by: [] },
+          updatedTweet: { ...mockedTweetContent, liked_by: [] },
         };
       });
 
@@ -139,18 +99,17 @@ describe("Like tests", () => {
   */
 
 test("Simple Retweet test", async () => {
-  const oldTweetContent = mockTweetContent();
+  const newTweet = mocker.mockTweet({
+    id: 10055,
+    retweet: 1,
+    content: mockedTweetContent.id,
+  });
+
   //mock api response to post retweet
   client.post.mockResolvedValue({
     success: true,
-    tweetContent: { ...oldTweetContent, retweeted_by: [1] },
-    tweet: {
-      id: 10055,
-      author: 1,
-      retweet: 1,
-      content: oldTweetContent.id,
-      parent: null,
-    },
+    tweetContent: { ...mockedTweetContent, retweeted_by: [1] },
+    tweet: newTweet,
   });
 
   renderWithRedux(<Feed />, { initialState });
@@ -173,23 +132,23 @@ test("Simple Retweet test", async () => {
 });
 
 test("Undo retweet", async () => {
-  const oldTweetContent = mockTweetContent();
+  const newTweet = mocker.mockTweet({
+    id: 10055,
+    retweet: 1,
+    content: mockedTweetContent.id,
+    original: mockedTweet.id,
+  });
+
   //mock api response to post and delete retweet
   client.post.mockResolvedValue({
     success: true,
-    tweetContent: { ...oldTweetContent, retweeted_by: [1] },
-    tweet: {
-      id: 10055,
-      author: 1,
-      retweet: 1,
-      content: oldTweetContent.id,
-      parent: null,
-    },
+    tweetContent: { ...mockedTweetContent, retweeted_by: [1] },
+    tweet: newTweet,
   });
 
   client.delete.mockResolvedValue({
     success: true,
-    updatedTweet: { ...oldTweetContent, retweeted_by: [] },
+    updatedTweet: { ...mockedTweetContent, retweeted_by: [] },
   });
 
   renderWithRedux(<Feed />, { initialState });
@@ -221,43 +180,17 @@ test("Undo retweet", async () => {
 
 test("Comment tweet with button", async () => {
   const typedText = "I'm testing this answer stuff";
-  const oldTweet = mockTweet();
-  const oldTweetContent = mockTweetContent();
+
   //mock api response to post cmment
   client.post.mockResolvedValue({
     success: true,
     updatedTweet: {
-      tweet: oldTweet,
-      tweetContent: { ...oldTweetContent, comment_ids: [1005] },
+      tweet: mockedTweet,
+      tweetContent: { ...mockedTweetContent, comment_ids: [1005] },
     },
-    tweet: {
-      id: 1999,
-      author: 1,
-      retweet: 0,
-      content: 99999,
-      parent: oldTweet.id,
-      original: null,
-    },
-    tweetContent: {
-      id: 99999,
-      author: 1,
-      message: typedText,
-      attach: null,
-      created_at: new Date().getTime(),
-      poll: 0,
-      comment: null,
-      liked_by: [],
-      retweeted_by: [],
-      comment_ids: [],
-      pollSettings: {
-        choices: ["hi", "ho"],
-        pollLen: {
-          days: 1,
-          hours: 3,
-          minutes: 35,
-        },
-      },
-    },
+    tweet: mocker.mockTweet({ id: 1999, content: 99999, parent: mockedTweet.id }),
+
+    tweetContent: mocker.mockTweetContent({ id: 99999, message: typedText }),
   });
 
   renderWithRedux(<Feed />, { initialState });

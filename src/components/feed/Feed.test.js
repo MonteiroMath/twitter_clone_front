@@ -4,18 +4,9 @@ import { renderWithRedux } from "../../renderWithRedux";
 import { client } from "../../api/client";
 import Feed from "./Feed.js";
 
-const initialState = {
-  tweets: {
-    status: "fulfilled",
-    error: null,
-    data: [],
-  },
-  tweetContent: {
-    status: "fulfilled",
-    error: null,
-    data: [],
-  },
-};
+import mocker from "../../testUtilities/mockers";
+
+const initialState = mocker.mockInitialState();
 
 afterEach(cleanup);
 jest.mock("../../api/client");
@@ -23,35 +14,11 @@ jest.mock("../../api/client");
 describe("Add new tweet", () => {
   test("Add a tweet to the top of the feed", async () => {
     const typedText = "Typed by the user";
+
     const resp = {
       success: true,
-      tweet: {
-        id: 1111,
-        author: 1,
-        retweet: 0,
-        content: 1000,
-        parent: null,
-      },
-      tweetContent: {
-        id: 1000,
-        author: 1,
-        message: typedText,
-        attach: null,
-        created_at: "2022-06-15T14:04:48.000Z",
-        poll: 0,
-        comment: null,
-        liked_by: [],
-        retweeted_by: [],
-        comment_ids: [],
-        pollSettings: {
-          choices: ["hi", "ho"],
-          pollLen: {
-            days: 1,
-            hours: 3,
-            minutes: 35,
-          },
-        },
-      },
+      tweet: mocker.mockTweet({ id: 1111 }),
+      tweetContent: mocker.mockTweetContent({ message: typedText }),
     };
 
     client.post.mockResolvedValue(resp);

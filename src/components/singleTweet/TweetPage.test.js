@@ -4,53 +4,16 @@ import { client } from "../../api/client";
 import { createMemoryHistory } from "history";
 import TweetPage from "./TweetPage";
 import { renderWithHistory } from "../../renderWithRedux";
+import mocker from "../../testUtilities/mockers";
 
-const mockedTweet = {
-  id: 1,
-  author: 1,
-  retweet: 0,
-  content: 1000,
-  parent: null,
-};
+const mockedTweet = mocker.mockTweet();
 
-const mockedTweetContent = {
-  id: 1000,
-  author: 1,
-  message: "This is my second tweet lol getting good at this",
-  attach: null,
-  created_at: new Date().getTime(),
-  poll: 0,
-  comment: null,
-  liked_by: [],
-  retweeted_by: [],
-  comment_ids: [],
-  pollSettings: {
-    choices: ["hi", "ho"],
-    pollLen: {
-      days: 1,
-      hours: 3,
-      minutes: 35,
-    },
-  },
-};
+const mockedTweetContent = mocker.mockTweetContent();
 
-const initialState = {
-  tweets: {
-    status: "fulfilled",
-    error: null,
-    data: [mockedTweet],
-  },
-  tweetContent: {
-    status: "fulfilled",
-    error: null,
-    data: [mockedTweetContent],
-  },
-  page: {
-    status: "fulfilled",
-    error: null,
-    data: [],
-  },
-};
+const initialState = mocker.mockInitialState({
+  tweets: mocker.mockInitialSlice({ data: [mockedTweet] }),
+  tweetContent: mocker.mockInitialSlice({ data: [mockedTweetContent] }),
+});
 
 jest.mock("../../api/client");
 
@@ -69,34 +32,12 @@ describe("Comment tests", () => {
         tweet: mockedTweet,
         tweetContent: { ...mockedTweetContent, comment_ids: [1005] },
       },
-      tweet: {
+      tweet: mocker.mockTweet({
         id: 1999,
-        author: 1,
-        retweet: 0,
         content: 99999,
         parent: mockedTweet.id,
-        original: null,
-      },
-      tweetContent: {
-        id: 99999,
-        author: 1,
-        message: typedText,
-        attach: null,
-        created_at: new Date().getTime(),
-        poll: 0,
-        comment: null,
-        liked_by: [],
-        retweeted_by: [],
-        comment_ids: [],
-        pollSettings: {
-          choices: ["hi", "ho"],
-          pollLen: {
-            days: 1,
-            hours: 3,
-            minutes: 35,
-          },
-        },
-      },
+      }),
+      tweetContent: mocker.mockTweetContent({ id: 99999, message: typedText }),
     };
 
     //mock api response to post comment
