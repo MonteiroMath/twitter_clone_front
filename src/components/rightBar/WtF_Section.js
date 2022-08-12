@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
-import Avatar from "../Avatar";
+import Avatar from "../Shared/Avatar/Avatar";
 import FollowButton from "../FollowButton";
 
 function WtF_Section(props) {

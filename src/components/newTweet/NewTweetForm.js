@@ -4,11 +4,13 @@ import { useDispatch } from "react-redux";
 import { postTweet } from "../../store/tweetsSlice";
 import { postAnswer } from "../../store/PageSlice";
 
-import Attachment from "../Attachment.js";
 import PollForm from "./PollForm";
 import ToolBar from "./ToolBar";
 import NewTweetFormDisplay from "./NewTweetFormDisplay.js";
-import RetweetBox from "../feed/RetweetBox.js";
+
+import Attachment from "../Shared/Attachment/Attachment";
+import RetweetBox from "../Shared/TweetList/TweetCard/Tweet/RetweetBox/RetweetBox";
+
 import user from "../../placeholders/user.js";
 
 function NewTweetForm({

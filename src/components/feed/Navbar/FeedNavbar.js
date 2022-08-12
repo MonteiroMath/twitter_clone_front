@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Navbar, Nav, NavItem, NavLink } from "reactstrap";
 
-import Avatar from "../Avatar";
+import Avatar from "../../Shared/Avatar/Avatar";
 
 //todo likely to divide this component in the future
 

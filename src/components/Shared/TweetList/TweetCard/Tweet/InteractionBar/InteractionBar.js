@@ -1,8 +1,9 @@
 import React from "react";
-import LikeButton from "./LikeButton.js";
-import ShareButton from "./ShareButton.js";
-import RetweetButton from "./RetweetButton.js";
-import CommentButton from "./CommentButton.js";
+
+import LikeButton from "./Buttons/LikeButton";
+import ShareButton from "./Buttons/ShareButton.js";
+import RetweetButton from "./Buttons/RetweetButton.js";
+import CommentButton from "./Buttons/CommentButton.js";
 
 function InteractionBar(props) {
   let {

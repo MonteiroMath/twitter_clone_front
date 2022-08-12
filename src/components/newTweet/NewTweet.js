@@ -1,4 +1,4 @@
-import Avatar from "../Avatar";
+import Avatar from "../Shared/Avatar/Avatar";
 import { Row, Col } from "reactstrap";
 
 import NewTweetForm from "./NewTweetForm";

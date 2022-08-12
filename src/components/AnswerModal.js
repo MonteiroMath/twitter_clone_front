@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import CommentTweet from "./CommentTweet";
-import RetweetBox from "./feed/RetweetBox";
+import RetweetBox from "./Shared/TweetList/TweetCard/Tweet/RetweetBox/RetweetBox";
 import user from "../placeholders/user";
 
 export default function AnswerModal({

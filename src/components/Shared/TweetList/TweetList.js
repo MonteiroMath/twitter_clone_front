@@ -1,6 +1,6 @@
 import React from "react";
 
-import TweetCard from "./TweetCard";
+import TweetCard from "./TweetCard/TweetCard";
 
 function TweetList(props) {
   const { user, tweetList } = props;

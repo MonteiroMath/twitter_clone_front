@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
-import Tweet from "./Tweet";
-import Retweet from "./Retweet";
+import Tweet from "./Tweet/Tweet";
+import Retweet from "./Retweet/Retweet";
 
 function TweetCard(props) {
   let { tweet, user } = props;

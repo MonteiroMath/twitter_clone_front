@@ -8,8 +8,9 @@ import user from "../../placeholders/user";
 
 import TopBar from "../TopBar";
 import SubsetTweetList from "../SubsetTweetList";
-import TweetCard from "../feed/TweetCard";
 import CommentTweet from "../CommentTweet";
+
+import TweetCard from "../Shared/TweetList/TweetCard/TweetCard";
 import { fetchAnswers, selectAnswers, closePage } from "../../store/PageSlice";
 
 export default function TweetPage(props) {

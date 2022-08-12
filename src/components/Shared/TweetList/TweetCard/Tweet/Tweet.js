@@ -1,23 +1,24 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addRetweet, removeRetweet } from "../../store/tweetsSlice";
-import { updateLike } from "../../store/tweetContentSlice";
-
-import { selectTweetContent } from "../../store/tweetContentSlice";
 
 import { Row, Col } from "reactstrap";
 
-import Attachment from "../Attachment";
 
-import Avatar from "../Avatar";
-import InfoBar from "./InfoBar";
-import Message from "./Message";
-import Poll from "./Poll";
-import InteractionBar from "./InteractionBar";
-import RetweetBox from "./RetweetBox.js";
-import NewTweetModal from "../NewTweetModal";
-import AnswerModal from "../AnswerModal";
+import InfoBar from "./InfoBar/InfoBar";
+import Message from "./Message/Message";
+import Poll from "./Poll/Poll";
+import InteractionBar from "./InteractionBar/InteractionBar";
+import RetweetBox from "./RetweetBox/RetweetBox";
+import Avatar from "../../../Avatar/Avatar";
+import NewTweetModal from "../../../../NewTweetModal";
+import AnswerModal from "../../../../AnswerModal";
+import Attachment from "../../../Attachment/Attachment";
+
+//store imports
+import { addRetweet, removeRetweet } from "../../../../../store/tweetsSlice";
+import { selectTweetContent } from "../../../../../store/tweetContentSlice";
+import { updateLike } from "../../../../../store/tweetContentSlice";
 
 function Tweet({ tweet, user, originalId }) {
   const tweetContent = useSelector((state) =>
@@ -61,7 +62,7 @@ function Tweet({ tweet, user, originalId }) {
       </Col>
       <Col xs="9" md="10" className="ml-1 ml-md-3">
         <InfoBar username={user.username} created={tweetContent.created_at} />
-        <Link to={`/tweet/${originalId}`}>
+        <Link to={`/tweet/${tweet.parent ? tweet.parent : originalId}`}>
           <Message message={tweetContent.message} />
         </Link>
         <Attachment url={tweetContent.attach} />

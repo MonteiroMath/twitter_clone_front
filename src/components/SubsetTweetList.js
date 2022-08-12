@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Spinner } from "reactstrap";
-import TweetList from "./feed/TweetList";
 
+import TweetList from "./Shared/TweetList/TweetList";
 
 function SubsetTweetList({ user, tweetList }) {
   const tweetStatus = useSelector((state) => state.tweets.status);

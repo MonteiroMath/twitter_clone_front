@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import avatar from "../images/phavatar.png";
-import avatar2 from "../images/avatar.png";
+import avatar from "../../../images/phavatar.png";
+import avatar2 from "../../../images/avatar.png";
 
 function Avatar(props) {
   let [src, setSrc] = useState(avatar2);

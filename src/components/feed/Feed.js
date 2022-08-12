@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Row } from "reactstrap";
 
-import NewTweet from "../newTweet/NewTweet";
+import FeedNavbar from "./Navbar/FeedNavbar";
+import FeedTweetList from "./FeedTweetList/FeedTweetList";
+import BottomBar from "./BottomBar/BottomBar";
 
-import FeedNavbar from "./FeedNavbar";
-import FeedTweetList from "./FeedTweetList";
-import NewTweetButton from "./NewTweetButton";
-import BottomBar from "./BottomBar";
+import NewTweet from "../newTweet/NewTweet";
+import NewTweetButton from "../Shared/NewTweetButton/NewTweetButton";
 
 import userData from "../../placeholders/user";
 

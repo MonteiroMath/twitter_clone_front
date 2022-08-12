@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Spinner } from "reactstrap";
-import TweetList from "./TweetList";
-import { selectAllTweets, fetchTweets } from "../../store/tweetsSlice";
+import TweetList from "../../Shared/TweetList/TweetList";
+import { selectAllTweets, fetchTweets } from "../../../store/tweetsSlice";
 
 function FeedTweetList({ user }) {
   const dispatch = useDispatch();

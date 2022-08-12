@@ -1,11 +1,12 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
 
-import InfoBar from "./InfoBar";
-import Avatar from "../Avatar.js";
-import Message from "./Message";
-import Attachment from "../Attachment";
-import Poll from "./Poll";
+import InfoBar from "../InfoBar/InfoBar";
+import Message from "../Message/Message";
+import Poll from "../Poll/Poll";
+
+import Attachment from "../../../../Attachment/Attachment";
+import Avatar from "../../../../Avatar/Avatar";
 
 function RetweetBox(props) {
   let { retweet, user } = props;
