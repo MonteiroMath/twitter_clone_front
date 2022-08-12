@@ -1,7 +1,7 @@
 import React from "react";
 import { Row } from "reactstrap";
 
-import NewTweet from "../newTweet/NewTweet.js";
+import NewTweet from "../NewTweet/NewTweet.js";
 import TopBar from "./TopBar.js";
 
 function Compose(props) {

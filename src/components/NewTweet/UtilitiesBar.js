@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AttachButton from "./AttachButton";
 import AddMediaButton from "./AddMediaButton";
-import { EmoticonIcon, CalendarIcon } from "../svg/Svg";
+import { EmoticonIcon, CalendarIcon } from "../Svg/Svg";
 import PollButton from "./PollButton.js";
 
 function UtilitiesBar(props) {

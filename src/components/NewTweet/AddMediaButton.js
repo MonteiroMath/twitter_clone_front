@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Input, Label, Tooltip } from "reactstrap";
-import { AddMediaIcon } from "../svg/Svg";
+import { AddMediaIcon } from "../Svg/Svg";
 
 function AddMediaButton({ handleAttach, block, toggle, tooltipOpen }) {
   return (

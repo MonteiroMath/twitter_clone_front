@@ -1,6 +1,6 @@
 import React from "react";
 
-import NewTweet from "./newTweet/NewTweet";
+import NewTweet from "./NewTweet/NewTweet";
 
 export default function CommentTweet({
   toggle,

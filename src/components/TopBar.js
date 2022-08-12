@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { Row, Col, Navbar, Nav, NavItem, NavLink } from "reactstrap";
 
-import { LeftArrow } from "./svg/Svg";
+import { LeftArrow } from "./Svg/Svg";
 
 export default function TopBar({ header }) {
   let history = useHistory();

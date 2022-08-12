@@ -1,5 +1,5 @@
 import React from "react";
-import NewTweetForm from "./newTweet/NewTweetForm";
+import NewTweetForm from "./NewTweet/NewTweetForm";
 
 export default function CommentForm({ parent_id, toggle }) {
   return (

@@ -4,15 +4,14 @@ import { Row, Col } from "reactstrap";
 
 import "./App.css";
 
-import Feed from "./components/feed/Feed";
-import RightBar from "./components/rightBar/RightBar";
-import LeftBar from "./components/leftBar/LeftBar";
-import Compose from "./components/compose/Compose";
+import Feed from "./components/Feed/Feed";
+import RightBar from "./components/RightBar/RightBar";
+import LeftBar from "./components/LeftBar/LeftBar";
+import Compose from "./components/Compose/Compose";
 
-import TweetPage from "./components/singleTweet/TweetPage";
+import TweetPage from "./components/SingleTweet/TweetPage";
 
 function App() {
-
   return (
     <Router>
       <div color="white">

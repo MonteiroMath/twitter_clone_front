@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
 
-import { RetweetIcon } from "../../../svg/Svg";
+import { RetweetIcon } from "../../../Svg/Svg";
 
 function Retweet(props) {
   let { children } = props;
