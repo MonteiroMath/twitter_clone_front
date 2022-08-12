@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import AttachButton from "./AttachButton";
-import AddMediaButton from "./AddMediaButton";
-import { EmoticonIcon, CalendarIcon } from "../Svg/Svg";
-import PollButton from "./PollButton.js";
+
+import AttachButton from "./Buttons/AttachButton";
+import AddMediaButton from "./Buttons/AddMediaButton";
+import PollButton from "./Buttons/PollButton.js";
+
+import { EmoticonIcon, CalendarIcon } from "../../Svg/Svg";
 
 function UtilitiesBar(props) {
   const { handleAttach, handlePoll, block, noPoll } = props;

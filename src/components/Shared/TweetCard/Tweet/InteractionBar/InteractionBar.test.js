@@ -1,11 +1,12 @@
 import { screen, cleanup, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Feed from "./Feed";
-import { renderWithRedux } from "../../renderWithRedux";
-import { client } from "../../api/client";
-import mocker from "../../testUtilities/mockers";
+import { renderWithRedux } from "../../../../../renderWithRedux";
+import { client } from "../../../../../api/client";
+import mocker from "../../../../../testUtilities/mockers";
 
-jest.mock("../../api/client");
+import Feed from "../../../../Feed/Feed";
+
+jest.mock("../../../../../api/client");
 
 const mockedTweet = mocker.mockTweet();
 const mockedTweetContent = mocker.mockTweetContent();
@@ -188,7 +189,11 @@ test("Comment tweet with button", async () => {
       tweet: mockedTweet,
       tweetContent: { ...mockedTweetContent, comment_ids: [1005] },
     },
-    tweet: mocker.mockTweet({ id: 1999, content: 99999, parent: mockedTweet.id }),
+    tweet: mocker.mockTweet({
+      id: 1999,
+      content: 99999,
+      parent: mockedTweet.id,
+    }),
 
     tweetContent: mocker.mockTweetContent({ id: 99999, message: typedText }),
   });

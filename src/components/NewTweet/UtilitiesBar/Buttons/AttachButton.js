@@ -1,6 +1,6 @@
 import React from "react";
 import { Input, Label, Tooltip } from "reactstrap";
-import { AddImageIcon } from "../Svg/Svg";
+import { AddImageIcon } from "../../../Svg/Svg";
 
 function AttachButton({ handleAttach, block, toggle, tooltipOpen }) {
   return (
