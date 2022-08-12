@@ -4,21 +4,20 @@ import { Link } from "react-router-dom";
 
 import { Row, Col } from "reactstrap";
 
-
 import InfoBar from "./InfoBar/InfoBar";
 import Message from "./Message/Message";
 import Poll from "./Poll/Poll";
 import InteractionBar from "./InteractionBar/InteractionBar";
-import RetweetBox from "./RetweetBox/RetweetBox";
-import Avatar from "../../../Avatar/Avatar";
-import NewTweetModal from "../../../../NewTweetModal";
-import AnswerModal from "../../../../AnswerModal";
-import Attachment from "../../../Attachment/Attachment";
+import RetweetBox from "../RetweetBox/RetweetBox";
+import Avatar from "../../Avatar/Avatar";
+import NewTweetModal from "../../../NewTweetModal";
+import AnswerModal from "../../../AnswerModal";
+import Attachment from "../../Attachment/Attachment";
 
 //store imports
-import { addRetweet, removeRetweet } from "../../../../../store/tweetsSlice";
-import { selectTweetContent } from "../../../../../store/tweetContentSlice";
-import { updateLike } from "../../../../../store/tweetContentSlice";
+import { addRetweet, removeRetweet } from "../../../../store/tweetsSlice";
+import { selectTweetContent } from "../../../../store/tweetContentSlice";
+import { updateLike } from "../../../../store/tweetContentSlice";
 
 function Tweet({ tweet, user, originalId }) {
   const tweetContent = useSelector((state) =>

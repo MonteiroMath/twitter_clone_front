@@ -10,7 +10,7 @@ import TopBar from "../TopBar";
 import SubsetTweetList from "../SubsetTweetList";
 import CommentTweet from "../CommentTweet";
 
-import TweetCard from "../Shared/TweetList/TweetCard/TweetCard";
+import TweetCard from "../Shared/TweetCard/TweetCard";
 import { fetchAnswers, selectAnswers, closePage } from "../../store/PageSlice";
 
 export default function TweetPage(props) {

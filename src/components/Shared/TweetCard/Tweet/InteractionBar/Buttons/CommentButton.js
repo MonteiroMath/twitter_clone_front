@@ -2,7 +2,7 @@ import React from "react";
 
 import { Button } from "reactstrap";
 
-import { CommentIcon } from "../../../../../../svg/Svg.js";
+import { CommentIcon } from "../../../../../svg/Svg.js";
 
 export default function CommentButton({ comments, toggle }) {
   return (

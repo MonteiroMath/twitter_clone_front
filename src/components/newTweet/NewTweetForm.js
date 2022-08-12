@@ -9,7 +9,7 @@ import ToolBar from "./ToolBar";
 import NewTweetFormDisplay from "./NewTweetFormDisplay.js";
 
 import Attachment from "../Shared/Attachment/Attachment";
-import RetweetBox from "../Shared/TweetList/TweetCard/Tweet/RetweetBox/RetweetBox";
+import RetweetBox from "../Shared/TweetCard/RetweetBox/RetweetBox";
 
 import user from "../../placeholders/user.js";
 
