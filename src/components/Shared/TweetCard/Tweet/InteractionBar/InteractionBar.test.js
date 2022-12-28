@@ -8,16 +8,19 @@ import Feed from "../../../../Feed/Feed";
 
 jest.mock("../../../../../api/client");
 
-const mockedTweet = mocker.mockTweet();
-const mockedTweetContent = mocker.mockTweetContent();
+let mockedTweet, mockedTweetContent, initialState;
 
-const initialState = mocker.mockInitialState({
-  tweets: mocker.mockInitialSlice({
-    data: [mockedTweet],
-  }),
-  tweetContent: mocker.mockInitialSlice({
-    data: [mockedTweetContent],
-  }),
+beforeAll(() => {
+  mockedTweet = mocker.mockTweet();
+  mockedTweetContent = mocker.mockTweetContent();
+  initialState = mocker.mockInitialState({
+    tweets: mocker.mockInitialSlice({
+      data: [mockedTweet],
+    }),
+    tweetContent: mocker.mockInitialSlice({
+      data: [mockedTweetContent],
+    }),
+  });
 });
 
 afterEach(cleanup);
@@ -31,12 +34,6 @@ describe("Like tests", () => {
     });
 
     renderWithRedux(<Feed />, { initialState });
-
-    //check number of likes the tweet has
-    const likesNum = parseInt(
-      screen.getByLabelText("number of likes").textContent
-    );
-    expect(likesNum).toBe(0);
 
     //click the like button
     userEvent.click(screen.getByRole("button", { name: /^like tweet$/i }));
@@ -65,27 +62,16 @@ describe("Like tests", () => {
 
     renderWithRedux(<Feed />, { initialState });
 
-    //check number of likes the tweet has
-    const likesNum = parseInt(
-      screen.getByLabelText("number of likes").textContent
-    );
-    expect(likesNum).toBe(0);
 
     //click the like button
     userEvent.click(screen.getByRole("button", { name: /^like tweet$/i }));
-
-    //check number of likes the tweet has after the first click
-    let likesLabel = await screen.findByLabelText("number of likes");
-    let updatedLikes = parseInt(likesLabel.textContent);
-    expect(updatedLikes).toBe(1);
-
     //click Like button again
     userEvent.click(screen.getByRole("button", { name: /^like tweet$/i }));
 
     //check number of likes the tweet has after the second click
-    likesLabel = await screen.findByLabelText("number of likes");
-    updatedLikes = parseInt(likesLabel.textContent);
-    expect(updatedLikes).toBe(0);
+    let likesLabel = await screen.findByLabelText("number of likes");
+    let likes = parseInt(likesLabel.textContent);
+    expect(likes).toBe(0);
   });
 });
 

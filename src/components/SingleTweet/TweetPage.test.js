@@ -6,26 +6,27 @@ import TweetPage from "./TweetPage";
 import { renderWithHistory } from "../../renderWithRedux";
 import mocker from "../../testUtilities/mockers";
 
-const mockedTweet = mocker.mockTweet();
-
-const mockedTweetContent = mocker.mockTweetContent();
-
-const initialState = mocker.mockInitialState({
-  tweets: mocker.mockInitialSlice({ data: [mockedTweet] }),
-  tweetContent: mocker.mockInitialSlice({ data: [mockedTweetContent] }),
-});
 
 jest.mock("../../api/client");
+let mockedTweet, mockedTweetContent, initialState;
+
+beforeAll(() => {
+  mockedTweet = mocker.mockTweet();
+  mockedTweetContent = mocker.mockTweetContent();
+  initialState = mocker.mockInitialState({
+    tweets: mocker.mockInitialSlice({ data: [mockedTweet] }),
+    tweetContent: mocker.mockInitialSlice({ data: [mockedTweetContent] }),
+  });
+});
 
 afterEach(cleanup);
 
 describe("Comment tests", () => {
   test("Write a comment on tweet single page", async () => {
+    //arrange
     const history = createMemoryHistory();
     history.push("/1");
-
     const typedText = "git gud";
-
     const resp = {
       success: true,
       updatedTweet: {
@@ -48,14 +49,12 @@ describe("Comment tests", () => {
       initialState,
     });
 
-    expect(
-      screen.getByText(/This is my second tweet lol getting good at this/i)
-    ).toBeInTheDocument();
-
+    let commentBox = screen.getByPlaceholderText(/Answer this tweet/);
     let button = screen.getByRole("button", { name: /^comment$/i });
+
+
     expect(button).toBeDisabled();
 
-    let commentBox = screen.getByPlaceholderText(/Answer this tweet/);
 
     //type new comment
     userEvent.type(commentBox, typedText);
