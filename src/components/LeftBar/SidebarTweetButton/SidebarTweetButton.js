@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { Button } from "reactstrap";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
-import NewTweet from "../NewTweet/NewTweet";
-
-import { PenIcon } from "../Svg/Svg";
+import NewTweet from "../../NewTweet/NewTweet";
+import { PenIcon } from "../../Svg/Svg";
 
 function SideBarTweetButton(props) {
   const [modal, setModal] = useState(false);
