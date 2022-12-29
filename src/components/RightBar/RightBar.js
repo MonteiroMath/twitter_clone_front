@@ -1,15 +1,15 @@
 import React from "react";
 
-import SearchBar from "./SearchBar";
-import RightBarCard from "./RightBarCard";
+import SearchBar from "./SearchBar/SearchBar";
+import RightBarCard from "./RightBarCard/RightBarCard";
 
-import ExploreSection from "./ExploreSection";
-import WtF_Section from "./WtF_Section";
-import TopicSection from "./TopicSection";
+import ExploreSection from "./ExploreSection/ExploreSection";
+import WtF_Section from "./WtfSection/WtfSection";
+import TopicSection from "./TopicSection/TopicSection";
 
-function RightBar(props) {
+function RightBar() {
   return (
-    <div>
+    <div data-testid="RightBar">
       <SearchBar />
       <RightBarCard
         title="What's Happening"

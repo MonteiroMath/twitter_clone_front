@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
 
-import FollowButton from "../FollowButton";
+import FollowButton from "../../FollowButton";
 
 function TopicSection(props) {
   const { topic, genre } = props.content;
