@@ -1,6 +1,6 @@
 import { screen, cleanup, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { renderWithRedux } from "../../../../../renderWithRedux";
+import { renderWithRedux } from "../../../../../testUtilities/renderWithProviders";
 import { client } from "../../../../../api/client";
 import mocker from "../../../../../testUtilities/mockers";
 
@@ -61,7 +61,6 @@ describe("Like tests", () => {
       });
 
     renderWithRedux(<Feed />, { initialState });
-
 
     //click the like button
     userEvent.click(screen.getByRole("button", { name: /^like tweet$/i }));

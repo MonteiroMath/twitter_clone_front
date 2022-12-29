@@ -3,9 +3,8 @@ import userEvent from "@testing-library/user-event";
 import { client } from "../../api/client";
 import { createMemoryHistory } from "history";
 import TweetPage from "./TweetPage";
-import { renderWithHistory } from "../../renderWithRedux";
+import { renderWithHistory } from "../../testUtilities/renderWithProviders";
 import mocker from "../../testUtilities/mockers";
-
 
 jest.mock("../../api/client");
 let mockedTweet, mockedTweetContent, initialState;
@@ -52,9 +51,7 @@ describe("Comment tests", () => {
     let commentBox = screen.getByPlaceholderText(/Answer this tweet/);
     let button = screen.getByRole("button", { name: /^comment$/i });
 
-
     expect(button).toBeDisabled();
-
 
     //type new comment
     userEvent.type(commentBox, typedText);

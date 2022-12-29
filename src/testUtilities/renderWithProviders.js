@@ -1,11 +1,11 @@
 import { render } from "@testing-library/react";
 import { configureStore } from "@reduxjs/toolkit";
 import { Switch, Route } from "react-router-dom";
-import Providers from "./components/Providers.js";
+import Providers from "../components/Providers.js";
 
-import tweetsSlice from "./store/tweetsSlice.js";
-import tweetContentSlice from "./store/tweetContentSlice.js";
-import PageSlice from "./store/PageSlice.js";
+import tweetsSlice from "../store/tweetsSlice.js";
+import tweetContentSlice from "../store/tweetContentSlice.js";
+import PageSlice from "../store/PageSlice.js";
 
 export const renderWithRedux = (
   component,
