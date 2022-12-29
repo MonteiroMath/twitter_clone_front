@@ -8,7 +8,7 @@ import BottomBar from "./BottomBar/BottomBar";
 import NewTweet from "../NewTweet/NewTweet";
 import NewTweetButton from "../Shared/NewTweetButton/NewTweetButton";
 
-import userData from "../../placeholders/user";
+import userData from "../../assets/placeholders/user";
 
 function Feed(props) {
   let [user, setUser] = useState({});

@@ -38,7 +38,7 @@ textarea {
 }
 
 .searchBar {
-  background: url(icons/search.png) no-repeat scroll 15px 10px;
+  background: url(assets/icons/search.png) no-repeat scroll 15px 10px;
   padding-left: 30px;
 }
 

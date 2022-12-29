@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { selectTweetById } from "../../store/tweetsSlice";
 import { Row } from "reactstrap";
 
-import user from "../../placeholders/user";
+import user from "../../assets/placeholders/user";
 
 import TopBar from "../Shared/TopBar/TopBar";
 import SubsetTweetList from "../SubsetTweetList";

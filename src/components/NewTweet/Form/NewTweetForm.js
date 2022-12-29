@@ -11,7 +11,7 @@ import NewTweetFormDisplay from "./NewTweetFormDisplay.js";
 import Attachment from "../../Shared/Attachment/Attachment";
 import RetweetBox from "../../Shared/TweetCard/RetweetBox/RetweetBox";
 
-import user from "../../../placeholders/user.js";
+import user from "../../../assets/placeholders/user.js";
 
 function NewTweetForm({
   toggle,
