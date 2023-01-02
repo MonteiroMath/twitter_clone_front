@@ -9,7 +9,7 @@ import RightBar from "./components/RightBar/RightBar";
 import LeftBar from "./components/LeftBar/LeftBar";
 import Compose from "./components/Compose/Compose";
 
-import TweetPage from "./components/SingleTweet/TweetPage";
+import TweetPage from "./components/TweetPage/TweetPage";
 
 function App() {
   return (
