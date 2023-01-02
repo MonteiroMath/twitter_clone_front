@@ -11,7 +11,7 @@ import InteractionBar from "./InteractionBar/InteractionBar";
 import RetweetBox from "../RetweetBox/RetweetBox";
 import Avatar from "../../Avatar/Avatar";
 import NewTweetModal from "../../../NewTweetModal";
-import AnswerModal from "../../../AnswerModal";
+import AnswerModal from "../../../AnswerModal/AnswerModal";
 import Attachment from "../../Attachment/Attachment";
 
 //store imports
