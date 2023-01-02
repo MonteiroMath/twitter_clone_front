@@ -7,7 +7,7 @@ import { Row } from "reactstrap";
 import user from "../../assets/placeholders/user";
 
 import TopBar from "../Shared/TopBar/TopBar";
-import SubsetTweetList from "../SubsetTweetList";
+import SubsetTweetList from "../SubsetTweetList/SubsetTweetList";
 import CommentTweet from "../CommentTweet/CommentTweet";
 
 import TweetCard from "../Shared/TweetCard/TweetCard";
