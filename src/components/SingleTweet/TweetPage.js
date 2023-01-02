@@ -8,7 +8,7 @@ import user from "../../assets/placeholders/user";
 
 import TopBar from "../Shared/TopBar/TopBar";
 import SubsetTweetList from "../SubsetTweetList";
-import CommentTweet from "../CommentTweet";
+import CommentTweet from "../CommentTweet/CommentTweet";
 
 import TweetCard from "../Shared/TweetCard/TweetCard";
 import { fetchAnswers, selectAnswers, closePage } from "../../store/PageSlice";
