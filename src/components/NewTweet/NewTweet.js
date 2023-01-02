@@ -1,7 +1,7 @@
 import Avatar from "../Shared/Avatar/Avatar";
 import { Row, Col } from "reactstrap";
 
-import NewTweetForm from "./Form/NewTweetForm";
+import NewTweetForm from "../Shared/NewTweetForm/NewTweetForm";
 import CommentForm from "../CommentForm";
 
 function NewTweet({ toggle, quote, placeholder, parent_id }) {

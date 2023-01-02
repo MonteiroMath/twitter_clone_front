@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
+
 import { postTweet } from "../../../store/tweetsSlice";
 import { postAnswer } from "../../../store/PageSlice";
 
 import PollForm from "../PollForm/PollForm";
+
 import ToolBar from "../ToolBar";
-import NewTweetFormDisplay from "./NewTweetFormDisplay.js";
+import NewTweetFormDisplay from "./NewTweetFormDisplay/NewTweetFormDisplay";
 
-import Attachment from "../../Shared/Attachment/Attachment";
-import RetweetBox from "../../Shared/TweetCard/RetweetBox/RetweetBox";
+import Attachment from "../Attachment/Attachment";
+import RetweetBox from "../TweetCard/RetweetBox/RetweetBox";
 
-import user from "../../../assets/placeholders/user.js";
+import user from "../../../assets/placeholders/user";
 
 function NewTweetForm({
   toggle,
