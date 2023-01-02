@@ -7,7 +7,7 @@ import { postAnswer } from "../../../store/PageSlice";
 
 import PollForm from "../PollForm/PollForm";
 
-import ToolBar from "../ToolBar";
+import ToolBar from "../ToolBar/ToolBar";
 import NewTweetFormDisplay from "./NewTweetFormDisplay/NewTweetFormDisplay";
 
 import Attachment from "../Attachment/Attachment";

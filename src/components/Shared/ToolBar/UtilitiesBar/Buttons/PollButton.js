@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Tooltip } from "reactstrap";
-import { PollIcon } from "../../../Svg/Svg";
+
+import { PollIcon } from "../../../../Svg/Svg";
 
 function PollButton({ handlePoll, block, tooltipOpen, toggle }) {
   return (
