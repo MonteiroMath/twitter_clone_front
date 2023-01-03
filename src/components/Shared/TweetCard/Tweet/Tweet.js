@@ -10,9 +10,9 @@ import Poll from "./Poll/Poll";
 import InteractionBar from "./InteractionBar/InteractionBar";
 import RetweetBox from "../RetweetBox/RetweetBox";
 import Avatar from "../../Avatar/Avatar";
-import NewTweetModal from "../../../NewTweetModal/NewTweetModal";
-import AnswerModal from "../../../AnswerModal/AnswerModal";
 import Attachment from "../../Attachment/Attachment";
+import NewTweetModal from "../../../Shared/Modals/NewTweetModal/NewTweetModal";
+import AnswerModal from "../../../Shared/Modals/AnswerModal/AnswerModal";
 
 //store imports
 import { addRetweet, removeRetweet } from "../../../../store/tweetsSlice";

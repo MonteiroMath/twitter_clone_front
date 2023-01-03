@@ -1,7 +1,7 @@
 import React from "react";
 import { Row } from "reactstrap";
 
-import NewTweet from "../NewTweet/NewTweet.js";
+import NewTweet from "../Shared/NewTweet/NewTweet.js";
 import TopBar from "./TopBar/TopBar.js";
 
 function NewTweetPage() {

@@ -2,7 +2,7 @@ import { screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithRedux } from "../../testUtilities/renderWithProviders";
 import { client } from "../../api/client";
-import Feed from "./Feed.js";
+import FeedPage from "./FeedPage.js";
 
 import mocker from "../../testUtilities/mockers";
 
@@ -23,7 +23,7 @@ describe("Add new tweet", () => {
 
     client.post.mockResolvedValue(resp);
 
-    renderWithRedux(<Feed />, { initialState });
+    renderWithRedux(<FeedPage />, { initialState });
 
     let textBox = screen.getByPlaceholderText(/What's happening?/);
     expect(textBox).toBeInTheDocument();

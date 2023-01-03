@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Button } from "reactstrap";
 
-import Avatar from "../../Shared/Avatar/Avatar";
+import Avatar from "../../../Shared/Avatar/Avatar";
 
 function ProfileInfoButton(props) {
   return (

@@ -4,14 +4,14 @@ import { useParams } from "react-router-dom";
 import { selectTweetById } from "../../store/tweetsSlice";
 import { Row } from "reactstrap";
 
-import user from "../../assets/placeholders/user";
-
 import TopBar from "../Shared/TopBar/TopBar";
 import SubsetTweetList from "./SubsetTweetList/SubsetTweetList";
-import CommentTweet from "../CommentTweet/CommentTweet";
+import CommentTweet from "../Shared/CommentTweet/CommentTweet";
 
 import TweetCard from "../Shared/TweetCard/TweetCard";
 import { fetchAnswers, selectAnswers, closePage } from "../../store/PageSlice";
+
+import user from "../../assets/placeholders/user";
 
 export default function TweetPage(props) {
   const dispatch = useDispatch();

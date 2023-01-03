@@ -2,7 +2,7 @@ import React from "react";
 
 import { Button } from "reactstrap";
 
-import { ShareIcon } from "../../../../../Svg/Svg.js";
+import { ShareIcon } from "../../../../Svg/Svg";
 
 export default function ShareButton(props) {
   return (

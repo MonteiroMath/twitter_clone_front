@@ -2,7 +2,7 @@ import { screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { renderWithRedux } from "../../../testUtilities/renderWithProviders";
-import NewTweet from "../NewTweet";
+import NewTweet from "../NewTweet/NewTweet";
 
 afterEach(cleanup);
 

@@ -7,7 +7,7 @@ import {
   DropdownItem,
 } from "reactstrap";
 
-import { RetweetIcon, CommentIcon } from "../../../../../Svg/Svg.js";
+import { RetweetIcon, CommentIcon } from "../../../../Svg/Svg";
 
 export default function RetweetButton({
   retweeted,

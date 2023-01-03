@@ -2,7 +2,7 @@ import React from "react";
 
 import { Button } from "reactstrap";
 
-import { LikeIcon } from "../../../../../Svg/Svg.js";
+import { LikeIcon } from "../../../../Svg/Svg";
 
 export default function LikeButton({ handleLike, liked, likes }) {
   return (

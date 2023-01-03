@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
 
-import { PenIcon } from "../../Svg/Svg";
+import { PenIcon } from "../../Shared/Svg/Svg";
 
 function NewTweetButton({ handleNewTweet }) {
   return (

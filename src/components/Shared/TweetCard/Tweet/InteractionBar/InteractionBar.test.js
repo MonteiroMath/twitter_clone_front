@@ -4,7 +4,7 @@ import { renderWithRedux } from "../../../../../testUtilities/renderWithProvider
 import { client } from "../../../../../api/client";
 import mocker from "../../../../../testUtilities/mockers";
 
-import Feed from "../../../../Feed/Feed";
+import FeedPage from "../../../../FeedPage/FeedPage";
 
 jest.mock("../../../../../api/client");
 
@@ -33,7 +33,7 @@ describe("Like tests", () => {
       updatedTweet: { ...mockedTweetContent, liked_by: [1] },
     });
 
-    renderWithRedux(<Feed />, { initialState });
+    renderWithRedux(<FeedPage />, { initialState });
 
     //click the like button
     userEvent.click(screen.getByRole("button", { name: /^like tweet$/i }));
@@ -60,7 +60,7 @@ describe("Like tests", () => {
         };
       });
 
-    renderWithRedux(<Feed />, { initialState });
+    renderWithRedux(<FeedPage />, { initialState });
 
     //click the like button
     userEvent.click(screen.getByRole("button", { name: /^like tweet$/i }));
@@ -98,7 +98,7 @@ test("Simple Retweet test", async () => {
     tweet: newTweet,
   });
 
-  renderWithRedux(<Feed />, { initialState });
+  renderWithRedux(<FeedPage />, { initialState });
 
   //click retweet button
   userEvent.click(screen.getByRole("button", { name: /^Retweet$/i }));
@@ -137,7 +137,7 @@ test("Undo retweet", async () => {
     updatedTweet: { ...mockedTweetContent, retweeted_by: [] },
   });
 
-  renderWithRedux(<Feed />, { initialState });
+  renderWithRedux(<FeedPage />, { initialState });
 
   //click retweet button
   userEvent.click(screen.getByRole("button", { name: /^Retweet$/i }));
@@ -183,7 +183,7 @@ test("Comment tweet with button", async () => {
     tweetContent: mocker.mockTweetContent({ id: 99999, message: typedText }),
   });
 
-  renderWithRedux(<Feed />, { initialState });
+  renderWithRedux(<FeedPage />, { initialState });
 
   const tweet = screen.getByText(
     /This is my second tweet lol getting good at this/i

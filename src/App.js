@@ -4,12 +4,12 @@ import { Row, Col } from "reactstrap";
 
 import "./App.css";
 
-import Feed from "./components/Feed/Feed";
-import RightBar from "./components/RightBar/RightBar";
-import LeftBar from "./components/LeftBar/LeftBar";
-import NewTweetPage from "./components/NewTweetPage/NewTweetPage";
+import RightBar from "./components/HomePage/RightBar/RightBar";
+import LeftBar from "./components/HomePage/LeftBar/LeftBar";
 
+import FeedPage from "./components/FeedPage/FeedPage";
 import TweetPage from "./components/TweetPage/TweetPage";
+import NewTweetPage from "./components/NewTweetPage/NewTweetPage";
 
 function App() {
   return (
@@ -28,7 +28,7 @@ function App() {
                 <TweetPage />
               </Route>
               <Route path="/">
-                <Feed />
+                <FeedPage />
               </Route>
             </Switch>
           </Col>

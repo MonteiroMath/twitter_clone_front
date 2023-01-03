@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
-import NewTweet from "../NewTweet/NewTweet";
+import NewTweet from "../../NewTweet/NewTweet";
 
 export default function NewTweetModal({ modal, toggleQuote, quote }) {
   return (

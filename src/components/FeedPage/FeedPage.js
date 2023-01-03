@@ -5,7 +5,7 @@ import FeedNavbar from "./Navbar/FeedNavbar";
 import FeedTweetList from "./FeedTweetList/FeedTweetList";
 import BottomBar from "./BottomBar/BottomBar";
 
-import NewTweet from "../NewTweet/NewTweet";
+import NewTweet from "../Shared/NewTweet/NewTweet";
 import NewTweetButton from "../Shared/NewTweetButton/NewTweetButton";
 
 import userData from "../../assets/placeholders/user";

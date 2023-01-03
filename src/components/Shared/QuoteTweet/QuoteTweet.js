@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Button } from "reactstrap";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
-import NewTweet from "../../NewTweet/NewTweet";
-import { PenIcon } from "../../Svg/Svg";
+import NewTweet from "./newTweet/NewTweet";
 
-function SideBarTweetButton(props) {
+import { PenIcon } from "../Svg/Svg";
+
+function QuoteTweet(props) {
   const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
@@ -28,4 +29,4 @@ function SideBarTweetButton(props) {
   );
 }
 
-export default SideBarTweetButton;
+export default QuoteTweet;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Row, Col, Navbar, Nav, NavItem, NavLink } from "reactstrap";
-import { LeftArrow } from "../../Svg/Svg";
+import { LeftArrow } from "../../Shared/Svg/Svg";
 
 function TopBar(props) {
   let history = useHistory();
@@ -12,12 +12,8 @@ function TopBar(props) {
         <Navbar>
           <Nav navbar>
             <NavItem>
-              <NavLink
-                className="text-dark"
-                href="#"
-                onClick={history.goBack}
-              >
-                <LeftArrow/>
+              <NavLink className="text-dark" href="#" onClick={history.goBack}>
+                <LeftArrow />
               </NavLink>
             </NavItem>
           </Nav>
