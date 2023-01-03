@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col } from "reactstrap";
 
 import UtilitiesBar from "./UtilitiesBar/UtilitiesBar"
-import TweetButton from "../TweetButton/TweetButton"
+import TweetButton from "../../Buttons/TweetButton/TweetButton"
 
 //todo figure out gif attachment
 

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { selectTweetById } from "../../store/tweetsSlice";
 import { Row } from "reactstrap";
 
-import TopBar from "../Shared/TopBar/TopBar";
+import TopBar from "../Shared/Bars/TopBar/TopBar";
 import SubsetTweetList from "./SubsetTweetList/SubsetTweetList";
 import CommentTweet from "../Shared/CommentTweet/CommentTweet";
 

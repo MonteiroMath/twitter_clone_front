@@ -1,5 +1,5 @@
 import React from "react";
-import NewTweetForm from "../../NewTweetForm/NewTweetForm";
+import NewTweetForm from "../../../Shared/Forms/NewTweetForm/NewTweetForm";
 
 /*
   This component is a wrapper over the NewTweetForm components passing the necessary proporties to assure the correct form behavior.

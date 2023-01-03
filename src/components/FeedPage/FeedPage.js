@@ -4,9 +4,8 @@ import { Row } from "reactstrap";
 import FeedNavbar from "./Navbar/FeedNavbar";
 import FeedTweetList from "./FeedTweetList/FeedTweetList";
 import BottomBar from "./BottomBar/BottomBar";
-
 import NewTweet from "../Shared/NewTweet/NewTweet";
-import NewTweetButton from "../Shared/NewTweetButton/NewTweetButton";
+import NewTweetButton from "../Shared//Buttons/NewTweetButton/NewTweetButton";
 
 import userData from "../../assets/placeholders/user";
 

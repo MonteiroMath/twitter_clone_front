@@ -1,8 +1,8 @@
 import { Row, Col } from "reactstrap";
 
-import NewTweetForm from "../NewTweetForm/NewTweetForm";
-import Avatar from "../Avatar/Avatar";
 import CommentForm from "./CommentForm/CommentForm";
+import Avatar from "../Avatar/Avatar";
+import NewTweetForm from "../Forms/NewTweetForm/NewTweetForm";
 
 function NewTweet({ toggle, quote, placeholder, parent_id }) {
   const Form = parent_id ? CommentForm : NewTweetForm;
