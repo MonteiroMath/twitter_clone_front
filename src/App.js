@@ -7,7 +7,7 @@ import "./App.css";
 import Feed from "./components/Feed/Feed";
 import RightBar from "./components/RightBar/RightBar";
 import LeftBar from "./components/LeftBar/LeftBar";
-import Compose from "./components/Compose/Compose";
+import NewTweetPage from "./components/NewTweetPage/NewTweetPage";
 
 import TweetPage from "./components/TweetPage/TweetPage";
 
@@ -21,13 +21,12 @@ function App() {
           </Col>
           <Col className="ml-auto p-0" xs="12" md="10" lg="6">
             <Switch>
-              <Route path="/compose">
-                <Compose />
+              <Route path="/newTweet">
+                <NewTweetPage />
               </Route>
               <Route path="/tweet/:id">
                 <TweetPage />
               </Route>
-
               <Route path="/">
                 <Feed />
               </Route>

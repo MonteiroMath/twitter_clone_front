@@ -12,7 +12,7 @@ function NewTweetButton({ handleNewTweet }) {
       onClick={handleNewTweet}
     >
       <div>
-        <Link className="text-white" to="/compose">
+        <Link className="text-white" to="/newTweet">
           <PenIcon />
         </Link>
       </div>

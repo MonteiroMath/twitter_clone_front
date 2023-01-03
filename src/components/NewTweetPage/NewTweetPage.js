@@ -2,9 +2,9 @@ import React from "react";
 import { Row } from "reactstrap";
 
 import NewTweet from "../NewTweet/NewTweet.js";
-import TopBar from "./TopBar.js";
+import TopBar from "./TopBar/TopBar.js";
 
-function Compose(props) {
+function NewTweetPage() {
   return (
     <div>
       <Row noGutters={true}>
@@ -17,4 +17,4 @@ function Compose(props) {
   );
 }
 
-export default Compose;
+export default NewTweetPage;
