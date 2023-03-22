@@ -5,7 +5,6 @@ import PageSlice from "./PageSlice";
 export default configureStore({
   reducer: {
     tweets: tweetsSlice,
-    
     page: PageSlice,
   },
 });

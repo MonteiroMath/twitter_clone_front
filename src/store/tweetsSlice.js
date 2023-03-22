@@ -8,9 +8,14 @@ const initialState = {
   data: [],
 };
 
+function updateTweet(stateData, updatedTweet) {
+  let index = stateData.findIndex((tweet) => tweet.id === updatedTweet.id);
+
+  stateData[index] = updatedTweet;
+}
+
 export const fetchTweets = createAsyncThunk("tweets/fetch", async (id) => {
   const data = await client.get(`/tweets?userId=${id}`);
-
   return data;
 });
 
@@ -29,7 +34,7 @@ export const postTweet = createAsyncThunk(
 
 export const addRetweet = createAsyncThunk("tweets/addRt", async (params) => {
   const { tweetId, userId } = params;
-  const data = await client.post(`/tweets/${tweetId}/retweet`, { userId });
+  const data = await client.post(`/tweets/${tweetId}/retweet?userId=${userId}`);
   return data;
 });
 
@@ -37,8 +42,10 @@ export const removeRetweet = createAsyncThunk(
   "tweets/deleteRt",
   async (params) => {
     const { tweetId, userId } = params;
-    const data = await client.delete(`/tweets/${tweetId}/retweet`, { userId });
-    return { tweetId, updatedTweet: data.updatedTweet };
+    const data = await client.delete(
+      `/tweets/${tweetId}/retweet?userId=${userId}`
+    );
+    return data;
   }
 );
 
@@ -58,7 +65,7 @@ export const addLike = createAsyncThunk("tweets/addLike", async (params) => {
   const { id, userId } = params;
   const data = await client.put(`/tweets/${id}/likes?userId=${userId}`);
 
-  return data.like;
+  return data;
 });
 
 export const deleteLike = createAsyncThunk(
@@ -67,7 +74,7 @@ export const deleteLike = createAsyncThunk(
     const { id, userId } = params;
     const data = await client.delete(`/tweets/${id}/likes?userId=${userId}`);
 
-    return data.success;
+    return data;
   }
 );
 
@@ -98,34 +105,42 @@ const tweetsSlice = createSlice({
         state.data.unshift(tweet);
       })
       .addCase(postAnswer.fulfilled, (state, action) => {
-        const { tweet } = action.payload;
+        const { tweet, updatedTweet } = action.payload;
+        updateTweet(state.data, updatedTweet);
         state.data.unshift(tweet);
       })
       .addCase(addRetweet.fulfilled, (state, action) => {
-        let { tweet } = action.payload;
+        let { tweet, updatedTweet } = action.payload;
 
+        updateTweet(state.data, updatedTweet);
         state.data.unshift(tweet);
       })
       .addCase(removeRetweet.fulfilled, (state, action) => {
-        const { tweetId } = action.payload;
+        const { updatedTweet } = action.payload;
 
+        updateTweet(state.data, updatedTweet);
+
+        //todo extract
         let retweetIndex = state.data.findIndex(
           (tweet) =>
-            (tweet.id === tweetId && tweet.original !== null) ||
-            tweet.original === tweetId
+            tweet.referenceId === updatedTweet && tweet.type === "retweet"
         );
 
         state.data.splice(retweetIndex, 1);
       })
       .addCase(addComment.fulfilled, (state, action) => {
-        const { comment } = action.payload;
+        const { comment, updatedTweet } = action.payload;
 
-        state.data.push(comment);
+        updateTweet(state.data, updatedTweet);
+        state.data.unshift(comment);
       })
       .addCase(addLike.fulfilled, (state, action) => {
-        let like = action.payload;
-
-        //todo figure out how I want to update tweets now. Maybe receive the updated tweet and change it in the store?
+        const { updatedTweet } = action.payload;
+        updateTweet(state.data, updatedTweet);
+      })
+      .addCase(deleteLike.fulfilled, (state, action) => {
+        const { updatedTweet } = action.payload;
+        updateTweet(state.data, updatedTweet);
       })
       .addMatcher(isActionRejected, (state, action) => {
         console.log(action.error.message);

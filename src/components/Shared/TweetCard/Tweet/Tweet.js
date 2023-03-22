@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -16,20 +16,18 @@ import AnswerModal from "../../../Shared/Modals/AnswerModal/AnswerModal";
 
 //store imports
 import { addRetweet, removeRetweet } from "../../../../store/tweetsSlice";
-import { selectTweetContent } from "../../../../store/tweetContentSlice";
+
 import { updateLike } from "../../../../store/tweetContentSlice";
 
 function Tweet({ tweet, user, originalId }) {
-  const tweetContent = useSelector((state) =>
-    selectTweetContent(state, tweet.content)
+  let retweeted = useMemo(
+    () => tweet.retweets.some((retweet) => retweet.authorId === user.id),
+    [tweet.retweets, user.id]
   );
-
-  const commentedContent = useSelector((state) =>
-    selectTweetContent(state, tweetContent.comment)
+  let liked = useMemo(
+    () => tweet.likers.some((liker) => liker.id === user.id),
+    [tweet.likers, user.id]
   );
-
-  let retweeted = tweetContent.retweeted_by.includes(user.id);
-  let liked = tweetContent.liked_by.includes(user.id);
 
   const [modal, setModal] = useState(false);
   const [answerModal, setAnswerModal] = useState(false);
@@ -60,23 +58,23 @@ function Tweet({ tweet, user, originalId }) {
         <Avatar />
       </Col>
       <Col xs="9" md="10" className="ml-1 ml-md-3">
-        <InfoBar username={user.username} created={tweetContent.created_at} />
+        <InfoBar username={user.username} created={tweet.createdAt} />
         <Link to={`/tweet/${tweet.parent ? tweet.parent : originalId}`}>
-          <Message message={tweetContent.message} />
+          <Message message={tweet.message} />
         </Link>
-        <Attachment url={tweetContent.attach} />
-        <Poll
-          poll={tweetContent.poll}
-          pollSettings={tweetContent.pollSettings}
-          start={tweetContent.created}
-        />
-        {commentedContent ? (
+        <Attachment url={tweet.attachment} />
+        {/* <Poll
+          poll={tweet.poll}
+          pollSettings={tweet.pollSettings}
+          start={tweet.createdAt}
+        />*/}
+        {/* commentedContent ? (
           <RetweetBox retweet={commentedContent} user={user} />
-        ) : null}
+        ) : null */}
         <InteractionBar
-          likes={tweetContent.liked_by.length}
-          retweets={tweetContent.retweeted_by.length}
-          comments={tweetContent.comment_ids.length}
+          likes={tweet.likers.length}
+          retweets={tweet.retweets.length}
+          comments={tweet.comments.length}
           liked={liked}
           retweeted={retweeted}
           handleLike={handleLike}
@@ -85,16 +83,12 @@ function Tweet({ tweet, user, originalId }) {
           toggleAnswer={toggleAnswer}
         />
       </Col>
-      <NewTweetModal
-        modal={modal}
-        toggleQuote={toggleQuote}
-        quote={tweetContent}
-      />
+      <NewTweetModal modal={modal} toggleQuote={toggleQuote} quote={tweet} />
       <AnswerModal
         modal={answerModal}
         toggle={toggleAnswer}
         parentId={originalId}
-        parentContent={tweetContent}
+        parentContent={tweet}
       />
     </Row>
   );
