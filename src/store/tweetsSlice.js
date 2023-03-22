@@ -9,7 +9,8 @@ const initialState = {
 };
 
 export const fetchTweets = createAsyncThunk("tweets/fetch", async (id) => {
-  const data = await client.get(`/tweets/user/${id}`);
+  const data = await client.get(`/tweets?userId=${id}`);
+
   return data;
 });
 
@@ -45,9 +46,28 @@ export const addComment = createAsyncThunk(
   "tweets/addComment",
   async (params) => {
     const { newTweet, parentId } = params;
-    const data = await client.post(`/tweets/${parentId}/comment`, { newTweet });
+    const data = await client.post(`/tweets/${parentId}/comments`, {
+      newTweet,
+    });
 
     return data;
+  }
+);
+
+export const addLike = createAsyncThunk("tweets/addLike", async (params) => {
+  const { id, userId } = params;
+  const data = await client.put(`/tweets/${id}/likes?userId=${userId}`);
+
+  return data.like;
+});
+
+export const deleteLike = createAsyncThunk(
+  "tweets/deleteLike",
+  async (params) => {
+    const { id, userId } = params;
+    const data = await client.delete(`/tweets/${id}/likes?userId=${userId}`);
+
+    return data.success;
   }
 );
 
@@ -101,6 +121,11 @@ const tweetsSlice = createSlice({
         const { comment } = action.payload;
 
         state.data.push(comment);
+      })
+      .addCase(addLike.fulfilled, (state, action) => {
+        let like = action.payload;
+
+        //todo figure out how I want to update tweets now. Maybe receive the updated tweet and change it in the store?
       })
       .addMatcher(isActionRejected, (state, action) => {
         console.log(action.error.message);
