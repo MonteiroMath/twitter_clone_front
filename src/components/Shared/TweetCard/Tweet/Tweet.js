@@ -17,7 +17,8 @@ import AnswerModal from "../../../Shared/Modals/AnswerModal/AnswerModal";
 //store imports
 import { addRetweet, removeRetweet } from "../../../../store/tweetsSlice";
 
-import { updateLike } from "../../../../store/tweetContentSlice";
+const updateLike = () =>
+  console.log("replace with addLike/removeLike from tweetsSlice");
 
 function Tweet({ tweet, user, originalId }) {
   let retweeted = useMemo(
