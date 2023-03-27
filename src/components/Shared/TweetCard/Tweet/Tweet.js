@@ -47,6 +47,9 @@ function Tweet({ tweet, user, originalId }) {
     setAnswerModal(!answerModal);
   };
 
+  console.log(tweet.id, " - ", tweet.type, " - ", tweet.message);
+  console.log(tweet);
+
   return (
     <Row noGutters>
       <Col xs="2" md="1">
