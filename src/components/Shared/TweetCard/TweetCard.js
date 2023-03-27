@@ -12,9 +12,7 @@ function TweetCard(props) {
     <Row className="border p-3" noGutters>
       <Col xs={12}>
         {tweet.type === "retweet" ? (
-          <Retweet>
-            <Tweet tweet={tweet} user={user} originalId={tweet.referenceId} />
-          </Retweet>
+          <Retweet tweet={tweet} user={user} />
         ) : (
           <Tweet tweet={tweet} user={user} originalId={tweet.id} />
         )}

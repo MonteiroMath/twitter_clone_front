@@ -34,3 +34,5 @@ client.put = async function (endpoint, body) {
 client.delete = async function (endpoint, body) {
   return client(endpoint, "DELETE", body);
 };
+
+client.getTweet = (id, userId) => client.get(`/tweets/${id}?userId=${userId}`);

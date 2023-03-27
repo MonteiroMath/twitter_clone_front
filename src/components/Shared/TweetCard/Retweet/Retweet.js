@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Row, Col } from "reactstrap";
 
+import { selectTweetById } from "../../../../store/tweetsSlice";
+import { client } from "../../../../api/client";
+
+import Tweet from "../Tweet/Tweet";
 import { RetweetIcon } from "../../Svg/Svg";
 
-function Retweet(props) {
-  let { children } = props;
+function Retweet({ tweet, user }) {
+  const cachedReference = useSelector((state) =>
+    selectTweetById(state, tweet.referenceId)
+  );
+
+  const [referenceTweet, setReferenceTweet] = useState(cachedReference || null);
+
+  useEffect(() => {
+    if (!referenceTweet) {
+      client
+        .getTweet(tweet.id, user.id)
+        .then((tweet) => setReferenceTweet(tweet))
+        .catch(console.log);
+    }
+  }, [referenceTweet, setReferenceTweet, tweet.id, user.id]);
 
   return (
     <Row noGutters>
@@ -17,7 +35,7 @@ function Retweet(props) {
         <span className="ml-2">You retweeted</span>
       </Col>
       <Col className="mx-auto" xs="12">
-        {children}
+        <Tweet tweet={referenceTweet} user={user} />
       </Col>
     </Row>
   );
