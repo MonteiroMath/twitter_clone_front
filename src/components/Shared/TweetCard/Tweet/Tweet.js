@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { Row, Col } from "reactstrap";
@@ -15,32 +15,26 @@ import NewTweetModal from "../../../Shared/Modals/NewTweetModal/NewTweetModal";
 import AnswerModal from "../../../Shared/Modals/AnswerModal/AnswerModal";
 
 //store imports
-import { addRetweet, removeRetweet } from "../../../../store/tweetsSlice";
-
-const updateLike = () =>
-  console.log("replace with addLike/removeLike from tweetsSlice");
+import {
+  addRetweet,
+  removeRetweet,
+  addLike,
+  deleteLike,
+} from "../../../../store/tweetsSlice";
 
 function Tweet({ tweet, user, originalId }) {
-  let retweeted = useMemo(
-    () => tweet.retweets.some((retweet) => retweet.authorId === user.id),
-    [tweet.retweets, user.id]
-  );
-  let liked = useMemo(
-    () => tweet.likers.some((liker) => liker.id === user.id),
-    [tweet.likers, user.id]
-  );
-
   const [modal, setModal] = useState(false);
   const [answerModal, setAnswerModal] = useState(false);
 
   let dispatch = useDispatch();
 
   async function handleLike() {
-    dispatch(updateLike({ id: tweet.id, userId: user.id, like: !liked }));
+    let action = tweet.liked ? deleteLike : addLike;
+    dispatch(action({ id: tweet.id, userId: user.id }));
   }
 
   function handleRetweet() {
-    let action = retweeted ? removeRetweet : addRetweet;
+    let action = tweet.retweeted ? removeRetweet : addRetweet;
 
     dispatch(action({ tweetId: tweet.id, userId: user.id }));
   }
@@ -60,7 +54,11 @@ function Tweet({ tweet, user, originalId }) {
       </Col>
       <Col xs="9" md="10" className="ml-1 ml-md-3">
         <InfoBar username={user.username} created={tweet.createdAt} />
-        <Link to={`/tweet/${tweet.parent ? tweet.parent : originalId}`}>
+        <Link
+          to={`/tweet/${
+            tweet.type === "answer" ? tweet.referenceId : tweet.id
+          }`}
+        >
           <Message message={tweet.message} />
         </Link>
         <Attachment url={tweet.attachment} />
@@ -69,15 +67,15 @@ function Tweet({ tweet, user, originalId }) {
           pollSettings={tweet.pollSettings}
           start={tweet.createdAt}
         />*/}
-        {/* commentedContent ? (
-          <RetweetBox retweet={commentedContent} user={user} />
-        ) : null */}
+        {tweet.type === "comment" ? (
+          <RetweetBox retweet={tweet} user={user} />
+        ) : null}
         <InteractionBar
-          likes={tweet.likers.length}
-          retweets={tweet.retweets.length}
-          comments={tweet.comments.length}
-          liked={liked}
-          retweeted={retweeted}
+          likes={tweet.likesCount}
+          retweets={tweet.retweetsCount}
+          comments={tweet.commentsCount}
+          liked={tweet.liked}
+          retweeted={tweet.retweeted}
           handleLike={handleLike}
           handleRetweet={handleRetweet}
           toggleQuote={toggleQuote}

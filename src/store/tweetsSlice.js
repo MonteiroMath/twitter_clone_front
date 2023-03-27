@@ -63,7 +63,7 @@ export const addComment = createAsyncThunk(
 
 export const addLike = createAsyncThunk("tweets/addLike", async (params) => {
   const { id, userId } = params;
-  const data = await client.put(`/tweets/${id}/likes?userId=${userId}`);
+  const data = await client.post(`/tweets/${id}/likes?userId=${userId}`);
 
   return data;
 });
@@ -123,7 +123,7 @@ const tweetsSlice = createSlice({
         //todo extract
         let retweetIndex = state.data.findIndex(
           (tweet) =>
-            tweet.referenceId === updatedTweet && tweet.type === "retweet"
+            tweet.referenceId === updatedTweet.id && tweet.type === "retweet"
         );
 
         state.data.splice(retweetIndex, 1);
