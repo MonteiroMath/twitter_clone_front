@@ -8,21 +8,36 @@ import { client } from "../../../../api/client";
 import Tweet from "../Tweet/Tweet";
 import { RetweetIcon } from "../../Svg/Svg";
 
+/*
+  Probably can't reutilize Tweet Component logic fully:
+    - Tweet Component logic might be reusable if reference is present in state, but not otherwise
+    - Local state solution doesn't allow for perfect syncronization - more than one source of truth
+    - think about employing two modes of operation:
+      - one for when the original tweet is not on the state
+      - one for when the original tweet is in the state
+      - if the original tweet comes into state, it should start being used. Ideally, seamlessly
+
+    - When the reference tweet is not in state, it will not be updated with likes and other data
+    
+*/
+
 function Retweet({ tweet, user }) {
   const cachedReference = useSelector((state) =>
     selectTweetById(state, tweet.referenceId)
   );
 
-  const [referenceTweet, setReferenceTweet] = useState(cachedReference || null);
+  const [referenceTweet, setReferenceTweet] = useState(cachedReference);
 
   useEffect(() => {
-    if (!referenceTweet) {
+    if (!cachedReference) {
       client
         .getTweet(tweet.id, user.id)
         .then((tweet) => setReferenceTweet(tweet))
         .catch(console.log);
+    } else {
+      setReferenceTweet(cachedReference);
     }
-  }, [referenceTweet, setReferenceTweet, tweet.id, user.id]);
+  }, [cachedReference, setReferenceTweet, tweet.id, user.id]);
 
   return (
     <Row noGutters>
