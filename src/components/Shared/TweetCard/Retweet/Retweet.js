@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { Row, Col } from "reactstrap";
 
@@ -18,6 +18,7 @@ import { RetweetIcon } from "../../Svg/Svg";
       - if the original tweet comes into state, it should start being used. Ideally, seamlessly
 
     - When the reference tweet is not in state, it will not be updated with likes and other data
+
     
 */
 
@@ -31,15 +32,17 @@ function Retweet({ tweet, user }) {
   useEffect(() => {
     if (!cachedReference) {
       client
-        .getTweet(tweet.id, user.id)
-        .then((tweet) => setReferenceTweet(tweet))
+        .getTweet(tweet.referenceId, user.id)
+        .then(({ tweet }) => {
+          setReferenceTweet(tweet);
+        })
         .catch(console.log);
     } else {
       setReferenceTweet(cachedReference);
     }
-  }, [cachedReference, setReferenceTweet, tweet.id, user.id]);
+  }, [tweet.referenceId, user.id, cachedReference, setReferenceTweet]);
 
-  return (
+  return referenceTweet ? (
     <Row noGutters>
       <Col
         className="ml-auto pl-2 pl-md-3 pb-1 cBold cfontSmall"
@@ -53,7 +56,7 @@ function Retweet({ tweet, user }) {
         <Tweet tweet={referenceTweet} user={user} />
       </Col>
     </Row>
-  );
+  ) : null;
 }
 
 export default Retweet;
