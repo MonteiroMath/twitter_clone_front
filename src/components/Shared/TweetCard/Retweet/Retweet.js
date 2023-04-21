@@ -1,12 +1,20 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Row, Col } from "reactstrap";
 
 import { selectTweetById } from "../../../../store/tweetsSlice";
 import { client } from "../../../../api/client";
 
-import Tweet from "../Tweet/Tweet";
+import TweetDisplay from "../TweetDisplay/TweetDisplay";
 import { RetweetIcon } from "../../Svg/Svg";
+
+//store imports
+import {
+  addRetweet,
+  removeRetweet,
+  addLike,
+  deleteLike,
+} from "../../../../store/tweetsSlice";
 
 /*
   Probably can't reutilize Tweet Component logic fully:
@@ -42,6 +50,19 @@ function Retweet({ tweet, user }) {
     }
   }, [tweet.referenceId, user.id, cachedReference, setReferenceTweet]);
 
+  let dispatch = useDispatch();
+
+  async function handleLike() {
+    let action = tweet.liked ? deleteLike : addLike;
+    dispatch(action({ id: tweet.id, userId: user.id }));
+  }
+
+  function handleRetweet() {
+    let action = tweet.retweeted ? removeRetweet : addRetweet;
+
+    dispatch(action({ tweetId: tweet.id, userId: user.id }));
+  }
+
   return referenceTweet ? (
     <Row noGutters>
       <Col
@@ -53,7 +74,12 @@ function Retweet({ tweet, user }) {
         <span className="ml-2">You retweeted</span>
       </Col>
       <Col className="mx-auto" xs="12">
-        <Tweet tweet={referenceTweet} user={user} />
+        <TweetDisplay
+          tweet={referenceTweet}
+          user={user}
+          handleLike={handleLike}
+          handleRetweet={handleRetweet}
+        />
       </Col>
     </Row>
   ) : null;
