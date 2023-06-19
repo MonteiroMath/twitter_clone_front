@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Row, Col } from "reactstrap";
 
-import { selectTweetById } from "../../../../store/tweetsSlice";
+import { selectTweetById, fetchReference } from "../../../../store/tweetsSlice";
 import { client } from "../../../../api/client";
 
 import TweetDisplay from "../TweetDisplay/TweetDisplay";
@@ -41,29 +41,19 @@ import {
 */
 
 function Retweet({ tweet, user }) {
-  let referenceTweet;
   let dispatch = useDispatch();
 
   const cachedReference = useSelector((state) =>
     selectTweetById(state, tweet.referenceId)
   );
 
-  console.log(tweet);
-
-  /*
   useEffect(() => {
     if (!cachedReference) {
-      client
-        .getTweet(tweet.referenceId, user.id)
-        .then(({ tweet }) => {
-          setReferenceTweet(tweet);
-        })
-        .catch(console.log);
-    } else {
-      setReferenceTweet(cachedReference);
+      dispatch(fetchReference({ tweetId: tweet.id, userId: user.id }));
     }
-  }, [tweet.referenceId, user.id, cachedReference, setReferenceTweet]);
-*/
+  }, [tweet.id, user.id, cachedReference, dispatch]);
+
+  let referenceTweet = cachedReference || tweet.reference;
 
   async function handleLike() {
     let action = tweet.liked ? deleteLike : addLike;
@@ -95,9 +85,7 @@ function Retweet({ tweet, user }) {
         />
       </Col>
     </Row>
-  ) : (
-    "retweet"
-  );
+  ) : null;
 }
 
 export default Retweet;

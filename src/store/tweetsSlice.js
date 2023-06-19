@@ -22,9 +22,11 @@ export const fetchTweets = createAsyncThunk("tweets/fetch", async (id) => {
 });
 
 export const fetchReference = createAsyncThunk(
-  "tweets/fetch",
+  "tweets/fetchReference",
   async (params) => {
     const { tweetId, userId } = params;
+
+    console.log(tweetId);
 
     const data = await client.get(
       `/tweets/${tweetId}/reference?userId=${userId}`
