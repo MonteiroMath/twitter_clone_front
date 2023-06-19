@@ -11,13 +11,28 @@ const initialState = {
 function updateTweet(stateData, updatedTweet) {
   let index = stateData.findIndex((tweet) => tweet.id === updatedTweet.id);
 
-  stateData[index] = updatedTweet;
+  if (index !== -1) {
+    stateData[index] = updatedTweet;
+  }
 }
 
 export const fetchTweets = createAsyncThunk("tweets/fetch", async (id) => {
   const data = await client.get(`/tweets?userId=${id}`);
   return data;
 });
+
+export const fetchReference = createAsyncThunk(
+  "tweets/fetch",
+  async (params) => {
+    const { tweetId, userId } = params;
+
+    const data = await client.get(
+      `/tweets/${tweetId}/reference?userId=${userId}`
+    );
+
+    return data;
+  }
+);
 
 export const postTweet = createAsyncThunk(
   "tweets/postTweets",
@@ -78,6 +93,26 @@ export const deleteLike = createAsyncThunk(
   }
 );
 
+export const addLikeRt = createAsyncThunk(
+  "tweets/addLikeRt",
+  async (params) => {
+    const { id, userId } = params;
+    const data = await client.post(`/tweets/${id}/likes/rt?userId=${userId}`);
+
+    return data;
+  }
+);
+
+export const deleteLikeRt = createAsyncThunk(
+  "tweets/deleteLike",
+  async (params) => {
+    const { id, userId } = params;
+    const data = await client.delete(`/tweets/${id}/likes/rt?userId=${userId}`);
+
+    return data;
+  }
+);
+
 function isActionRejected(action) {
   return action.type.endsWith("/rejected");
 }
@@ -99,6 +134,13 @@ const tweetsSlice = createSlice({
       .addCase(fetchTweets.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.error.message;
+      })
+      .addCase(fetchReference.fulfilled, (state, action) => {
+        if (action.payload.success) {
+          const { tweet } = action.payload;
+
+          updateTweet(state.data, tweet);
+        }
       })
       .addCase(postTweet.fulfilled, (state, action) => {
         const { tweet } = action.payload;
@@ -135,12 +177,27 @@ const tweetsSlice = createSlice({
         state.data.unshift(comment);
       })
       .addCase(addLike.fulfilled, (state, action) => {
-        const { updatedTweet } = action.payload;
-        updateTweet(state.data, updatedTweet);
+        if (action.payload.success) {
+          const { updatedTweet } = action.payload;
+          console.log(updatedTweet);
+          updateTweet(state.data, updatedTweet);
+        } else {
+          console.log(action.payload.msg);
+        }
       })
       .addCase(deleteLike.fulfilled, (state, action) => {
         const { updatedTweet } = action.payload;
         updateTweet(state.data, updatedTweet);
+      })
+      .addCase(addLikeRt.fulfilled, (state, action) => {
+        if (action.payload.success) {
+          const { updatedTweet, updatedReference } = action.payload;
+          console.log(updatedTweet);
+          console.log(updatedReference);
+          updateTweet(state.data, updatedTweet);
+        } else {
+          console.log(action.payload.msg);
+        }
       })
       .addMatcher(isActionRejected, (state, action) => {
         console.log(action.error.message);

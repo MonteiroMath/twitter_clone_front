@@ -27,16 +27,30 @@ import {
 
     - When the reference tweet is not in state, it will not be updated with likes and other data
 
-    
+    plan: 
+      - Reweet comes populated with its own reference tweet
+      - System tries to get a reference in memory
+        - if reference is in memory, use it as the source of true
+          - handle like will use its id, it will get updated and everything should work fine
+        - if reference is not in memory, use the populated info as source of true
+          - handle like will use the RetweetId and the ReferenceId to dispatch a likeRetweet specific action
+          - if it succeeds, the store will update the RETWEET with a new populated version
+          - will need a new endpoint for it
+
+    -problem: the reference inside the RETWEET must be populated - changes to BE.
 */
 
 function Retweet({ tweet, user }) {
+  let referenceTweet;
+  let dispatch = useDispatch();
+
   const cachedReference = useSelector((state) =>
     selectTweetById(state, tweet.referenceId)
   );
 
-  const [referenceTweet, setReferenceTweet] = useState(cachedReference);
+  console.log(tweet);
 
+  /*
   useEffect(() => {
     if (!cachedReference) {
       client
@@ -49,12 +63,11 @@ function Retweet({ tweet, user }) {
       setReferenceTweet(cachedReference);
     }
   }, [tweet.referenceId, user.id, cachedReference, setReferenceTweet]);
-
-  let dispatch = useDispatch();
+*/
 
   async function handleLike() {
     let action = tweet.liked ? deleteLike : addLike;
-    dispatch(action({ id: tweet.id, userId: user.id }));
+    dispatch(action({ id: referenceTweet.id, userId: user.id }));
   }
 
   function handleRetweet() {
@@ -82,7 +95,9 @@ function Retweet({ tweet, user }) {
         />
       </Col>
     </Row>
-  ) : null;
+  ) : (
+    "retweet"
+  );
 }
 
 export default Retweet;
