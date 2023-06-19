@@ -98,8 +98,10 @@ export const deleteLike = createAsyncThunk(
 export const addLikeRt = createAsyncThunk(
   "tweets/addLikeRt",
   async (params) => {
-    const { id, userId } = params;
-    const data = await client.post(`/tweets/${id}/likes/rt?userId=${userId}`);
+    const { tweetId, userId } = params;
+    const data = await client.post(
+      `/tweets/${tweetId}/likes/rt?userId=${userId}`
+    );
 
     return data;
   }
@@ -194,9 +196,9 @@ const tweetsSlice = createSlice({
       .addCase(addLikeRt.fulfilled, (state, action) => {
         if (action.payload.success) {
           const { updatedTweet, updatedReference } = action.payload;
-          console.log(updatedTweet);
-          console.log(updatedReference);
+
           updateTweet(state.data, updatedTweet);
+          updateTweet(state.data, updatedReference);
         } else {
           console.log(action.payload.msg);
         }

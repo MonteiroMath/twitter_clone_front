@@ -2,19 +2,18 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Row, Col } from "reactstrap";
 
-import { selectTweetById, fetchReference } from "../../../../store/tweetsSlice";
+import {
+  addRetweet,
+  removeRetweet,
+  selectTweetById,
+  fetchReference,
+  addLikeRt,
+  deleteLike,
+} from "../../../../store/tweetsSlice";
 import { client } from "../../../../api/client";
 
 import TweetDisplay from "../TweetDisplay/TweetDisplay";
 import { RetweetIcon } from "../../Svg/Svg";
-
-//store imports
-import {
-  addRetweet,
-  removeRetweet,
-  addLike,
-  deleteLike,
-} from "../../../../store/tweetsSlice";
 
 /*
   Probably can't reutilize Tweet Component logic fully:
@@ -56,8 +55,8 @@ function Retweet({ tweet, user }) {
   let referenceTweet = cachedReference || tweet.reference;
 
   async function handleLike() {
-    let action = tweet.liked ? deleteLike : addLike;
-    dispatch(action({ id: referenceTweet.id, userId: user.id }));
+    let action = tweet.liked ? deleteLike : addLikeRt;
+    dispatch(action({ tweetId: tweet.id, userId: user.id }));
   }
 
   function handleRetweet() {
