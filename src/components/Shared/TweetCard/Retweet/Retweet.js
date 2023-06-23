@@ -60,9 +60,9 @@ function Retweet({ tweet, user }) {
   }
 
   function handleRetweet() {
-    let action = tweet.retweeted ? removeRetweet : addRetweet;
+    let action = referenceTweet.retweeted ? removeRetweet : addRetweet;
 
-    dispatch(action({ tweetId: tweet.id, userId: user.id }));
+    dispatch(action({ tweetId: tweet.referenceId, userId: user.id }));
   }
 
   return referenceTweet ? (
