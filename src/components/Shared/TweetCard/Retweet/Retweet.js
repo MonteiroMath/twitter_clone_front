@@ -8,9 +8,8 @@ import {
   selectTweetById,
   fetchReference,
   addLikeRt,
-  deleteLike,
+  deleteLikeRt,
 } from "../../../../store/tweetsSlice";
-import { client } from "../../../../api/client";
 
 import TweetDisplay from "../TweetDisplay/TweetDisplay";
 import { RetweetIcon } from "../../Svg/Svg";
@@ -55,7 +54,8 @@ function Retweet({ tweet, user }) {
   let referenceTweet = cachedReference || tweet.reference;
 
   async function handleLike() {
-    let action = tweet.liked ? deleteLike : addLikeRt;
+    console.log(referenceTweet.liked);
+    let action = referenceTweet.liked ? deleteLikeRt : addLikeRt;
     dispatch(action({ tweetId: tweet.id, userId: user.id }));
   }
 
