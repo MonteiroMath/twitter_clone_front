@@ -1,18 +1,16 @@
-import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { postTweet } from "../../../../store/tweetsSlice";
+import { postAnswer } from "../../../../store/PageSlice";
 
 import NewTweetFormControl from "../NewTweetFormControl/NewTweetFormControl";
 
-function NewTweetForm({ toggle }) {
+function AnswerTweetForm({ toggle, quote, parent_id }) {
   const dispatch = useDispatch();
-  let history = useHistory();
+  //let history = useHistory();
 
   function handleSubmit(formData) {
     const { tweetText, attach, poll, pollChoices, pollLength } = formData;
 
-    //!move this to formControl
     let choices = pollChoices.map((choice) => {
       return { text: choice, votes: 0 };
     });
@@ -21,7 +19,7 @@ function NewTweetForm({ toggle }) {
       message: tweetText,
       attach: attach,
       poll: poll,
-      comment: null,
+      comment: quote.id,
       pollSettings: {
         choices,
         pollLen: pollLength,
@@ -29,22 +27,26 @@ function NewTweetForm({ toggle }) {
     };
 
     dispatch(
-      postTweet({
+      postAnswer({
         userId: 1,
         newTweet,
+        parentId: parent_id,
       })
     );
 
-    toggle && toggle();     //!verify if it is ok to toggle separated from clearPoll
-    history.push("/"); //!verify redirect in this situation
+    toggle();
+
+    //!confirm if no redirect here
+    //history.push("/");
   }
 
   return (
     <NewTweetFormControl
       handleSubmit={handleSubmit}
-      placeholder="What's happening?"
+      quote={quote}
+      placeholder="Answer tweet"
     />
   );
 }
 
-export default NewTweetForm;
+export default AnswerTweetForm;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
-import CommentTweet from "../../CommentTweet/CommentTweet";
+import AnswerTweetForm from "../../../Shared/Forms/AnswerTweetForm/AnswerTweetForm";
 import RetweetBox from "../../TweetCard/RetweetBox/RetweetBox";
 
 import user from "../../../../assets/placeholders/user";
@@ -19,7 +19,7 @@ export default function AnswerModal({
         <RetweetBox user={user} retweet={parentContent} />
 
         <div className="pt-3">
-          <CommentTweet toggle={toggle} parent_id={parseInt(parentId)} />
+          <AnswerTweetForm toggle={toggle} parent_id={parseInt(parentId)} />
         </div>
       </ModalBody>
     </Modal>
