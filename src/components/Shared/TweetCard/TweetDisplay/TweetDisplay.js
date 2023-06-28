@@ -13,7 +13,7 @@ import Attachment from "../../Attachment/Attachment";
 import NewTweetModal from "../../../Shared/Modals/NewTweetModal/NewTweetModal";
 import AnswerModal from "../../../Shared/Modals/AnswerModal/AnswerModal";
 
-function TweetDisplay({ tweet, user, originalId, handleLike, handleRetweet }) {
+function TweetDisplay({ tweet, user, handleLike, handleRetweet }) {
   const [modal, setModal] = useState(false);
   const [answerModal, setAnswerModal] = useState(false);
 
@@ -64,7 +64,7 @@ function TweetDisplay({ tweet, user, originalId, handleLike, handleRetweet }) {
       <AnswerModal
         modal={answerModal}
         toggle={toggleAnswer}
-        parentId={originalId}
+        parentId={tweet.id}
         parentContent={tweet}
       />
     </Row>

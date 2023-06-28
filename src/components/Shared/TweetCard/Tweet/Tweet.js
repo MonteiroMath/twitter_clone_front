@@ -28,7 +28,6 @@ function Tweet({ tweet, user, originalId }) {
     <TweetDisplay
       tweet={tweet}
       user={user}
-      originalId={originalId}
       handleLike={handleLike}
       handleRetweet={handleRetweet}
     />

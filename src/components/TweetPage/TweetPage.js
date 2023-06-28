@@ -6,7 +6,7 @@ import { Row } from "reactstrap";
 
 import TopBar from "../Shared/Bars/TopBar/TopBar";
 import SubsetTweetList from "./SubsetTweetList/SubsetTweetList";
-import CommentTweet from "../Shared/CommentTweet/CommentTweet";
+import AnswerTweetForm from "../Shared/Forms/AnswerTweetForm/AnswerTweetForm";
 
 import TweetCard from "../Shared/TweetCard/TweetCard";
 import { fetchAnswers, selectAnswers, closePage } from "../../store/PageSlice";
@@ -24,7 +24,7 @@ export default function TweetPage(props) {
 
   useEffect(() => {
     if (pageStatus === "idle") {
-      dispatch(fetchAnswers(id));
+      dispatch(fetchAnswers({ parentId: id, userId: user.id }));
     }
 
     return () => dispatch(closePage());
@@ -35,7 +35,7 @@ export default function TweetPage(props) {
       <TopBar header="Tweet" />
       {tweet ? <TweetCard tweet={tweet} user={user} /> : null}
       <Row className="border p-3 d-none d-md-flex" noGutters={true}>
-        <CommentTweet parent_id={parseInt(id)} />
+        <AnswerTweetForm parent_id={id} />
       </Row>
       <SubsetTweetList user={user} tweetList={tweetList} />
     </div>

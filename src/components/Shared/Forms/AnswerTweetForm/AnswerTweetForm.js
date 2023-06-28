@@ -4,7 +4,7 @@ import { postAnswer } from "../../../../store/PageSlice";
 
 import NewTweetFormControl from "../NewTweetFormControl/NewTweetFormControl";
 
-function AnswerTweetForm({ toggle, quote, parent_id }) {
+function AnswerTweetForm({ toggle, parent_id }) {
   const dispatch = useDispatch();
   //let history = useHistory();
 
@@ -19,7 +19,7 @@ function AnswerTweetForm({ toggle, quote, parent_id }) {
       message: tweetText,
       attach: attach,
       poll: poll,
-      comment: quote.id,
+      comment: null,
       pollSettings: {
         choices,
         pollLen: pollLength,
@@ -34,7 +34,7 @@ function AnswerTweetForm({ toggle, quote, parent_id }) {
       })
     );
 
-    toggle();
+    toggle && toggle();
 
     //!confirm if no redirect here
     //history.push("/");
@@ -43,7 +43,6 @@ function AnswerTweetForm({ toggle, quote, parent_id }) {
   return (
     <NewTweetFormControl
       handleSubmit={handleSubmit}
-      quote={quote}
       placeholder="Answer tweet"
     />
   );

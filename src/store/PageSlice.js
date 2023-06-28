@@ -7,8 +7,11 @@ const initialState = {
   data: [],
 };
 
-export const fetchAnswers = createAsyncThunk("page/fetch", async (parentId) => {
-  const data = await client.get(`/tweets/answers/${parentId}`);
+export const fetchAnswers = createAsyncThunk("page/fetch", async (params) => {
+  const { parentId, userId } = params;
+
+
+  const data = await client.get(`/tweets/${parentId}/answers?userId=${userId}`);
   return data;
 });
 
@@ -17,7 +20,7 @@ export const postAnswer = createAsyncThunk(
   async (params) => {
     const { userId, newTweet, parentId } = params;
     const { tweet, tweetContent, updatedTweet } = await client.post(
-      `/tweets/answers/${parentId}`,
+      `/tweets/${parentId}/answers/`,
       {
         userId,
         newTweet,

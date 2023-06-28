@@ -10,11 +10,10 @@ function NewTweetFormDisplay(props) {
     toolBar,
     quotePreview,
     placeholder,
-
   } = props;
 
   return (
-    <div>
+    <div className="w-100">
       <Form>
         <Input
           type="textarea"

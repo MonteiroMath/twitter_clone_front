@@ -24,7 +24,7 @@ function CommentTweetForm({ toggle, quote }) {
       })
     );
 
-    toggle(); //!verify if it is ok to toggle separated from clearPoll
+    toggle && toggle(); //!verify if it is ok to toggle separated from clearPoll
     //history.push("/"); //!verify redirect in this situation
   }
 
