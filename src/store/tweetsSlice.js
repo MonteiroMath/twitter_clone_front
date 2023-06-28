@@ -69,10 +69,13 @@ export const removeRetweet = createAsyncThunk(
 export const addComment = createAsyncThunk(
   "tweets/addComment",
   async (params) => {
-    const { newTweet, parentId } = params;
-    const data = await client.post(`/tweets/${parentId}/comments`, {
-      newTweet,
-    });
+    const { newTweet, referenceId, userId } = params;
+    const data = await client.post(
+      `/tweets/${referenceId}/comments?userId=${userId}`,
+      {
+        newTweet,
+      }
+    );
 
     return data;
   }
@@ -177,10 +180,10 @@ const tweetsSlice = createSlice({
         state.data.splice(retweetIndex, 1);
       })
       .addCase(addComment.fulfilled, (state, action) => {
-        const { comment, updatedTweet } = action.payload;
+        const { tweet, updatedTweet } = action.payload;
 
         updateTweet(state.data, updatedTweet);
-        state.data.unshift(comment);
+        state.data.unshift(tweet);
       })
       .addCase(addLike.fulfilled, (state, action) => {
         if (action.payload.success) {

@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 
-import { postTweet } from "../../../../store/tweetsSlice";
+import { addComment } from "../../../../store/tweetsSlice";
 
 import NewTweetFormControl from "../NewTweetFormControl/NewTweetFormControl";
 
@@ -18,8 +18,9 @@ function CommentTweetForm({ toggle, quote }) {
     };
 
     dispatch(
-      postTweet({
+      addComment({
         userId: 1,
+        referenceId: quote.id,
         newTweet,
       })
     );

@@ -46,7 +46,7 @@ function TweetDisplay({ tweet, user, handleLike, handleRetweet }) {
         start={tweet.createdAt}
       />*/}
         {tweet.type === "comment" ? (
-          <RetweetBox retweet={tweet} user={user} />
+          <RetweetBox retweet={tweet.reference} user={user} />
         ) : null}
         <InteractionBar
           likes={tweet.likesCount}
