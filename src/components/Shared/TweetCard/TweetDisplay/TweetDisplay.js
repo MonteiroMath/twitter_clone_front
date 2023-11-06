@@ -51,7 +51,7 @@ function TweetDisplay({ tweet, user, handleLike, handleRetweet }) {
         <InteractionBar
           likes={tweet.likesCount}
           retweets={tweet.retweetsCount}
-          comments={tweet.commentsCount}
+          answers={tweet.answersCount}
           liked={tweet.liked}
           retweeted={tweet.retweeted}
           handleLike={handleLike}
@@ -64,11 +64,12 @@ function TweetDisplay({ tweet, user, handleLike, handleRetweet }) {
       <AnswerModal
         modal={answerModal}
         toggle={toggleAnswer}
-        parentId={tweet.id}
-        parentContent={tweet}
+        parentId={tweet.reference ? tweet.reference.id : tweet.id} 
+        parentContent={tweet.reference ? tweet.reference : tweet}
       />
     </Row>
   );
 }
+
 
 export default TweetDisplay;

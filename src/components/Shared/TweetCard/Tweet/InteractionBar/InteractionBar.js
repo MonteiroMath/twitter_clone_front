@@ -11,7 +11,7 @@ function InteractionBar(props) {
     liked,
     retweeted,
     retweets,
-    comments,
+    answers,
     handleLike,
     handleRetweet,
     toggleQuote,
@@ -20,7 +20,7 @@ function InteractionBar(props) {
 
   return (
     <div className="d-flex pt-2 small text-secondary align-item">
-      <CommentButton comments={comments} toggle={toggleAnswer} />
+      <CommentButton answers={answers} toggle={toggleAnswer} />
       <RetweetButton
         retweeted={retweeted}
         handleRetweet={handleRetweet}

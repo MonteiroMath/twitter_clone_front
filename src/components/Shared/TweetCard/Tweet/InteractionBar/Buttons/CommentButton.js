@@ -4,7 +4,7 @@ import { Button } from "reactstrap";
 
 import { CommentIcon } from "../../../../Svg/Svg";
 
-export default function CommentButton({ comments, toggle }) {
+export default function CommentButton({ answers, toggle }) {
   return (
     <div className="mr-3 d-flex align-items-center">
       <Button
@@ -18,7 +18,7 @@ export default function CommentButton({ comments, toggle }) {
       </Button>
 
       <span aria-label="number of comments" className="pl-2">
-        {comments}
+        {answers}
       </span>
     </div>
   );
