@@ -23,11 +23,7 @@ export const fetchTweets = createAsyncThunk("tweets/fetch", async (id) => {
 
 export const fetchReference = createAsyncThunk(
   "tweets/fetchReference",
-  async (params) => {
-    const { tweetId, userId } = params;
-
-    console.log(tweetId);
-
+  async ({ tweetId, userId }) => {
     const data = await client.get(
       `/tweets/${tweetId}/reference?userId=${userId}`
     );
@@ -38,27 +34,29 @@ export const fetchReference = createAsyncThunk(
 
 export const postTweet = createAsyncThunk(
   "tweets/postTweets",
-  async (params) => {
-    const { userId, newTweet } = params;
-    const { tweet, tweetContent } = await client.post("/tweets", {
+  async ({ userId, newTweet }) => {
+    const { tweet } = await client.post("/tweets", {
       userId,
       newTweet,
     });
 
-    return { tweet, tweetContent };
+    return { tweet };
   }
 );
 
-export const addRetweet = createAsyncThunk("tweets/addRt", async (params) => {
-  const { tweetId, userId } = params;
-  const data = await client.post(`/tweets/${tweetId}/retweet?userId=${userId}`);
-  return data;
-});
+export const addRetweet = createAsyncThunk(
+  "tweets/addRt",
+  async ({ tweetId, userId }) => {
+    const data = await client.post(
+      `/tweets/${tweetId}/retweet?userId=${userId}`
+    );
+    return data;
+  }
+);
 
 export const removeRetweet = createAsyncThunk(
   "tweets/deleteRt",
-  async (params) => {
-    const { tweetId, userId } = params;
+  async ({ tweetId, userId }) => {
     const data = await client.delete(
       `/tweets/${tweetId}/retweet?userId=${userId}`
     );
@@ -68,8 +66,7 @@ export const removeRetweet = createAsyncThunk(
 
 export const addComment = createAsyncThunk(
   "tweets/addComment",
-  async (params) => {
-    const { newTweet, referenceId, userId } = params;
+  async ({ newTweet, referenceId, userId }) => {
     const data = await client.post(
       `/tweets/${referenceId}/comments?userId=${userId}`,
       {
@@ -81,17 +78,18 @@ export const addComment = createAsyncThunk(
   }
 );
 
-export const addLike = createAsyncThunk("tweets/addLike", async (params) => {
-  const { id, userId } = params;
-  const data = await client.post(`/tweets/${id}/likes?userId=${userId}`);
+export const addLike = createAsyncThunk(
+  "tweets/addLike",
+  async ({ id, userId }) => {
+    const data = await client.post(`/tweets/${id}/likes?userId=${userId}`);
 
-  return data;
-});
+    return data;
+  }
+);
 
 export const deleteLike = createAsyncThunk(
   "tweets/deleteLike",
-  async (params) => {
-    const { id, userId } = params;
+  async ({ id, userId }) => {
     const data = await client.delete(`/tweets/${id}/likes?userId=${userId}`);
 
     return data;
@@ -100,8 +98,7 @@ export const deleteLike = createAsyncThunk(
 
 export const addLikeRt = createAsyncThunk(
   "tweets/addLikeRt",
-  async (params) => {
-    const { tweetId, userId } = params;
+  async ({ tweetId, userId }) => {
     const data = await client.post(
       `/tweets/${tweetId}/likes/rt?userId=${userId}`
     );
@@ -112,8 +109,7 @@ export const addLikeRt = createAsyncThunk(
 
 export const deleteLikeRt = createAsyncThunk(
   "tweets/deleteLikeRt",
-  async (params) => {
-    const { tweetId, userId } = params;
+  async ({ tweetId, userId }) => {
     const data = await client.delete(
       `/tweets/${tweetId}/likes/rt?userId=${userId}`
     );
