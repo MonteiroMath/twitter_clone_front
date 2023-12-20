@@ -2,10 +2,11 @@ FROM node:18-alpine
 
 WORKDIR /twitter_f
 
-COPY public/ /twitter_f/public
-COPY src/ /twitter_f/src
-COPY package.json /twitter_f/
+COPY package.json .
+COPY package-lock.json .
 
-RUN npm install
+RUN npm install --silent
+
+COPY . .
 
 CMD ["npm", "start"]
