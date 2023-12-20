@@ -1,15 +1,16 @@
 import { screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import tweets from "../../../assets/placeholders/tweets";
 
 import { renderWithRedux } from "../../../testUtilities/renderWithProviders";
 import NewTweet from "./NewTweet";
+
+import mocker from "../../../testUtilities/mockers";
 
 afterEach(cleanup);
 
 describe("Rendering test", () => {
   test("Renders correctly", () => {
-    renderWithRedux(<NewTweet />, { initialState: { tweets } });
+    renderWithRedux(<NewTweet />, { initialState: mocker.mockInitialState() });
 
     let button = screen.getByText("Tweet");
     let newTweet = screen.getByPlaceholderText(/What's happening?/);

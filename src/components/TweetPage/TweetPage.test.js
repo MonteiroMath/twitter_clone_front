@@ -7,14 +7,12 @@ import { renderWithHistory } from "../../testUtilities/renderWithProviders";
 import mocker from "../../testUtilities/mockers";
 
 jest.mock("../../api/client");
-let mockedTweet, mockedTweetContent, initialState;
+let mockedTweet, initialState;
 
 beforeAll(() => {
   mockedTweet = mocker.mockTweet();
-  mockedTweetContent = mocker.mockTweetContent();
   initialState = mocker.mockInitialState({
     tweets: mocker.mockInitialSlice({ data: [mockedTweet] }),
-    tweetContent: mocker.mockInitialSlice({ data: [mockedTweetContent] }),
   });
 });
 
@@ -29,15 +27,16 @@ describe("Comment tests", () => {
     const resp = {
       success: true,
       updatedTweet: {
-        tweet: mockedTweet,
-        tweetContent: { ...mockedTweetContent, comment_ids: [1005] },
+        ...mockedTweet,
+        commentsCount: mockedTweet.commentsCount + 1,
       },
       tweet: mocker.mockTweet({
         id: 1999,
-        content: 99999,
-        parent: mockedTweet.id,
+        type: "comment",
+        message: typedText,
+        referenceId: mockedTweet.id,
+        reference: mockedTweet,
       }),
-      tweetContent: mocker.mockTweetContent({ id: 99999, message: typedText }),
     };
 
     //mock api response to post comment
@@ -48,7 +47,7 @@ describe("Comment tests", () => {
       initialState,
     });
 
-    let commentBox = screen.getByPlaceholderText(/Answer this tweet/);
+    let commentBox = screen.getByPlaceholderText(/Answer tweet/);
     let button = screen.getByRole("button", { name: /^comment$/i });
 
     expect(button).toBeDisabled();

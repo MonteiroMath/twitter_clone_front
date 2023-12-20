@@ -8,17 +8,13 @@ import FeedPage from "../../../../FeedPage/FeedPage";
 
 jest.mock("../../../../../api/client");
 
-let mockedTweet, mockedTweetContent, initialState;
+let mockedTweet, initialState;
 
 beforeAll(() => {
   mockedTweet = mocker.mockTweet();
-  mockedTweetContent = mocker.mockTweetContent();
   initialState = mocker.mockInitialState({
     tweets: mocker.mockInitialSlice({
       data: [mockedTweet],
-    }),
-    tweetContent: mocker.mockInitialSlice({
-      data: [mockedTweetContent],
     }),
   });
 });
@@ -28,9 +24,13 @@ afterEach(cleanup);
 describe("Like tests", () => {
   test("Tweet get one more like", async () => {
     //mock api response to liking a tweet
-    client.put.mockResolvedValue({
+    client.post.mockResolvedValue({
       success: true,
-      updatedTweet: { ...mockedTweetContent, liked_by: [1] },
+      updatedTweet: {
+        ...mockedTweet,
+        likesCount: mockedTweet.likesCount + 1,
+        liked: 1,
+      },
     });
 
     renderWithRedux(<FeedPage />, { initialState });
@@ -46,17 +46,21 @@ describe("Like tests", () => {
 
   test("Unlike tweet", async () => {
     //mock api response to liking and unliking a tweet
-    client.put
+    client.post
       .mockImplementationOnce(() => {
         return {
           success: true,
-          updatedTweet: { ...mockedTweetContent, liked_by: [1] },
+          updatedTweet: {
+            ...mockedTweet,
+            likesCount: mockedTweet.likesCount + 1,
+            liked: 1,
+          },
         };
       })
       .mockImplementationOnce(() => {
         return {
           success: true,
-          updatedTweet: { ...mockedTweetContent, liked_by: [] },
+          updatedTweet: { ...mockedTweet },
         };
       });
 
@@ -87,14 +91,20 @@ describe("Like tests", () => {
 test("Simple Retweet test", async () => {
   const newTweet = mocker.mockTweet({
     id: 10055,
-    retweet: 1,
-    content: mockedTweetContent.id,
+    type: "retweet",
+    message: "",
+    referenceId: 1,
+    reference: mockedTweet,
   });
 
   //mock api response to post retweet
   client.post.mockResolvedValue({
     success: true,
-    tweetContent: { ...mockedTweetContent, retweeted_by: [1] },
+    updatedTweet: {
+      ...mockedTweet,
+      retweetsCount: mockedTweet.retweetsCount + 1,
+      retweeted: 1,
+    },
     tweet: newTweet,
   });
 
@@ -120,21 +130,26 @@ test("Simple Retweet test", async () => {
 test("Undo retweet", async () => {
   const newTweet = mocker.mockTweet({
     id: 10055,
-    retweet: 1,
-    content: mockedTweetContent.id,
-    original: mockedTweet.id,
+    type: "retweet",
+    message: "",
+    referenceId: mockedTweet.id,
+    reference: mockedTweet,
   });
 
   //mock api response to post and delete retweet
   client.post.mockResolvedValue({
     success: true,
-    tweetContent: { ...mockedTweetContent, retweeted_by: [1] },
+    updatedTweet: {
+      ...mockedTweet,
+      retweetsCount: mockedTweet.retweetsCount + 1,
+      retweeted: 1,
+    },
     tweet: newTweet,
   });
 
   client.delete.mockResolvedValue({
     success: true,
-    updatedTweet: { ...mockedTweetContent, retweeted_by: [] },
+    updatedTweet: { ...mockedTweet },
   });
 
   renderWithRedux(<FeedPage />, { initialState });
@@ -150,6 +165,7 @@ test("Undo retweet", async () => {
 
   //click retweet button
   userEvent.click(screen.getAllByRole("button", { name: /^Retweet$/i })[0]);
+
   //click undo retweet button
   userEvent.click(screen.getByRole("menuitem", { name: /undo retweet/i }));
 
@@ -171,23 +187,21 @@ test("Comment tweet with button", async () => {
   client.post.mockResolvedValue({
     success: true,
     updatedTweet: {
-      tweet: mockedTweet,
-      tweetContent: { ...mockedTweetContent, comment_ids: [1005] },
+      ...mockedTweet,
+      commentsCount: mockedTweet.commentsCount + 1,
     },
     tweet: mocker.mockTweet({
       id: 1999,
-      content: 99999,
-      parent: mockedTweet.id,
+      type: "comment",
+      message: typedText,
+      referenceId: mockedTweet.id,
+      reference: mockedTweet,
     }),
-
-    tweetContent: mocker.mockTweetContent({ id: 99999, message: typedText }),
   });
 
   renderWithRedux(<FeedPage />, { initialState });
 
-  const tweet = screen.getByText(
-    /This is my second tweet lol getting good at this/i
-  );
+  const tweet = screen.getByText(mockedTweet.message);
   expect(tweet).toBeInTheDocument();
 
   //click comment button
@@ -197,7 +211,7 @@ test("Comment tweet with button", async () => {
   expect(button).toBeDisabled();
 
   //type new comment
-  const commentBox = screen.getByPlaceholderText(/Answer this tweet/);
+  const commentBox = screen.getByPlaceholderText(/Answer tweet/);
   userEvent.type(commentBox, typedText);
 
   expect(commentBox.value).toBe(typedText);

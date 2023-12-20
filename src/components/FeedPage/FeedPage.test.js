@@ -17,8 +17,7 @@ describe("Add new tweet", () => {
 
     const resp = {
       success: true,
-      tweet: mocker.mockTweet({ id: 1111 }),
-      tweetContent: mocker.mockTweetContent({ message: typedText }),
+      tweet: mocker.mockTweet({ id: 1111, message: typedText }),
     };
 
     client.post.mockResolvedValue(resp);

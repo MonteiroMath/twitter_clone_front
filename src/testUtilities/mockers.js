@@ -11,7 +11,6 @@ function mockInitialSlice(customValues = {}) {
 function mockInitialState(customValues = {}) {
   const initialState = {
     tweets: mockInitialSlice(),
-    tweetContent: mockInitialSlice(),
     page: mockInitialSlice(),
   };
 
@@ -21,11 +20,21 @@ function mockInitialState(customValues = {}) {
 function mockTweet(customValues = {}) {
   const mockedTweet = {
     id: 1,
-    author: 1,
-    retweet: 0,
-    content: 1000,
-    parent: null,
-    original: null,
+    message: "Test",
+    attachment: null,
+    pool: false,
+    type: "simple",
+    createdAt: "2023-12-20T14:52:13.000Z",
+    updatedAt: "2023-12-20T14:52:13.000Z",
+    referenceId: null,
+    authorId: 1,
+    retweetsCount: 0,
+    commentsCount: 0,
+    answersCount: 0,
+    likesCount: 0,
+    liked: 0,
+    retweeted: 0,
+    reference: null,
   };
 
   return {
@@ -34,36 +43,10 @@ function mockTweet(customValues = {}) {
   };
 }
 
-function mockTweetContent(customValues = {}) {
-  const mockedTweetContent = {
-    id: 1000,
-    author: 1,
-    message: "This is my second tweet lol getting good at this",
-    attach: null,
-    created_at: new Date().getTime(),
-    poll: 0,
-    comment: null,
-    liked_by: [],
-    retweeted_by: [],
-    comment_ids: [],
-    pollSettings: {
-      choices: ["hi", "ho"],
-      pollLen: {
-        days: 1,
-        hours: 3,
-        minutes: 35,
-      },
-    },
-  };
-
-  return { ...mockedTweetContent, ...customValues };
-}
-
 const mocker = {
   mockInitialState,
   mockInitialSlice,
   mockTweet,
-  mockTweetContent,
 };
 
 export default mocker;

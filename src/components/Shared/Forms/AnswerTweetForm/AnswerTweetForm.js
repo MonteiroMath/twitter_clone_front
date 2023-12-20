@@ -44,6 +44,7 @@ function AnswerTweetForm({ toggle, parent_id }) {
     <NewTweetFormControl
       handleSubmit={handleSubmit}
       placeholder="Answer tweet"
+      submit_text="Comment"
     />
   );
 }
