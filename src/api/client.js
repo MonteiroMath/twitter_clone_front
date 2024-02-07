@@ -36,3 +36,13 @@ client.delete = async function (endpoint, body) {
 };
 
 client.getTweet = (id, userId) => client.get(`/tweets/${id}?userId=${userId}`);
+
+client.registerUser = ({ email, username, password, birthDate }) =>
+  client.post("/users/register", { email, username, password, birthDate });
+
+client.login = (email, password) =>
+  client.post("/users/login", { email, password });
+
+client.logout = (jwtToken) => {
+  client.post("/users/logout", { jwtToken });
+};

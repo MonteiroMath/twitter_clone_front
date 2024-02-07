@@ -9,8 +9,7 @@ const initialState = {
 
 export const fetchAnswers = createAsyncThunk("page/fetch", async (params) => {
   const { parentId, userId } = params;
-
-
+  
   const data = await client.get(`/tweets/${parentId}/answers?userId=${userId}`);
   return data;
 });
