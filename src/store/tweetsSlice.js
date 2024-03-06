@@ -35,11 +35,14 @@ export const fetchReference = createAsyncThunk(
 export const postTweet = createAsyncThunk(
   "tweets/postTweets",
   async ({ userId, newTweet }) => {
-    const { tweet } = await client.post("/tweets", {
+    const result = await client.post("/tweets", {
       userId,
       newTweet,
     });
 
+    console.log(result);
+
+    const { tweet } = result;
     return { tweet };
   }
 );

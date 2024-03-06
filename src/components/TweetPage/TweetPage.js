@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { selectTweetById } from "../../store/tweetsSlice";
 import { Row } from "reactstrap";
 
+import MainLayout from "../MainLayout/MainLayout";
 import TopBar from "../Shared/Bars/TopBar/TopBar";
 import SubsetTweetList from "./SubsetTweetList/SubsetTweetList";
 import AnswerTweetForm from "../Shared/Forms/AnswerTweetForm/AnswerTweetForm";
@@ -31,13 +32,15 @@ export default function TweetPage(props) {
   }, [dispatch]);
 
   return tweet ? (
-    <div>
-      <TopBar header="Tweet" />
-      {tweet ? <TweetCard tweet={tweet} user={user} /> : null}
-      <Row className="border p-3 d-none d-md-flex" noGutters={true}>
-        <AnswerTweetForm parent_id={id} />
-      </Row>
-      <SubsetTweetList user={user} tweetList={tweetList} />
-    </div>
+    <MainLayout>
+      <div>
+        <TopBar header="Tweet" />
+        {tweet ? <TweetCard tweet={tweet} user={user} /> : null}
+        <Row className="border p-3 d-none d-md-flex" noGutters={true}>
+          <AnswerTweetForm parent_id={id} />
+        </Row>
+        <SubsetTweetList user={user} tweetList={tweetList} />
+      </div>
+    </MainLayout>
   ) : null;
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Row } from "reactstrap";
 
+import MainLayout from "../MainLayout/MainLayout";
 import FeedNavbar from "./Navbar/FeedNavbar";
 import FeedTweetList from "./FeedTweetList/FeedTweetList";
 import BottomBar from "./BottomBar/BottomBar";
@@ -17,17 +18,19 @@ function Feed(props) {
   }, []);
 
   return (
-    <div>
-      <Row className="sticky-top border bg-white" noGutters>
-        <FeedNavbar />
-      </Row>
-      <Row className="border p-3 d-none d-md-flex" noGutters={true}>
-        <NewTweet />
-      </Row>
-      <FeedTweetList user={user} />
-      <NewTweetButton />
-      <BottomBar />
-    </div>
+    <MainLayout>
+      <div>
+        <Row className="sticky-top border bg-white" noGutters>
+          <FeedNavbar />
+        </Row>
+        <Row className="border p-3 d-none d-md-flex" noGutters={true}>
+          <NewTweet />
+        </Row>
+        <FeedTweetList user={user} />
+        <NewTweetButton />
+        <BottomBar />
+      </div>
+    </MainLayout>
   );
 }
 
