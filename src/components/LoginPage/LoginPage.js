@@ -30,21 +30,25 @@ import tweet from "../../assets/icons/tweet.svg";
 
 function LoginPage() {
   return (
-    <div className="pt-4 px-5">
+    <div className="c-vp-height loginPage pt-4 px-5">
       <div className="mb-5">
-        <img src={tweet} alt="tweet icon" width="55px" />
+        <img className="loginLogo" src={tweet} alt="tweet icon" />
       </div>
 
       <div className="loginMainContainer">
-        <h1 class="font-weight-bold">Happening Now</h1>
-        <h4 class="font-weight-bold">Join today.</h4>
+        <h1 class="cfs-gigantic font-weight-bold">Happening Now</h1>
+        <h3 class="font-weight-bold">Join today.</h3>
 
-        <Button color="primary">Create account</Button>
-
-        <div class="font-weight-bold">Already have an account?</div>
-        <Button color="primary" outline>
-          Sign In
+        <Button className="loginPageButton" color="primary">
+          Create account
         </Button>
+
+        <div>
+          <div class="font-weight-bold mb-3">Already have an account?</div>
+          <Button className="loginPageButton" color="primary" outline>
+            Sign In
+          </Button>
+        </div>
       </div>
     </div>
   );

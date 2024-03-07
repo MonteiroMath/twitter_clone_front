@@ -46,6 +46,10 @@ textarea {
   font-size: 12px;
 }
 
+.cfs-gigantic {
+  font-size: 2.5rem;
+}
+
 .cfw-bolder {
   font-weight: 900;
 }
@@ -135,7 +139,7 @@ input[type="file"] {
 
 .loginMainContainer {
 
-  height: 400px;
+  min-height: 400px;
 
   display: flex;
   flex-direction: column;
@@ -143,10 +147,34 @@ input[type="file"] {
 
 }
 
+.loginPageButton {
+  max-width: 280px;
+}
+
+.loginLogo {
+  width: 55px;
+}
+
 @media (min-width: 992px) {
   .csidebarTweet {
     border-radius: 18px !important;
     width: 100%;
     height: auto;
+  }
+
+  .loginPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    column-gap: 20%;
+  }
+
+  .cfs-gigantic {
+    font-size: 3.5rem;
+  }
+
+  .loginLogo {
+    width: 450px;
   }
 }
