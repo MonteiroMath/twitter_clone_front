@@ -133,6 +133,16 @@ input[type="file"] {
   position: absolute;
 }
 
+.loginMainContainer {
+
+  height: 400px;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 32px;
+
+}
+
 @media (min-width: 992px) {
   .csidebarTweet {
     border-radius: 18px !important;
