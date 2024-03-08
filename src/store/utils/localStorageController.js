@@ -1,10 +1,10 @@
-const key = "userState";
+const KEY = "userState";
 
 export const loadUserState = () => {
   try {
-    const state = localStorage.getItem(key);
+    const state = localStorage.getItem(KEY);
 
-    if (state) {
+    if (!state) {
       return undefined;
     }
 
@@ -18,15 +18,16 @@ export const saveUserState = (state) => {
   try {
     const serializedState = JSON.stringify(state);
 
-    localStorage.set(key, serializedState);
+    localStorage.setItem(KEY, serializedState);
   } catch (err) {
+    console.log(err);
     console.log("Could not serialize state");
   }
 };
 
 export const clearUserState = () => {
   try {
-    localStorage.removeItem(key);
+    localStorage.removeItem(KEY);
   } catch (err) {
     console.log("Could not clear user data from local storage");
   }

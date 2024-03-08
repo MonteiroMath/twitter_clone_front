@@ -35,7 +35,6 @@ function RegisterModal({ isOpen, toggle }) {
     client
       .registerUser(newUser)
       .then((result) => {
-        console.log(result);
         setFormState({ ...initialFormState });
         toggle();
       })

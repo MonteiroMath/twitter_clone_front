@@ -11,13 +11,21 @@ import {
   Input,
 } from "reactstrap";
 
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+
+import { login } from "../../../store/UserSlice";
+
 import tweet from "../../../assets/icons/tweet.svg";
 
-function LoginModal({ isOpen, toggle }) {
-  const [formState, setFormState] = useState({
-    email: "",
+const initialState = { email: "", password: "" };
 
-    password: "",
+function LoginModal({ isOpen, toggle }) {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const [formState, setFormState] = useState({
+    ...initialState,
   });
 
   function handleFormChange(evt) {
@@ -26,9 +34,17 @@ function LoginModal({ isOpen, toggle }) {
   }
 
   function handleSubmit() {
-    //todo
-  }
+    const userData = { ...formState };
+    dispatch(login(userData)).then((result) => {
+      console.log(result);
+      setFormState({ ...initialState });
+      toggle();
 
+      if (result.payload.success) {
+        history.push("/home");
+      }
+    });
+  }
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} centered>

@@ -40,8 +40,6 @@ export const postTweet = createAsyncThunk(
       newTweet,
     });
 
-    console.log(result);
-
     const { tweet } = result;
     return { tweet };
   }
