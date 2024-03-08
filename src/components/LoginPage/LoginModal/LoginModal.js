@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Modal,
   ModalHeader,
@@ -14,6 +14,17 @@ import {
 import tweet from "../../../assets/icons/tweet.svg";
 
 function LoginModal({ isOpen, toggle }) {
+  const [formState, setFormState] = useState({
+    email: "",
+
+    password: "",
+  });
+
+  function handleFormChange(evt) {
+    const { name, value } = evt.target;
+    setFormState((prev) => ({ ...prev, [name]: value }));
+  }
+
   return (
     <Modal isOpen={isOpen} toggle={toggle} centered>
       <ModalHeader toggle={toggle}>
@@ -24,11 +35,21 @@ function LoginModal({ isOpen, toggle }) {
         <Form>
           <FormGroup>
             <Label>Email</Label>
-            <Input type="email"></Input>
+            <Input
+              type="email"
+              name="email"
+              value={formState.email}
+              onChange={handleFormChange}
+            />
           </FormGroup>
           <FormGroup>
             <Label>Password</Label>
-            <Input type="password"></Input>
+            <Input
+              type="password"
+              name="password"
+              value={formState.password}
+              onChange={handleFormChange}
+            />
           </FormGroup>
         </Form>
       </ModalBody>

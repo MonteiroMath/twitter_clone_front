@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Modal,
   ModalHeader,
@@ -14,6 +14,18 @@ import {
 import tweet from "../../../assets/icons/tweet.svg";
 
 function RegisterModal({ isOpen, toggle }) {
+  const [formState, setFormState] = useState({
+    email: "",
+    name: "",
+    password: "",
+    birthDate: "",
+  });
+
+  function handleFormChange(evt) {
+    const { name, value } = evt.target;
+    setFormState((prev) => ({ ...prev, [name]: value }));
+  }
+
   return (
     <Modal isOpen={isOpen} toggle={toggle} centered>
       <ModalHeader toggle={toggle}>
@@ -24,15 +36,39 @@ function RegisterModal({ isOpen, toggle }) {
         <Form>
           <FormGroup>
             <Label>Name</Label>
-            <Input type="text"></Input>
+            <Input
+              type="text"
+              name="name"
+              value={formState.name}
+              onChange={handleFormChange}
+            />
           </FormGroup>
           <FormGroup>
             <Label>Email</Label>
-            <Input type="email"></Input>
+            <Input
+              type="email"
+              name="email"
+              value={formState.email}
+              onChange={handleFormChange}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label>Password</Label>
+            <Input
+              type="password"
+              name="password"
+              value={formState.password}
+              onChange={handleFormChange}
+            />
           </FormGroup>
           <FormGroup>
             <Label>Date of Birth</Label>
-            <Input type="date"></Input>
+            <Input
+              type="date"
+              name="birthDate"
+              value={formState.birthDate}
+              onChange={handleFormChange}
+            />
           </FormGroup>
         </Form>
       </ModalBody>

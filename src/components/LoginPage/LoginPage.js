@@ -51,7 +51,7 @@ function LoginPage() {
         </div>
       </div>
       <RegisterModal isOpen={isOpenRegister} toggle={toggleRegister} />
-      <LoginModal isOpen={isOpenLogin} toggle={toggleRegister} />
+      <LoginModal isOpen={isOpenLogin} toggle={toggleLogin} />
     </>
   );
 }
