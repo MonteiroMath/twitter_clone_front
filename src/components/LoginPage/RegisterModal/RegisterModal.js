@@ -11,19 +11,35 @@ import {
   Input,
 } from "reactstrap";
 
+import { client } from "../../../api/client";
 import tweet from "../../../assets/icons/tweet.svg";
 
+const initialFormState = {
+  email: "",
+  username: "",
+  password: "",
+  birthDate: "",
+};
+
 function RegisterModal({ isOpen, toggle }) {
-  const [formState, setFormState] = useState({
-    email: "",
-    name: "",
-    password: "",
-    birthDate: "",
-  });
+  const [formState, setFormState] = useState({ ...initialFormState });
 
   function handleFormChange(evt) {
     const { name, value } = evt.target;
     setFormState((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function handleSubmit() {
+    const newUser = { ...formState };
+
+    client
+      .registerUser(newUser)
+      .then((result) => {
+        console.log(result);
+        setFormState({ ...initialFormState });
+        toggle();
+      })
+      .catch((err) => console.log(err));
   }
 
   return (
@@ -38,8 +54,8 @@ function RegisterModal({ isOpen, toggle }) {
             <Label>Name</Label>
             <Input
               type="text"
-              name="name"
-              value={formState.name}
+              name="username"
+              value={formState.username}
               onChange={handleFormChange}
             />
           </FormGroup>
@@ -73,7 +89,7 @@ function RegisterModal({ isOpen, toggle }) {
         </Form>
       </ModalBody>
       <ModalFooter>
-        <Button> Create Account </Button>
+        <Button onClick={handleSubmit}> Create Account </Button>
       </ModalFooter>
     </Modal>
   );

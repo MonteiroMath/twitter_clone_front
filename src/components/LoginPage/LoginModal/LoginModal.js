@@ -25,6 +25,11 @@ function LoginModal({ isOpen, toggle }) {
     setFormState((prev) => ({ ...prev, [name]: value }));
   }
 
+  function handleSubmit() {
+    //todo
+  }
+
+
   return (
     <Modal isOpen={isOpen} toggle={toggle} centered>
       <ModalHeader toggle={toggle}>
@@ -54,7 +59,7 @@ function LoginModal({ isOpen, toggle }) {
         </Form>
       </ModalBody>
       <ModalFooter>
-        <Button> Login</Button>
+        <Button onClick={handleSubmit}> Login</Button>
       </ModalFooter>
     </Modal>
   );
