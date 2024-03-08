@@ -13,34 +13,30 @@ import {
 
 import tweet from "../../../assets/icons/tweet.svg";
 
-function RegisterModal({ isOpen, toggle }) {
+function LoginModal({ isOpen, toggle }) {
   return (
     <Modal isOpen={isOpen} toggle={toggle} centered>
       <ModalHeader toggle={toggle}>
         <img src={tweet} alt="tweet icon" width="30px" />
       </ModalHeader>
       <ModalBody>
-        <h1>Create your Account</h1>
+        <h1>Sign In</h1>
         <Form>
-          <FormGroup>
-            <Label>Name</Label>
-            <Input type="text"></Input>
-          </FormGroup>
           <FormGroup>
             <Label>Email</Label>
             <Input type="email"></Input>
           </FormGroup>
           <FormGroup>
-            <Label>Date of Birth</Label>
-            <Input type="date"></Input>
+            <Label>Password</Label>
+            <Input type="password"></Input>
           </FormGroup>
         </Form>
       </ModalBody>
       <ModalFooter>
-        <Button> Create Account </Button>
+        <Button> Login</Button>
       </ModalFooter>
     </Modal>
   );
 }
 
-export default RegisterModal;
+export default LoginModal;

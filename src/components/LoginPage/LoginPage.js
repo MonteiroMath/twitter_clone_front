@@ -2,14 +2,20 @@ import React, { useEffect, useState } from "react";
 
 import { Button } from "reactstrap";
 import RegisterModal from "./RegisterModal/RegisterModal";
+import LoginModal from "./LoginModal/LoginModal";
 
 import tweet from "../../assets/icons/tweet.svg";
 
 function LoginPage() {
   const [isOpenRegister, setIsOpenRegister] = useState(false);
+  const [isOpenLogin, setIsOpenLogin] = useState(false);
 
   function toggleRegister() {
     setIsOpenRegister((isOpen) => !isOpen);
+  }
+
+  function toggleLogin() {
+    setIsOpenLogin((isOpen) => !isOpen);
   }
 
   return (
@@ -33,13 +39,19 @@ function LoginPage() {
 
           <div>
             <div class="font-weight-bold mb-3">Already have an account?</div>
-            <Button className="loginPageButton" color="primary" outline>
+            <Button
+              className="loginPageButton"
+              color="primary"
+              outline
+              onClick={toggleLogin}
+            >
               Sign In
             </Button>
           </div>
         </div>
       </div>
       <RegisterModal isOpen={isOpenRegister} toggle={toggleRegister} />
+      <LoginModal isOpen={isOpenLogin} toggle={toggleRegister} />
     </>
   );
 }
