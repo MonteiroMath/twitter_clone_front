@@ -148,7 +148,7 @@ input[type="file"] {
 }
 
 .loginPageButton {
-  max-width: 280px;
+  width: 280px;
 }
 
 .loginLogo {
