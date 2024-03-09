@@ -16,7 +16,7 @@ import { fetchAnswers, selectAnswers, closePage } from "../../store/PageSlice";
 import user from "../../assets/placeholders/user";
 
 export default function TweetPage(props) {
-  const jswToken = useSelector((state) => selectJwtToken(state));
+  const jwtToken = useSelector((state) => selectJwtToken(state));
 
   const dispatch = useDispatch();
   const pageStatus = useSelector((state) => state.page.status);
@@ -28,26 +28,26 @@ export default function TweetPage(props) {
 
   useEffect(() => {
     if (pageStatus === "idle") {
-      dispatch(fetchAnswers({ parentId: id, userId: user.id }));
+      dispatch(fetchAnswers({ parentId: id, userId: user.id, jwtToken }));
     }
 
     return () => dispatch(closePage());
   }, [dispatch]);
 
-  return jswToken ? (
-    tweet ? (
-      <MainLayout>
-        <div>
-          <TopBar header="Tweet" />
-          {tweet ? <TweetCard tweet={tweet} user={user} /> : null}
-          <Row className="border p-3 d-none d-md-flex" noGutters={true}>
-            <AnswerTweetForm parent_id={id} />
-          </Row>
-          <SubsetTweetList user={user} tweetList={tweetList} />
-        </div>
-      </MainLayout>
-    ) : null
-  ) : (
-    <Redirect to="/" />
-  );
+  if (!jwtToken) {
+    return <Redirect to="/" />;
+  }
+
+  return tweet ? (
+    <MainLayout>
+      <div>
+        <TopBar header="Tweet" />
+        {tweet ? <TweetCard tweet={tweet} user={user} /> : null}
+        <Row className="border p-3 d-none d-md-flex" noGutters={true}>
+          <AnswerTweetForm parent_id={id} />
+        </Row>
+        <SubsetTweetList user={user} tweetList={tweetList} />
+      </div>
+    </MainLayout>
+  ) : null;
 }

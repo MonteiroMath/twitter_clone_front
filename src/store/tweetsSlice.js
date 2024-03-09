@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { client } from "../api/client";
 import { postAnswer } from "./PageSlice";
+import setJwtHeader from "./utils/setJwtHeader";
 
 const initialState = {
   status: "idle",
@@ -16,16 +17,23 @@ function updateTweet(stateData, updatedTweet) {
   }
 }
 
-export const fetchTweets = createAsyncThunk("tweets/fetch", async (id) => {
-  const data = await client.get(`/tweets?userId=${id}`);
-  return data;
-});
+export const fetchTweets = createAsyncThunk(
+  "tweets/fetch",
+  async (id, jwtToken) => {
+    const data = await client.get(
+      `/tweets?userId=${id}`,
+      setJwtHeader(jwtToken)
+    );
+    return data;
+  }
+);
 
 export const fetchReference = createAsyncThunk(
   "tweets/fetchReference",
-  async ({ tweetId, userId }) => {
+  async ({ tweetId, userId, jwtToken }) => {
     const data = await client.get(
-      `/tweets/${tweetId}/reference?userId=${userId}`
+      `/tweets/${tweetId}/reference?userId=${userId}`,
+      setJwtHeader(jwtToken)
     );
 
     return data;
@@ -34,11 +42,15 @@ export const fetchReference = createAsyncThunk(
 
 export const postTweet = createAsyncThunk(
   "tweets/postTweets",
-  async ({ userId, newTweet }) => {
-    const result = await client.post("/tweets", {
-      userId,
-      newTweet,
-    });
+  async ({ userId, newTweet, jwtToken }) => {
+    const result = await client.post(
+      "/tweets",
+      {
+        userId,
+        newTweet,
+      },
+      setJwtHeader(jwtToken)
+    );
 
     const { tweet } = result;
     return { tweet };
@@ -47,9 +59,11 @@ export const postTweet = createAsyncThunk(
 
 export const addRetweet = createAsyncThunk(
   "tweets/addRt",
-  async ({ tweetId, userId }) => {
+  async ({ tweetId, userId, jwtToken }) => {
     const data = await client.post(
-      `/tweets/${tweetId}/retweet?userId=${userId}`
+      `/tweets/${tweetId}/retweet?userId=${userId}`,
+      {},
+      setJwtHeader(jwtToken)
     );
     return data;
   }
@@ -57,9 +71,11 @@ export const addRetweet = createAsyncThunk(
 
 export const removeRetweet = createAsyncThunk(
   "tweets/deleteRt",
-  async ({ tweetId, userId }) => {
+  async ({ tweetId, userId, jwtToken }) => {
     const data = await client.delete(
-      `/tweets/${tweetId}/retweet?userId=${userId}`
+      `/tweets/${tweetId}/retweet?userId=${userId}`,
+      {},
+      setJwtHeader(jwtToken)
     );
     return data;
   }
@@ -67,12 +83,13 @@ export const removeRetweet = createAsyncThunk(
 
 export const addComment = createAsyncThunk(
   "tweets/addComment",
-  async ({ newTweet, referenceId, userId }) => {
+  async ({ newTweet, referenceId, userId, jwtToken }) => {
     const data = await client.post(
       `/tweets/${referenceId}/comments?userId=${userId}`,
       {
         newTweet,
-      }
+      },
+      setJwtHeader(jwtToken)
     );
 
     return data;
@@ -81,8 +98,12 @@ export const addComment = createAsyncThunk(
 
 export const addLike = createAsyncThunk(
   "tweets/addLike",
-  async ({ id, userId }) => {
-    const data = await client.post(`/tweets/${id}/likes?userId=${userId}`);
+  async ({ id, userId, jwtToken }) => {
+    const data = await client.post(
+      `/tweets/${id}/likes?userId=${userId}`,
+      {},
+      setJwtHeader(jwtToken)
+    );
 
     return data;
   }
@@ -90,8 +111,12 @@ export const addLike = createAsyncThunk(
 
 export const deleteLike = createAsyncThunk(
   "tweets/deleteLike",
-  async ({ id, userId }) => {
-    const data = await client.delete(`/tweets/${id}/likes?userId=${userId}`);
+  async ({ id, userId, jwtToken }) => {
+    const data = await client.delete(
+      `/tweets/${id}/likes?userId=${userId}`,
+      {},
+      setJwtHeader(jwtToken)
+    );
 
     return data;
   }
@@ -99,9 +124,11 @@ export const deleteLike = createAsyncThunk(
 
 export const addLikeRt = createAsyncThunk(
   "tweets/addLikeRt",
-  async ({ tweetId, userId }) => {
+  async ({ tweetId, userId, jwtToken }) => {
     const data = await client.post(
-      `/tweets/${tweetId}/likes/rt?userId=${userId}`
+      `/tweets/${tweetId}/likes/rt?userId=${userId}`,
+      {},
+      setJwtHeader(jwtToken)
     );
 
     return data;
@@ -110,9 +137,11 @@ export const addLikeRt = createAsyncThunk(
 
 export const deleteLikeRt = createAsyncThunk(
   "tweets/deleteLikeRt",
-  async ({ tweetId, userId }) => {
+  async ({ tweetId, userId, jwtToken }) => {
     const data = await client.delete(
-      `/tweets/${tweetId}/likes/rt?userId=${userId}`
+      `/tweets/${tweetId}/likes/rt?userId=${userId}`,
+      {},
+      setJwtHeader(jwtToken)
     );
 
     return data;

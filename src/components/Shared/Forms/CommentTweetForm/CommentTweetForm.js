@@ -1,12 +1,12 @@
-import { useDispatch } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { selectJwtToken } from "../../../../store/UserSlice";
 import { addComment } from "../../../../store/tweetsSlice";
 
 import NewTweetFormControl from "../NewTweetFormControl/NewTweetFormControl";
 
 function CommentTweetForm({ toggle, quote }) {
   const dispatch = useDispatch();
-  //let history = useHistory();
+  const jwtToken = useSelector((state) => selectJwtToken(state));
 
   function handleSubmit(formData) {
     const { tweetText, attach } = formData;
@@ -22,6 +22,7 @@ function CommentTweetForm({ toggle, quote }) {
         userId: 1,
         referenceId: quote.id,
         newTweet,
+        jwtToken,
       })
     );
 

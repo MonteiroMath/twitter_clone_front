@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { client } from "../api/client";
+import setJwtHeader from "./utils/setJwtHeader";
 
 const initialState = {
   status: "idle",
@@ -8,22 +9,26 @@ const initialState = {
 };
 
 export const fetchAnswers = createAsyncThunk("page/fetch", async (params) => {
-  const { parentId, userId } = params;
-  
-  const data = await client.get(`/tweets/${parentId}/answers?userId=${userId}`);
+  const { parentId, userId, jwtToken } = params;
+
+  const data = await client.get(
+    `/tweets/${parentId}/answers?userId=${userId}`,
+    setJwtHeader(jwtToken)
+  );
   return data;
 });
 
 export const postAnswer = createAsyncThunk(
   "page/postAnswer",
   async (params) => {
-    const { userId, newTweet, parentId } = params;
+    const { userId, newTweet, parentId, jwtToken } = params;
     const { tweet, tweetContent, updatedTweet } = await client.post(
       `/tweets/${parentId}/answers/`,
       {
         userId,
         newTweet,
-      }
+      },
+      setJwtHeader(jwtToken)
     );
 
     return { tweet, tweetContent, updatedTweet };

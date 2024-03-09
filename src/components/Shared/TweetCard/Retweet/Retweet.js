@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Row, Col } from "reactstrap";
 
+import { selectJwtToken } from "../../../../store/UserSlice";
+
 import {
   addRetweet,
   removeRetweet,
@@ -39,6 +41,7 @@ import { RetweetIcon } from "../../Svg/Svg";
 */
 
 function Retweet({ tweet, user }) {
+  const jwtToken = useSelector((state) => selectJwtToken(state));
   let dispatch = useDispatch();
 
   const cachedReference = useSelector((state) =>
@@ -47,22 +50,23 @@ function Retweet({ tweet, user }) {
 
   useEffect(() => {
     if (!cachedReference) {
-      dispatch(fetchReference({ tweetId: tweet.id, userId: user.id }));
+      dispatch(
+        fetchReference({ tweetId: tweet.id, userId: user.id, jwtToken })
+      );
     }
-  }, [tweet.id, user.id, cachedReference, dispatch]);
+  }, [tweet.id, user.id, cachedReference, dispatch, jwtToken]);
 
   let referenceTweet = cachedReference || tweet.reference;
 
   async function handleLike() {
-    console.log(referenceTweet.liked);
     let action = referenceTweet.liked ? deleteLikeRt : addLikeRt;
-    dispatch(action({ tweetId: tweet.id, userId: user.id }));
+    dispatch(action({ tweetId: tweet.id, userId: user.id, jwtToken }));
   }
 
   function handleRetweet() {
     let action = referenceTweet.retweeted ? removeRetweet : addRetweet;
 
-    dispatch(action({ tweetId: tweet.referenceId, userId: user.id }));
+    dispatch(action({ tweetId: tweet.referenceId, userId: user.id, jwtToken }));
   }
 
   return referenceTweet ? (

@@ -1,4 +1,5 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectJwtToken } from "../../../../store/UserSlice";
 
 import { postAnswer } from "../../../../store/PageSlice";
 
@@ -6,7 +7,7 @@ import NewTweetFormControl from "../NewTweetFormControl/NewTweetFormControl";
 
 function AnswerTweetForm({ toggle, parent_id }) {
   const dispatch = useDispatch();
-  //let history = useHistory();
+  const jwtToken = useSelector((state) => selectJwtToken(state));
 
   function handleSubmit(formData) {
     const { tweetText, attach, poll, pollChoices, pollLength } = formData;
@@ -31,6 +32,7 @@ function AnswerTweetForm({ toggle, parent_id }) {
         userId: 1,
         newTweet,
         parentId: parent_id,
+        jwtToken,
       })
     );
 

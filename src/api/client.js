@@ -1,6 +1,6 @@
-export async function client(endpoint, method, body) {
+export async function client(endpoint, method, body, extraHeaders = {}) {
   const baseUrl = `http://localhost:6868`;
-  const headers = { "Content-Type": "application/json" };
+  const headers = { "Content-Type": "application/json", ...extraHeaders };
   const mode = "cors";
 
   const config = {
@@ -19,20 +19,20 @@ export async function client(endpoint, method, body) {
   return data;
 }
 
-client.get = async function (endpoint) {
+client.get = async function (endpoint, extraHeaders = {}) {
   return client(endpoint, "GET");
 };
 
-client.post = async function (endpoint, body) {
-  return client(endpoint, "POST", body);
+client.post = async function (endpoint, body, extraHeaders = {}) {
+  return client(endpoint, "POST", body, extraHeaders);
 };
 
-client.put = async function (endpoint, body) {
-  return client(endpoint, "PUT", body);
+client.put = async function (endpoint, body, extraHeaders = {}) {
+  return client(endpoint, "PUT", body, extraHeaders);
 };
 
-client.delete = async function (endpoint, body) {
-  return client(endpoint, "DELETE", body);
+client.delete = async function (endpoint, body, extraHeaders = {}) {
+  return client(endpoint, "DELETE", body, extraHeaders);
 };
 
 client.getTweet = (id, userId) => client.get(`/tweets/${id}?userId=${userId}`);
