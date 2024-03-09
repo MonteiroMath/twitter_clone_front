@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Redirect } from "react-router-dom";
+import { selectJwtToken } from "../../store/UserSlice";
 import { selectTweetById } from "../../store/tweetsSlice";
 import { Row } from "reactstrap";
 
@@ -15,6 +16,8 @@ import { fetchAnswers, selectAnswers, closePage } from "../../store/PageSlice";
 import user from "../../assets/placeholders/user";
 
 export default function TweetPage(props) {
+  const jswToken = useSelector((state) => selectJwtToken(state));
+
   const dispatch = useDispatch();
   const pageStatus = useSelector((state) => state.page.status);
   let { id } = useParams();
@@ -31,16 +34,20 @@ export default function TweetPage(props) {
     return () => dispatch(closePage());
   }, [dispatch]);
 
-  return tweet ? (
-    <MainLayout>
-      <div>
-        <TopBar header="Tweet" />
-        {tweet ? <TweetCard tweet={tweet} user={user} /> : null}
-        <Row className="border p-3 d-none d-md-flex" noGutters={true}>
-          <AnswerTweetForm parent_id={id} />
-        </Row>
-        <SubsetTweetList user={user} tweetList={tweetList} />
-      </div>
-    </MainLayout>
-  ) : null;
+  return jswToken ? (
+    tweet ? (
+      <MainLayout>
+        <div>
+          <TopBar header="Tweet" />
+          {tweet ? <TweetCard tweet={tweet} user={user} /> : null}
+          <Row className="border p-3 d-none d-md-flex" noGutters={true}>
+            <AnswerTweetForm parent_id={id} />
+          </Row>
+          <SubsetTweetList user={user} tweetList={tweetList} />
+        </div>
+      </MainLayout>
+    ) : null
+  ) : (
+    <Redirect to="/" />
+  );
 }

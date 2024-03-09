@@ -65,5 +65,5 @@ export default userSlice.reducer;
 export const actions = userSlice.actions;
 
 //selectors
-export const useJwtToken = (state) => state.user.data.jwtToken;
-export const useUserData = (state) => state.user.data.user;
+export const selectJwtToken = (state) => state.user.data.jwtToken;
+export const selectUserData = (state) => state.user.data.user;
