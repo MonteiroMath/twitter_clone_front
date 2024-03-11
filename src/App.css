@@ -23,6 +23,15 @@ textarea {
   resize: none !important;
 }
 
+input:invalid {
+  border: 2px solid red;
+}
+
+input:valid {
+  border: 2px solid black;
+}
+
+
 .c-vp-height {
   height: 100vh;
 }

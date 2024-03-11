@@ -3,7 +3,6 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   Button,
   FormGroup,
   Form,
@@ -28,16 +27,20 @@ function LoginModal({ isOpen, toggle }) {
     ...initialState,
   });
 
+  function clearForm() {
+    setFormState({ ...initialState });
+  }
+
   function handleFormChange(evt) {
     const { name, value } = evt.target;
     setFormState((prev) => ({ ...prev, [name]: value }));
   }
 
-  function handleSubmit() {
+  function handleSubmit(evt) {
+    evt.preventDefault();
     const userData = { ...formState };
     dispatch(login(userData)).then((result) => {
-      console.log(result);
-      setFormState({ ...initialState });
+      clearForm();
       toggle();
 
       if (result.payload.success) {
@@ -47,13 +50,25 @@ function LoginModal({ isOpen, toggle }) {
   }
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle} centered>
-      <ModalHeader toggle={toggle}>
+    <Modal
+      isOpen={isOpen}
+      toggle={() => {
+        clearForm();
+        toggle();
+      }}
+      centered
+    >
+      <ModalHeader
+        toggle={() => {
+          clearForm();
+          toggle();
+        }}
+      >
         <img src={tweet} alt="tweet icon" width="30px" />
       </ModalHeader>
       <ModalBody>
         <h1>Sign In</h1>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <FormGroup>
             <Label>Email</Label>
             <Input
@@ -61,6 +76,7 @@ function LoginModal({ isOpen, toggle }) {
               name="email"
               value={formState.email}
               onChange={handleFormChange}
+              required
             />
           </FormGroup>
           <FormGroup>
@@ -70,13 +86,17 @@ function LoginModal({ isOpen, toggle }) {
               name="password"
               value={formState.password}
               onChange={handleFormChange}
+              minLength={6}
+              required
             />
           </FormGroup>
+          <div className="d-flex mt-4">
+            <Button className="ml-auto" color="primary">
+              Login
+            </Button>
+          </div>
         </Form>
       </ModalBody>
-      <ModalFooter>
-        <Button onClick={handleSubmit}> Login</Button>
-      </ModalFooter>
     </Modal>
   );
 }

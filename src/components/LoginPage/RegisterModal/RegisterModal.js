@@ -3,7 +3,6 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   Button,
   FormGroup,
   Form,
@@ -24,12 +23,18 @@ const initialFormState = {
 function RegisterModal({ isOpen, toggle }) {
   const [formState, setFormState] = useState({ ...initialFormState });
 
+  function clearForm() {
+    setFormState({ ...initialFormState });
+  }
+
   function handleFormChange(evt) {
     const { name, value } = evt.target;
+
     setFormState((prev) => ({ ...prev, [name]: value }));
   }
 
-  function handleSubmit() {
+  function handleSubmit(evt) {
+    evt.preventDefault();
     const newUser = { ...formState };
 
     client
@@ -41,55 +46,82 @@ function RegisterModal({ isOpen, toggle }) {
       .catch((err) => console.log(err));
   }
 
+  const maxDate = new Date().toISOString().substring(0, 10);
+
   return (
-    <Modal isOpen={isOpen} toggle={toggle} centered>
-      <ModalHeader toggle={toggle}>
+    <Modal
+      isOpen={isOpen}
+      toggle={() => {
+        clearForm();
+        toggle();
+      }}
+      centered
+    >
+      <ModalHeader
+        toggle={() => {
+          clearForm();
+          toggle();
+        }}
+      >
         <img src={tweet} alt="tweet icon" width="30px" />
       </ModalHeader>
       <ModalBody>
         <h1>Create your Account</h1>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <FormGroup>
-            <Label>Name</Label>
+            <Label for="username">Name*</Label>
             <Input
+              id="username"
               type="text"
               name="username"
               value={formState.username}
               onChange={handleFormChange}
+              minLength={6}
+              required
             />
           </FormGroup>
           <FormGroup>
-            <Label>Email</Label>
+            <Label for="email">Email*</Label>
             <Input
+              id="email"
               type="email"
               name="email"
               value={formState.email}
               onChange={handleFormChange}
+              required
             />
           </FormGroup>
           <FormGroup>
-            <Label>Password</Label>
+            <Label for="password">Password*</Label>
             <Input
+              id="password"
               type="password"
               name="password"
               value={formState.password}
               onChange={handleFormChange}
+              minLength={6}
+              required
             />
           </FormGroup>
           <FormGroup>
-            <Label>Date of Birth</Label>
+            <Label for="date">Date of Birth*</Label>
             <Input
+              id="date"
               type="date"
               name="birthDate"
               value={formState.birthDate}
               onChange={handleFormChange}
+              max={maxDate}
+              required
             />
           </FormGroup>
+          <div className="d-flex mt-4">
+            <Button className="ml-auto " color="primary">
+              Create Account{" "}
+            </Button>
+          </div>
         </Form>
       </ModalBody>
-      <ModalFooter>
-        <Button onClick={handleSubmit}> Create Account </Button>
-      </ModalFooter>
     </Modal>
   );
 }
