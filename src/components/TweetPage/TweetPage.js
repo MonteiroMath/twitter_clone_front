@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Redirect } from "react-router-dom";
-import { selectJwtToken } from "../../store/UserSlice";
+import { selectJwtToken, selectUserData } from "../../store/UserSlice";
 import { selectTweetById } from "../../store/tweetsSlice";
 import { Row } from "reactstrap";
 
@@ -13,10 +13,9 @@ import AnswerTweetForm from "../Shared/Forms/AnswerTweetForm/AnswerTweetForm";
 import TweetCard from "../Shared/TweetCard/TweetCard";
 import { fetchAnswers, selectAnswers, closePage } from "../../store/PageSlice";
 
-import user from "../../assets/placeholders/user";
-
 export default function TweetPage(props) {
   const jwtToken = useSelector((state) => selectJwtToken(state));
+  const user = useSelector((state) => selectUserData(state));
 
   const dispatch = useDispatch();
   const pageStatus = useSelector((state) => state.page.status);

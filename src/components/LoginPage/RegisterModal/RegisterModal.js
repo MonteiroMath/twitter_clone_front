@@ -116,7 +116,7 @@ function RegisterModal({ isOpen, toggle }) {
             />
           </FormGroup>
           <div className="d-flex mt-4">
-            <Button className="ml-auto " color="primary">
+            <Button className="ml-auto" color="primary">
               Create Account{" "}
             </Button>
           </div>

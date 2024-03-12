@@ -5,8 +5,8 @@ import PollForm from "../PollForm/PollForm";
 import Attachment from "../../Attachment/Attachment";
 import RetweetBox from "../../TweetCard/RetweetBox/RetweetBox";
 import ToolBar from "../../Bars/ToolBar/ToolBar";
-
-import user from "../../../../assets/placeholders/user";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../../../../store/UserSlice";
 
 function NewTweetFormControl({
   quote,
@@ -15,6 +15,8 @@ function NewTweetFormControl({
   noPoll,
   handleSubmit,
 }) {
+  const user = useSelector((state) => selectUserData(state));
+
   const [tweetText, setTweetText] = useState("");
   const [attach, setAttach] = useState("");
   const [poll, setPoll] = useState(false);

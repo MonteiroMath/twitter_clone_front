@@ -3,8 +3,8 @@ import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
 import AnswerTweetForm from "../../../Shared/Forms/AnswerTweetForm/AnswerTweetForm";
 import RetweetBox from "../../TweetCard/RetweetBox/RetweetBox";
-
-import user from "../../../../assets/placeholders/user";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../../../../store/UserSlice";
 
 export default function AnswerModal({
   modal,
@@ -12,6 +12,8 @@ export default function AnswerModal({
   parentId,
   parentContent,
 }) {
+  const user = useSelector((state) => selectUserData(state));
+
   return (
     <Modal isOpen={modal} toggle={toggle}>
       <ModalHeader toggle={toggle} />

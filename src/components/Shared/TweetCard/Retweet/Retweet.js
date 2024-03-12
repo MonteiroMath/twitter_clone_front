@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Row, Col } from "reactstrap";
 
-import { selectJwtToken } from "../../../../store/UserSlice";
+import { selectJwtToken, selectUserData } from "../../../../store/UserSlice";
 
 import {
   addRetweet,
@@ -40,8 +40,9 @@ import { RetweetIcon } from "../../Svg/Svg";
     -problem: the reference inside the RETWEET must be populated - changes to BE.
 */
 
-function Retweet({ tweet, user }) {
+function Retweet({ tweet }) {
   const jwtToken = useSelector((state) => selectJwtToken(state));
+  const user = useSelector((state) => selectUserData(state));
   let dispatch = useDispatch();
 
   const cachedReference = useSelector((state) =>

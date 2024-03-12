@@ -38,12 +38,12 @@ const userSlice = createSlice({
         state.error = action.payload.msg;
       })
       .addCase(login.fulfilled, (state, action) => {
-        const { jwtToken, userId } = action.payload;
+        const { jwtToken, user } = action.payload;
         state.status = "fulfilled";
         state.error = null;
         state.data = {
           jwtToken,
-          user: userId,
+          user,
         };
       })
       .addCase(logout.pending, (state, action) => {

@@ -12,16 +12,8 @@ import BottomBar from "./BottomBar/BottomBar";
 import NewTweet from "../Shared/NewTweet/NewTweet";
 import NewTweetButton from "../Shared//Buttons/NewTweetButton/NewTweetButton";
 
-import userData from "../../assets/placeholders/user";
-
-function Feed(props) {
+function Feed() {
   const jwtToken = useSelector((state) => selectJwtToken(state));
-
-  let [user, setUser] = useState({});
-
-  useEffect(() => {
-    setUser(userData);
-  }, []);
 
   return jwtToken ? (
     <MainLayout>
@@ -32,7 +24,7 @@ function Feed(props) {
         <Row className="border p-3 d-none d-md-flex" noGutters={true}>
           <NewTweet />
         </Row>
-        <FeedTweetList user={user} />
+        <FeedTweetList />
         <NewTweetButton />
         <BottomBar />
       </div>

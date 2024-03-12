@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectJwtToken } from "../../../../store/UserSlice";
+import { selectJwtToken, selectUserData } from "../../../../store/UserSlice";
 
 import { postTweet } from "../../../../store/tweetsSlice";
 
@@ -9,6 +9,7 @@ import NewTweetFormControl from "../NewTweetFormControl/NewTweetFormControl";
 function NewTweetForm({ toggle }) {
   const dispatch = useDispatch();
   const jwtToken = useSelector((state) => selectJwtToken(state));
+  const user = useSelector((state) => selectUserData(state));
   let history = useHistory();
 
   function handleSubmit(formData) {
@@ -32,7 +33,7 @@ function NewTweetForm({ toggle }) {
 
     dispatch(
       postTweet({
-        userId: 1,
+        userId: user.id,
         newTweet,
         jwtToken,
       })

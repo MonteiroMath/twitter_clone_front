@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectJwtToken } from "../../../../store/UserSlice";
+import { selectJwtToken, selectUserData } from "../../../../store/UserSlice";
 import TweetDisplay from "../TweetDisplay/TweetDisplay";
 
 //store imports
@@ -11,9 +11,11 @@ import {
   deleteLike,
 } from "../../../../store/tweetsSlice";
 
-function Tweet({ tweet, user, originalId }) {
+//todo revisit necessity of originalId prop
+function Tweet({ tweet, originalId }) {
   let dispatch = useDispatch();
   const jwtToken = useSelector((state) => selectJwtToken(state));
+  const user = useSelector((state) => selectUserData(state));
 
   async function handleLike() {
     let action = tweet.liked ? deleteLike : addLike;

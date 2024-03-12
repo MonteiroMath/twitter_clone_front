@@ -4,15 +4,15 @@ import Tweet from "./Tweet/Tweet";
 import Retweet from "./Retweet/Retweet";
 
 function TweetCard(props) {
-  let { tweet, user } = props;
+  let { tweet } = props;
 
   return (
     <Row className="border p-3" noGutters>
       <Col xs={12}>
         {tweet.type === "retweet" ? (
-          <Retweet tweet={tweet} user={user} />
+          <Retweet tweet={tweet} />
         ) : (
-          <Tweet tweet={tweet} user={user} originalId={tweet.id} />
+          <Tweet tweet={tweet} originalId={tweet.id} />
         )}
       </Col>
     </Row>

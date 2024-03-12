@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectJwtToken } from "../../../store/UserSlice";
+import { selectJwtToken, selectUserData } from "../../../store/UserSlice";
 import { Spinner } from "reactstrap";
 import TweetList from "../../Shared/TweetList/TweetList";
 import { selectAllTweets, fetchTweets } from "../../../store/tweetsSlice";
 
-function FeedTweetList({ user }) {
+function FeedTweetList() {
+  const user = useSelector((state) => selectUserData(state));
   const dispatch = useDispatch();
   const jwtToken = useSelector((state) => selectJwtToken(state));
 
@@ -15,14 +16,14 @@ function FeedTweetList({ user }) {
 
   useEffect(() => {
     if (tweetStatus === "idle") {
-      dispatch(fetchTweets(1, jwtToken));
+      dispatch(fetchTweets(user.id, jwtToken));
     }
-  }, [dispatch, tweetStatus, jwtToken]);
+  }, [dispatch, tweetStatus, jwtToken, user.id]);
 
   let content = null;
 
   if (tweetStatus === "fulfilled") {
-    content = <TweetList user={user} tweetList={tweetList} />;
+    content = <TweetList tweetList={tweetList} />;
   } else if (tweetStatus === "pending") {
     content = <Spinner color="info" />;
   } else if (tweetStatus === "rejected") {
