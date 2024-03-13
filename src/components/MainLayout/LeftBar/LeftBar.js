@@ -22,10 +22,10 @@ function LeftBar() {
         </Col>
       </Row>
       <Row
-        className="justify-content-center justify-content-lg-end mt-auto mb-3"
+        className="justify-content-center mt-auto mb-3"
         noGutters
       >
-        <Col md="5" lg="9" className="mt-5 mr-lg-3">
+        <Col md="5" lg="12" className="mt-5 mr-lg-3">
           <ProfileInfoButton />
         </Col>
       </Row>

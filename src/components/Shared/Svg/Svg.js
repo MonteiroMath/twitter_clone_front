@@ -236,6 +236,51 @@ function ShareIcon(props) {
   );
 }
 
+function ShowMoreIcon() {
+  return (
+    <svg
+      fill="#000000"
+      height="16px"
+      width="16px"
+      version="1.1"
+      id="Layer_1"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 472.576 472.576"
+    >
+      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        {" "}
+        <g>
+          {" "}
+          <g>
+            {" "}
+            <circle cx="65.142" cy="236.288" r="65.142"></circle>{" "}
+          </g>{" "}
+        </g>{" "}
+        <g>
+          {" "}
+          <g>
+            {" "}
+            <circle cx="236.308" cy="236.288" r="65.142"></circle>{" "}
+          </g>{" "}
+        </g>{" "}
+        <g>
+          {" "}
+          <g>
+            {" "}
+            <circle cx="407.434" cy="236.288" r="65.142"></circle>{" "}
+          </g>{" "}
+        </g>{" "}
+      </g>
+    </svg>
+  );
+}
+
 export {
   AddImageIcon,
   AddMediaIcon,
@@ -248,4 +293,5 @@ export {
   LikeIcon,
   RetweetIcon,
   ShareIcon,
+  ShowMoreIcon,
 };
