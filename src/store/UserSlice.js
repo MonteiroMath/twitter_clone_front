@@ -16,7 +16,7 @@ export const login = createAsyncThunk(
     const data = await client.login(email, password);
 
     if (data.success) return data;
-    else throw new Error(data);
+    else throw new Error(data.msg);
   }
 );
 
@@ -40,13 +40,14 @@ const userSlice = createSlice({
         state.status = "pending";
       })
       .addCase(login.rejected, (state, action) => {
-        const error = action.meta.requestStatus;
-        state.status = "rejected";
+        const { error } = action;
 
-        if (error === "rejected") {
-          state.error =
-            "Sorry, there was an error with the request. Try again later or contact the administrator";
-        }
+        const errorMsg = error.message.includes("Failed to fetch")
+          ? "Sorry, there was an error. Please, try again later or contact the support."
+          : error.message;
+
+        state.status = "rejected";
+        state.error = errorMsg;
       })
       .addCase(login.fulfilled, (state, action) => {
         const { jwtToken, user } = action.payload;

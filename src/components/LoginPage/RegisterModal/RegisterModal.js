@@ -42,12 +42,19 @@ function RegisterModal({ isOpen, toggle }) {
     client
       .registerUser(newUser)
       .then((result) => {
-        setFormState({ ...initialFormState });
-        toggle();
+        const { success, msg } = result;
+
+        if (success) {
+          setFormState({ ...initialFormState });
+          toggle();
+          return;
+        }
+
+        setError(msg);
       })
       .catch((err) => {
         setError(
-          "Ocorreu um erro. Tente novamente mais tarde ou contacte o administrador."
+          "Sorry, there was an error. Please, try again later or contact the support."
         );
         console.log(err);
       });
