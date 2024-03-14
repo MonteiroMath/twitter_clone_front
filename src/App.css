@@ -146,6 +146,15 @@ input[type="file"] {
   position: absolute;
 }
 
+.errorBox {
+
+  border: dashed 1px red;
+  color: red;
+ 
+  padding: 2px;
+  margin-top: 25px;
+}
+
 .loginMainContainer {
 
   min-height: 400px;

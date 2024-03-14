@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   ModalHeader,
@@ -10,10 +10,14 @@ import {
   Input,
 } from "reactstrap";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { login } from "../../../store/UserSlice";
+import {
+  login,
+  selectLoginStatus,
+  clearRequest,
+} from "../../../store/UserSlice";
 
 import tweet from "../../../assets/icons/tweet.svg";
 
@@ -22,13 +26,23 @@ const initialState = { email: "", password: "" };
 function LoginModal({ isOpen, toggle }) {
   const dispatch = useDispatch();
   const history = useHistory();
+  const loginStatus = useSelector((state) => selectLoginStatus(state));
 
   const [formState, setFormState] = useState({
     ...initialState,
   });
 
+  useEffect(() => {
+    if (loginStatus.status === "fulfilled") {
+      history.push("/home");
+      clearForm();
+      toggle();
+    }
+  }, [loginStatus, history, toggle]);
+
   function clearForm() {
     setFormState({ ...initialState });
+    dispatch(clearRequest());
   }
 
   function handleFormChange(evt) {
@@ -39,14 +53,7 @@ function LoginModal({ isOpen, toggle }) {
   function handleSubmit(evt) {
     evt.preventDefault();
     const userData = { ...formState };
-    dispatch(login(userData)).then((result) => {
-      clearForm();
-      toggle();
-
-      if (result.payload.success) {
-        history.push("/home");
-      }
-    });
+    dispatch(login(userData));
   }
 
   return (
@@ -96,6 +103,9 @@ function LoginModal({ isOpen, toggle }) {
             </Button>
           </div>
         </Form>
+        {loginStatus.error ? (
+          <div className="errorBox">{loginStatus.error}</div>
+        ) : null}
       </ModalBody>
     </Modal>
   );

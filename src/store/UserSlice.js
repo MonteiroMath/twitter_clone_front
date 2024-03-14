@@ -20,13 +20,6 @@ export const login = createAsyncThunk(
   }
 );
 
-/*
-export const logout = createAsyncThunk("user/logout", async (jwtToken) => {
-  const data = await client.logout(jwtToken);
-  return data;
-});
-*/
-
 const userSlice = createSlice({
   name: "User",
   initialState,
@@ -36,6 +29,10 @@ const userSlice = createSlice({
       state.error = null;
       state.data = { user: null, jwtToken: null };
     },
+    clearRequest: (state) => {
+      state.status = "idle";
+      state.error = null;
+    },
   },
   extraReducers(builder) {
     builder
@@ -43,8 +40,13 @@ const userSlice = createSlice({
         state.status = "pending";
       })
       .addCase(login.rejected, (state, action) => {
+        const error = action.meta.requestStatus;
         state.status = "rejected";
-        state.error = action.payload.msg;
+
+        if (error === "rejected") {
+          state.error =
+            "Sorry, there was an error with the request. Try again later or contact the administrator";
+        }
       })
       .addCase(login.fulfilled, (state, action) => {
         const { jwtToken, user } = action.payload;
@@ -59,8 +61,11 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { logout } = userSlice.actions;
+export const { logout, clearRequest } = userSlice.actions;
 
 //selectors
 export const selectJwtToken = (state) => state.user.data.jwtToken;
 export const selectUserData = (state) => state.user.data.user;
+export const selectLoginStatus = (state) => {
+  return { status: state.user.status, error: state.user.error };
+};

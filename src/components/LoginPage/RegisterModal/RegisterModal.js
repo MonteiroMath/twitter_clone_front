@@ -22,9 +22,11 @@ const initialFormState = {
 
 function RegisterModal({ isOpen, toggle }) {
   const [formState, setFormState] = useState({ ...initialFormState });
+  const [error, setError] = useState(null);
 
   function clearForm() {
     setFormState({ ...initialFormState });
+    setError(null);
   }
 
   function handleFormChange(evt) {
@@ -43,7 +45,12 @@ function RegisterModal({ isOpen, toggle }) {
         setFormState({ ...initialFormState });
         toggle();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setError(
+          "Ocorreu um erro. Tente novamente mais tarde ou contacte o administrador."
+        );
+        console.log(err);
+      });
   }
 
   const maxDate = new Date().toISOString().substring(0, 10);
@@ -121,6 +128,7 @@ function RegisterModal({ isOpen, toggle }) {
             </Button>
           </div>
         </Form>
+        {error ? <div className="errorBox">{error}</div> : null}
       </ModalBody>
     </Modal>
   );
