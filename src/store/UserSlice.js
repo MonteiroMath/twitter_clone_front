@@ -10,6 +10,16 @@ const initialState = {
   data: localUserState ? localUserState : { user: null, jwtToken: null },
 };
 
+export const registerUser = createAsyncThunk(
+  "user/register",
+  async (newUser) => {
+    const data = await client.registerUser(newUser);
+
+    if (data.success) return data;
+    else throw new Error(data.msg);
+  }
+);
+
 export const login = createAsyncThunk(
   "user/login",
   async ({ email, password }) => {
@@ -50,6 +60,25 @@ const userSlice = createSlice({
         state.error = errorMsg;
       })
       .addCase(login.fulfilled, (state, action) => {
+        const { jwtToken, user } = action.payload;
+        state.status = "fulfilled";
+        state.error = null;
+        state.data = {
+          jwtToken,
+          user,
+        };
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        const { error } = action;
+
+        const errorMsg = error.message.includes("Failed to fetch")
+          ? "Sorry, there was an error. Please, try again later or contact the support."
+          : error.message;
+
+        state.status = "rejected";
+        state.error = errorMsg;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
         const { jwtToken, user } = action.payload;
         state.status = "fulfilled";
         state.error = null;

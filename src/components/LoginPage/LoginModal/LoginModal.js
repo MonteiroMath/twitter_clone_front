@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Modal,
   ModalHeader,
@@ -32,18 +32,18 @@ function LoginModal({ isOpen, toggle }) {
     ...initialState,
   });
 
+  const clearForm = useCallback(() => {
+    setFormState({ ...initialState });
+    dispatch(clearRequest());
+  }, [dispatch]);
+
   useEffect(() => {
     if (loginStatus.status === "fulfilled") {
       history.push("/home");
       clearForm();
       toggle();
     }
-  }, [loginStatus, history, toggle]);
-
-  function clearForm() {
-    setFormState({ ...initialState });
-    dispatch(clearRequest());
-  }
+  }, [loginStatus, history, toggle, clearForm]);
 
   function handleFormChange(evt) {
     const { name, value } = evt.target;

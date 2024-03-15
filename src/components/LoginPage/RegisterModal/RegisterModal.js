@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 import {
   Modal,
   ModalHeader,
@@ -10,7 +13,12 @@ import {
   Input,
 } from "reactstrap";
 
-import { client } from "../../../api/client";
+import {
+  selectLoginStatus,
+  clearRequest,
+  registerUser,
+} from "../../../store/UserSlice";
+
 import tweet from "../../../assets/icons/tweet.svg";
 
 const initialFormState = {
@@ -21,13 +29,24 @@ const initialFormState = {
 };
 
 function RegisterModal({ isOpen, toggle }) {
-  const [formState, setFormState] = useState({ ...initialFormState });
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-  function clearForm() {
+  const [formState, setFormState] = useState({ ...initialFormState });
+  const loginStatus = useSelector((state) => selectLoginStatus(state));
+
+  const clearForm = useCallback(() => {
     setFormState({ ...initialFormState });
-    setError(null);
-  }
+    dispatch(clearRequest());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (loginStatus.status === "fulfilled") {
+      history.push("/home");
+      clearForm();
+      toggle();
+    }
+  }, [loginStatus, history, toggle, clearForm]);
 
   function handleFormChange(evt) {
     const { name, value } = evt.target;
@@ -39,25 +58,7 @@ function RegisterModal({ isOpen, toggle }) {
     evt.preventDefault();
     const newUser = { ...formState };
 
-    client
-      .registerUser(newUser)
-      .then((result) => {
-        const { success, msg } = result;
-
-        if (success) {
-          setFormState({ ...initialFormState });
-          toggle();
-          return;
-        }
-
-        setError(msg);
-      })
-      .catch((err) => {
-        setError(
-          "Sorry, there was an error. Please, try again later or contact the support."
-        );
-        console.log(err);
-      });
+    dispatch(registerUser(newUser));
   }
 
   const maxDate = new Date().toISOString().substring(0, 10);
@@ -135,7 +136,9 @@ function RegisterModal({ isOpen, toggle }) {
             </Button>
           </div>
         </Form>
-        {error ? <div className="errorBox">{error}</div> : null}
+        {loginStatus.error ? (
+          <div className="errorBox">{loginStatus.error}</div>
+        ) : null}
       </ModalBody>
     </Modal>
   );
