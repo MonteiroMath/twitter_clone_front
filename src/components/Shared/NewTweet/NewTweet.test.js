@@ -6,11 +6,20 @@ import NewTweet from "./NewTweet";
 
 import mocker from "../../../testUtilities/mockers";
 
+let mockedUser, initialState;
+
+beforeAll(() => {
+  mockedUser = mocker.mockUser();
+  initialState = mocker.mockInitialState({
+    user: mocker.mockInitialSlice({ data: { user: mockedUser, jwtToken: 1 } }),
+  });
+});
+
 afterEach(cleanup);
 
 describe("Rendering test", () => {
   test("Renders correctly", () => {
-    renderWithRedux(<NewTweet />, { initialState: mocker.mockInitialState() });
+    renderWithRedux(<NewTweet />, { initialState });
 
     let button = screen.getByText("Tweet");
     let newTweet = screen.getByPlaceholderText(/What's happening?/);
@@ -23,7 +32,7 @@ describe("Rendering test", () => {
 
 describe("Field Interaction", () => {
   test("Adds text to the field when typed", () => {
-    renderWithRedux(<NewTweet />);
+    renderWithRedux(<NewTweet />, { initialState });
 
     let typedText = "Typed by the user";
 
@@ -37,7 +46,7 @@ describe("Field Interaction", () => {
   });
 
   test("Empties input when tweet is clicked", () => {
-    renderWithRedux(<NewTweet />);
+    renderWithRedux(<NewTweet />, { initialState });
 
     let typedText = "Typed by the user";
     let button = screen.getByText("Tweet");

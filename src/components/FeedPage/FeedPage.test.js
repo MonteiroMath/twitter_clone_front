@@ -6,7 +6,11 @@ import FeedPage from "./FeedPage.js";
 
 import mocker from "../../testUtilities/mockers";
 
-const initialState = mocker.mockInitialState();
+const initialState = mocker.mockInitialState({
+  user: mocker.mockInitialState({
+    data: { user: mocker.mockUser(), jwtToken: 1 },
+  }),
+});
 
 afterEach(cleanup);
 jest.mock("../../api/client");

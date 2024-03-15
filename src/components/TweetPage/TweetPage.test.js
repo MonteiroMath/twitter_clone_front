@@ -7,12 +7,14 @@ import { renderWithHistory } from "../../testUtilities/renderWithProviders";
 import mocker from "../../testUtilities/mockers";
 
 jest.mock("../../api/client");
-let mockedTweet, initialState;
+let mockedTweet, mockedUser, initialState;
 
 beforeAll(() => {
   mockedTweet = mocker.mockTweet();
+  mockedUser = mocker.mockUser();
   initialState = mocker.mockInitialState({
     tweets: mocker.mockInitialSlice({ data: [mockedTweet] }),
+    user: mocker.mockInitialSlice({ data: { user: mockedUser, jwtToken: 1 } }),
   });
 });
 

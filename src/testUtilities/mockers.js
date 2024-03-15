@@ -12,6 +12,7 @@ function mockInitialState(customValues = {}) {
   const initialState = {
     tweets: mockInitialSlice(),
     page: mockInitialSlice(),
+    user: mockInitialSlice(),
   };
 
   return { ...initialState, ...customValues };
@@ -43,10 +44,29 @@ function mockTweet(customValues = {}) {
   };
 }
 
+function mockUser(customValues = {}) {
+  const mockedUser = {
+    id: 1,
+    username: "TestUser",
+    email: "testuser@test.com",
+    description: "",
+    webpage: "",
+    birthDate: "1992-01-01T00:00:00.000Z",
+    updatedAt: "2024-03-15T13:16:21.473Z",
+    createdAt: "2024-03-15T13:16:21.473Z",
+  };
+
+  return {
+    ...mockedUser,
+    ...customValues,
+  };
+}
+
 const mocker = {
   mockInitialState,
   mockInitialSlice,
   mockTweet,
+  mockUser,
 };
 
 export default mocker;

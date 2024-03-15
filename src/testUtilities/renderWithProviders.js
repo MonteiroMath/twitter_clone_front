@@ -5,8 +5,8 @@ import { Switch, Route } from "react-router-dom";
 import Providers from "../components/Shared/Providers/Providers.js";
 
 import tweetsSlice from "../store/tweetsSlice.js";
-
 import PageSlice from "../store/PageSlice.js";
+import UserSlice from "../store/UserSlice.js";
 
 export const renderWithRedux = (
   component,
@@ -16,6 +16,7 @@ export const renderWithRedux = (
       reducer: {
         tweets: tweetsSlice,
         page: PageSlice,
+        user: UserSlice,
       },
       preloadedState: initialState,
     }),
@@ -37,6 +38,7 @@ export const renderWithHistory = (
       reducer: {
         tweets: tweetsSlice,
         page: PageSlice,
+        user: UserSlice,
       },
       preloadedState: initialState,
     }),
