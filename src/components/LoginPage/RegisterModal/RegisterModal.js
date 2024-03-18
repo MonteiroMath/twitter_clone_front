@@ -50,15 +50,16 @@ function RegisterModal({ isOpen, toggle }) {
 
   function handleFormChange(evt) {
     const { name, value } = evt.target;
-
     setFormState((prev) => ({ ...prev, [name]: value }));
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    const newUser = { ...formState };
+    if (evt.target.checkValidity()) {
+      const newUser = { ...formState };
 
-    dispatch(registerUser(newUser));
+      dispatch(registerUser(newUser));
+    }
   }
 
   const maxDate = new Date().toISOString().substring(0, 10);

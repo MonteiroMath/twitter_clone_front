@@ -71,7 +71,7 @@ const userSlice = createSlice({
       .addCase(registerUser.rejected, (state, action) => {
         const { error } = action;
 
-        const errorMsg = error.message.includes("Failed to fetch")
+        const errorMsg = error.message.includes("NetworkError")
           ? "Sorry, there was an error. Please, try again later or contact the support."
           : error.message;
 
@@ -80,6 +80,7 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         const { jwtToken, user } = action.payload;
+
         state.status = "fulfilled";
         state.error = null;
         state.data = {
