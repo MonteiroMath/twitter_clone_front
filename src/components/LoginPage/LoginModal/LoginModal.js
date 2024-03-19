@@ -77,8 +77,9 @@ function LoginModal({ isOpen, toggle }) {
         <h1>Sign In</h1>
         <Form onSubmit={handleSubmit}>
           <FormGroup>
-            <Label>Email</Label>
+            <Label for="email">Email</Label>
             <Input
+              id="email"
               type="email"
               name="email"
               value={formState.email}
@@ -87,8 +88,9 @@ function LoginModal({ isOpen, toggle }) {
             />
           </FormGroup>
           <FormGroup>
-            <Label>Password</Label>
+            <Label for="password">Password</Label>
             <Input
+              id="password"
               type="password"
               name="password"
               value={formState.password}
