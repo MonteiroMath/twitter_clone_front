@@ -33,7 +33,7 @@ function ProfileInfoButton(props) {
         <DropdownToggle color="none">
           <Row>
             <Col>
-              <Avatar size="45px" />
+              <Avatar context="leftBar" />
             </Col>
             <Col className="d-none d-lg-block">
               <div className=" text-left">

@@ -16,7 +16,7 @@ function RetweetBox(props) {
       <Row className="border croundCorners p-3 mt-2" noGutters>
         <Col xs="12">
           <Row noGutters>
-            <Avatar size="15px" />
+            <Avatar context="retweet" />
             <div className="ml-2">
               <InfoBar username={user.username} created={retweet.createdAt} />
             </div>

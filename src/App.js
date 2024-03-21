@@ -4,9 +4,11 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
 import LoginPage from "./components/LoginPage/LoginPage";
+import UserPage from "./components/UserPage/UserPage";
 import FeedPage from "./components/FeedPage/FeedPage";
 import TweetPage from "./components/TweetPage/TweetPage";
 import NewTweetPage from "./components/NewTweetPage/NewTweetPage";
+
 
 function App() {
   return (
@@ -20,6 +22,9 @@ function App() {
         </Route>
         <Route path="/home">
           <FeedPage />
+        </Route>
+        <Route path="/:username">
+          <UserPage />
         </Route>
         <Route path="/">
           <LoginPage />
