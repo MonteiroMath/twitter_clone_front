@@ -37,6 +37,8 @@ client.delete = async function (endpoint, body, extraHeaders = {}) {
 
 client.getTweet = (id, userId) => client.get(`/tweets/${id}?userId=${userId}`);
 
+client.getUserData = (username) => client.get(`/users?username=${username}`);
+
 client.registerUser = ({ email, username, password, birthDate }) =>
   client.post("/users/register", { email, username, password, birthDate });
 

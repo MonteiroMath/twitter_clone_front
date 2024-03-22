@@ -1,23 +1,21 @@
-import placeholderBg from "../../../assets/images/phbackground.jpg";
+import placeholderBg from "../../../assets/images/bgplaceholder.gif";
 import Avatar from "../../Shared/Avatar/Avatar";
 import { Button } from "reactstrap";
 
-import { CiLocationOn } from "react-icons/ci";
 import { IoIosLink } from "react-icons/io";
 import { IoCalendarOutline } from "react-icons/io5";
 
-function UserProfile({ username }) {
-  //Placer for user info display
+function UserProfile({ user }) {
   return (
     <div className="profileContainer">
       <img
-        src={placeholderBg}
+        src={user.background || placeholderBg}
         alt="User background"
         className="backgroundImg"
       />
 
       <div className="avatarAndEditProfileContainer">
-        <Avatar context="userProfile" />
+        <Avatar context="userProfile" avatar={user.avatar} />
 
         <div>
           <Button className="mt-2" color="primary" outline>
@@ -27,24 +25,21 @@ function UserProfile({ username }) {
       </div>
       <div className="profileInfo">
         <div className="mb-3">
-          <div className="cfw-bolder cfs-20">matham</div>
-          <div className="cfc-gray">@matham</div>
+          <div className="cfw-bolder cfs-20">{user.username}</div>
+          <div className="cfc-gray">{`@${user.username}`}</div>
         </div>
-        <div className="mb-3">This is a very interesting description</div>
+        <div className="mb-3">{user.description}</div>
         <div className="mb-3">
-          <span className="cfc-gray">
-            {" "}
-            <CiLocationOn /> Loch Modan
-          </span>{" "}
           <span>
-            {" "}
-            <a href="github.com">
-              <IoIosLink /> github.com{" "}
-            </a>
+            {user.webpage ? (
+              <a href="github.com">
+                <IoIosLink /> {user.webpage}
+              </a>
+            ) : null}
           </span>{" "}
           <span className="cfc-gray">
             {" "}
-            <IoCalendarOutline /> Joined April 2021{" "}
+            <IoCalendarOutline /> {`Joined ${user.createdAt}`}
           </span>
         </div>
         <div>

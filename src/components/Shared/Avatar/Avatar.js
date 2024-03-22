@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import avatar from "../../../assets/images/phavatar.png";
-import avatar2 from "../../../assets/images/avatar.png";
+
+import avatarph from "../../../assets/images/avatar-placeholder.gif";
 
 function Avatar(props) {
-  let { context = "default" } = props;
-  let [src, setSrc] = useState(avatar2);
+  let { context = "default", avatar } = props;
+  let [src, setSrc] = useState(avatar || avatarph);
 
   function fallbackSrc(e) {
-    setSrc(avatar);
+    setSrc(avatarph);
   }
 
   return (
