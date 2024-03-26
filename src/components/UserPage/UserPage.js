@@ -37,7 +37,7 @@ function UserPage() {
       {loadingState === "success" && (
         <>
           <UserProfile user={user} />
-          <FeedTweetList username={user.username} />
+          <FeedTweetList />
         </>
       )}
 

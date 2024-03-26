@@ -1,44 +1,36 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectJwtToken } from "../../../store/UserSlice";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectJwtToken, selectUserData } from "../../../store/UserSlice";
 import { Spinner } from "reactstrap";
 import TweetList from "../../Shared/TweetList/TweetList";
-import { client } from "../../../api/client";
+import { selectAllTweets, fetchTweets } from "../../../store/tweetsSlice";
 
-function FeedTweetList({ username }) {
+function FeedTweetList() {
+  const user = useSelector((state) => selectUserData(state));
+  const dispatch = useDispatch();
   const jwtToken = useSelector((state) => selectJwtToken(state));
 
-  const [tweetList, setTweetList] = useState([]);
-  const [error, setError] = useState(null);
-  const [reqStatus, setReqStatus] = useState("idle");
+  const tweetStatus = useSelector((state) => state.tweets.status);
+  const error = useSelector((state) => state.tweets.error);
+  const tweetList = useSelector(selectAllTweets);
 
   useEffect(() => {
-    if (reqStatus === "idle") {
-      setReqStatus("loading");
-      client
-        .getTweetsByUsername(username, jwtToken)
-        .then((res) => {
-          if (res.success) {
-            setReqStatus("fulfilled");
-            setTweetList(res.tweets);
-          } else {
-            throw new Error(res.msg);
-          }
-        })
-        .catch((err) => {
-          setReqStatus("failed");
-          setError(err.message);
-        });
+    if (tweetStatus === "idle") {
+      dispatch(fetchTweets(user.id, jwtToken));
     }
-  }, [reqStatus, username, jwtToken]);
+  }, [dispatch, tweetStatus, jwtToken, user.id]);
 
-  return (
-    <>
-      {reqStatus === "fulfilled" && <TweetList tweetList={tweetList} />}
-      {reqStatus === "loading" && <Spinner color="info" />}
-      {reqStatus === "failed" && <div>{error}</div>}
-    </>
-  );
+  let content = null;
+
+  if (tweetStatus === "fulfilled") {
+    content = <TweetList tweetList={tweetList} />;
+  } else if (tweetStatus === "pending") {
+    content = <Spinner color="info" />;
+  } else if (tweetStatus === "rejected") {
+    content = <div>{error}</div>;
+  }
+
+  return content;
 }
 
 export default FeedTweetList;
