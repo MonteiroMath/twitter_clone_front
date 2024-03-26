@@ -19,9 +19,9 @@ function updateTweet(stateData, updatedTweet) {
 
 export const fetchTweets = createAsyncThunk(
   "tweets/fetch",
-  async (id, jwtToken) => {
+  async (username, jwtToken) => {
     const data = await client.get(
-      `/tweets?userId=${id}`,
+      `/tweets?username=${username}`,
       setJwtHeader(jwtToken)
     );
     return data;
@@ -155,6 +155,11 @@ function isActionRejected(action) {
 const tweetsSlice = createSlice({
   name: "tweets",
   initialState,
+  reducers: {
+    clearState(state, action) {
+      return { ...initialState };
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchTweets.pending, (state, action) => {
@@ -253,6 +258,7 @@ export default tweetsSlice.reducer;
 
 //actions
 export const actions = tweetsSlice.actions;
+export const { clearState } = tweetsSlice.actions;
 
 //selectors
 export const selectTweetById = (state, id) =>

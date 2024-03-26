@@ -9,10 +9,10 @@ const initialState = {
 };
 
 export const fetchAnswers = createAsyncThunk("page/fetch", async (params) => {
-  const { parentId, userId, jwtToken } = params;
+  const { parentId, username, jwtToken } = params;
 
   const data = await client.get(
-    `/tweets/${parentId}/answers?userId=${userId}`,
+    `/tweets/${parentId}/answers?username=${username}`,
     setJwtHeader(jwtToken)
   );
   return data;

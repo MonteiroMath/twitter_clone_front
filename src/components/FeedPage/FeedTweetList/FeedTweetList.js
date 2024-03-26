@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectJwtToken, selectUserData } from "../../../store/UserSlice";
+import { selectJwtToken } from "../../../store/UserSlice";
 import { Spinner } from "reactstrap";
 import TweetList from "../../Shared/TweetList/TweetList";
-import { selectAllTweets, fetchTweets } from "../../../store/tweetsSlice";
+import {
+  selectAllTweets,
+  fetchTweets,
+  clearState,
+} from "../../../store/tweetsSlice";
 
-function FeedTweetList() {
-  const user = useSelector((state) => selectUserData(state));
+function FeedTweetList({ username }) {
   const dispatch = useDispatch();
   const jwtToken = useSelector((state) => selectJwtToken(state));
 
@@ -15,22 +18,18 @@ function FeedTweetList() {
   const tweetList = useSelector(selectAllTweets);
 
   useEffect(() => {
-    if (tweetStatus === "idle") {
-      dispatch(fetchTweets(user.id, jwtToken));
-    }
-  }, [dispatch, tweetStatus, jwtToken, user.id]);
+    dispatch(fetchTweets(username, jwtToken));
 
-  let content = null;
+    return () => dispatch(clearState());
+  }, [dispatch, jwtToken, username]);
 
-  if (tweetStatus === "fulfilled") {
-    content = <TweetList tweetList={tweetList} />;
-  } else if (tweetStatus === "pending") {
-    content = <Spinner color="info" />;
-  } else if (tweetStatus === "rejected") {
-    content = <div>{error}</div>;
-  }
-
-  return content;
+  return (
+    <>
+      {tweetStatus === "fulfilled" && <TweetList tweetList={tweetList} />}
+      {tweetStatus === "pending" && <Spinner color="info" />}
+      {tweetStatus === "rejected" && <div>{error}</div>}
+    </>
+  );
 }
 
 export default FeedTweetList;

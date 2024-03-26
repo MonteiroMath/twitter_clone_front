@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import { Row } from "reactstrap";
 
-import { selectJwtToken } from "../../store/UserSlice";
+import { selectJwtToken, selectUserData } from "../../store/UserSlice";
 
 import MainLayout from "../MainLayout/MainLayout";
 import FeedNavbar from "./Navbar/FeedNavbar";
@@ -13,6 +13,7 @@ import NewTweet from "../Shared/NewTweet/NewTweet";
 import NewTweetButton from "../Shared//Buttons/NewTweetButton/NewTweetButton";
 
 function Feed() {
+  const user = useSelector((state) => selectUserData(state));
   const jwtToken = useSelector((state) => selectJwtToken(state));
 
   return jwtToken ? (
@@ -24,7 +25,7 @@ function Feed() {
         <Row className="border p-3 d-none d-md-flex" noGutters={true}>
           <NewTweet />
         </Row>
-        <FeedTweetList />
+        <FeedTweetList username={user.username} />
         <NewTweetButton />
         <BottomBar />
       </div>
