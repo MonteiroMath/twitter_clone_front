@@ -7,20 +7,12 @@ import { client } from "../../api/client";
 import MainLayout from "../MainLayout/MainLayout";
 import UserProfile from "./UserProfile/UserProfile";
 import FeedTweetList from "../FeedPage/FeedTweetList/FeedTweetList";
-import { selectJwtToken } from "../../store/UserSlice";
-import { useSelector } from "react-redux";
-import useTweetLoader from "../../hooks/useTweetLoader";
 
 function UserPage() {
   let { username } = useParams();
-  const jwtToken = useSelector((state) => selectJwtToken(state));
 
-  //user State
   const [loadingState, setLoadingState] = useState("idle");
   const [user, setUser] = useState({});
-
-  //tweet State
-  const [tweetList, error, reqStatus] = useTweetLoader(username, jwtToken);
 
   useEffect(() => {
     setLoadingState("loading");
@@ -45,11 +37,7 @@ function UserPage() {
       {loadingState === "success" && (
         <>
           <UserProfile user={user} />
-          <FeedTweetList
-            status={reqStatus}
-            tweetList={tweetList}
-            error={error}
-          />
+          <FeedTweetList username={user.username} />
         </>
       )}
 

@@ -4,7 +4,6 @@ import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import { Row } from "reactstrap";
 
 import { selectJwtToken, selectUserData } from "../../store/UserSlice";
-import useTweetLoader from "../../hooks/useTweetLoader";
 
 import MainLayout from "../MainLayout/MainLayout";
 import FeedNavbar from "./Navbar/FeedNavbar";
@@ -17,9 +16,6 @@ function Feed() {
   const jwtToken = useSelector((state) => selectJwtToken(state));
   const user = useSelector((state) => selectUserData(state));
 
-  //tweet State
-  const [tweetList, error, reqStatus] = useTweetLoader(user.username, jwtToken);
-
   return jwtToken ? (
     <MainLayout>
       <div>
@@ -29,7 +25,7 @@ function Feed() {
         <Row className="border p-3 d-none d-md-flex" noGutters={true}>
           <NewTweet />
         </Row>
-        <FeedTweetList tweetList={tweetList} error={error} status={reqStatus} />
+        <FeedTweetList username={user.username} />
         <NewTweetButton />
         <BottomBar />
       </div>
