@@ -12,7 +12,7 @@ function TweetCard(props) {
         {tweet.type === "retweet" ? (
           <Retweet tweet={tweet} />
         ) : (
-          <Tweet tweet={tweet} originalId={tweet.id} />
+          <Tweet tweet={tweet} />
         )}
       </Col>
     </Row>

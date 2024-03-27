@@ -20,7 +20,7 @@ export async function client(endpoint, method, body, extraHeaders = {}) {
 }
 
 client.get = async function (endpoint, extraHeaders = {}) {
-  return client(endpoint, "GET");
+  return client(endpoint, "GET", null, extraHeaders);
 };
 
 client.post = async function (endpoint, body, extraHeaders = {}) {
@@ -44,7 +44,3 @@ client.registerUser = ({ email, username, password, birthDate }) =>
 
 client.login = (email, password) =>
   client.post("/users/login", { email, password });
-
-client.logout = (jwtToken) => {
-  client.post("/users/logout", { jwtToken });
-};

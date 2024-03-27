@@ -49,6 +49,8 @@ function Retweet({ tweet }) {
     selectTweetById(state, tweet.referenceId)
   );
 
+  console.log(cachedReference);
+
   useEffect(() => {
     if (!cachedReference) {
       dispatch(

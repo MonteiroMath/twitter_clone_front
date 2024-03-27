@@ -11,8 +11,8 @@ import {
   deleteLike,
 } from "../../../../store/tweetsSlice";
 
-//todo revisit necessity of originalId prop
-function Tweet({ tweet, originalId }) {
+
+function Tweet({ tweet }) {
   let dispatch = useDispatch();
   const jwtToken = useSelector((state) => selectJwtToken(state));
   const user = useSelector((state) => selectUserData(state));
@@ -24,7 +24,6 @@ function Tweet({ tweet, originalId }) {
 
   function handleRetweet() {
     let action = tweet.retweeted ? removeRetweet : addRetweet;
-
     dispatch(action({ tweetId: tweet.id, userId: user.id, jwtToken }));
   }
 

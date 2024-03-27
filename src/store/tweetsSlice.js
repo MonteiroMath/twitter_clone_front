@@ -19,7 +19,7 @@ function updateTweet(stateData, updatedTweet) {
 
 export const fetchTweets = createAsyncThunk(
   "tweets/fetch",
-  async (username, jwtToken) => {
+  async ({ username, jwtToken }) => {
     const data = await client.get(
       `/tweets?username=${username}`,
       setJwtHeader(jwtToken)
@@ -179,6 +179,8 @@ const tweetsSlice = createSlice({
         if (action.payload.success) {
           const { tweet } = action.payload;
 
+          console.log(tweet);
+
           updateTweet(state.data, tweet);
         }
       })
@@ -192,9 +194,9 @@ const tweetsSlice = createSlice({
         state.data.unshift(tweet);
       })
       .addCase(addRetweet.fulfilled, (state, action) => {
-        let { updatedTweet } = action.payload;
+        let { success, updatedTweet } = action.payload;
 
-        updateTweet(state.data, updatedTweet);
+        success && updateTweet(state.data, updatedTweet);
       })
       .addCase(removeRetweet.fulfilled, (state, action) => {
         const { updatedTweet } = action.payload;
