@@ -13,9 +13,11 @@ import Attachment from "../../Attachment/Attachment";
 import NewTweetModal from "../../../Shared/Modals/NewTweetModal/NewTweetModal";
 import AnswerModal from "../../../Shared/Modals/AnswerModal/AnswerModal";
 
-function TweetDisplay({ tweet, user, handleLike, handleRetweet }) {
+function TweetDisplay({ tweet, handleLike, handleRetweet }) {
   const [modal, setModal] = useState(false);
   const [answerModal, setAnswerModal] = useState(false);
+
+  const { author } = tweet;
 
   const toggleQuote = () => {
     setModal(!modal);
@@ -31,7 +33,7 @@ function TweetDisplay({ tweet, user, handleLike, handleRetweet }) {
         <Avatar />
       </Col>
       <Col xs="9" md="10" className="ml-1 ml-md-3">
-        <InfoBar username={user.username} created={tweet.createdAt} />
+        <InfoBar username={author.username} created={tweet.createdAt} />
         <Link
           to={`/tweet/${
             tweet.type === "answer" ? tweet.referenceId : tweet.id
@@ -46,7 +48,7 @@ function TweetDisplay({ tweet, user, handleLike, handleRetweet }) {
         start={tweet.createdAt}
       />*/}
         {tweet.type === "comment" ? (
-          <RetweetBox retweet={tweet.reference} user={user} />
+          <RetweetBox retweet={tweet.reference} user={author} />
         ) : null}
         <InteractionBar
           likes={tweet.likesCount}
@@ -64,12 +66,11 @@ function TweetDisplay({ tweet, user, handleLike, handleRetweet }) {
       <AnswerModal
         modal={answerModal}
         toggle={toggleAnswer}
-        parentId={tweet.reference ? tweet.reference.id : tweet.id} 
+        parentId={tweet.reference ? tweet.reference.id : tweet.id}
         parentContent={tweet.reference ? tweet.reference : tweet}
       />
     </Row>
   );
 }
-
 
 export default TweetDisplay;
