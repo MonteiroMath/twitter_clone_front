@@ -49,8 +49,6 @@ function Retweet({ tweet }) {
     selectTweetById(state, tweet.referenceId)
   );
 
-  console.log(cachedReference);
-
   useEffect(() => {
     if (!cachedReference) {
       dispatch(
@@ -85,7 +83,6 @@ function Retweet({ tweet }) {
       <Col className="mx-auto" xs="12">
         <TweetDisplay
           tweet={referenceTweet}
-          user={user}
           handleLike={handleLike}
           handleRetweet={handleRetweet}
         />
