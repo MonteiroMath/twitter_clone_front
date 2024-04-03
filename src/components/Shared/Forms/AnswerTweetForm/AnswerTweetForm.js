@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectJwtToken } from "../../../../store/UserSlice";
 
-import { postAnswer } from "../../../../store/PageSlice";
+import { postAnswer } from "../../../../store/tweetsSlice";
 
 import NewTweetFormControl from "../NewTweetFormControl/NewTweetFormControl";
 

@@ -1,9 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Redirect } from "react-router-dom";
+import { Row, Spinner } from "reactstrap";
 import { selectJwtToken, selectUserData } from "../../store/UserSlice";
-import { selectTweetById } from "../../store/tweetsSlice";
-import { Row } from "reactstrap";
+import {
+  fetchTweetWithAnswers,
+  selectTweetById,
+  selectAnswers,
+  clearState,
+} from "../../store/tweetsSlice";
 
 import MainLayout from "../MainLayout/MainLayout";
 import TopBar from "../Shared/Bars/TopBar/TopBar";
@@ -11,27 +16,26 @@ import SubsetTweetList from "./SubsetTweetList/SubsetTweetList";
 import AnswerTweetForm from "../Shared/Forms/AnswerTweetForm/AnswerTweetForm";
 
 import TweetCard from "../Shared/TweetCard/TweetCard";
-import { fetchAnswers, selectAnswers, closePage } from "../../store/PageSlice";
 
-export default function TweetPage(props) {
+export default function TweetPage() {
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
   const jwtToken = useSelector((state) => selectJwtToken(state));
   const user = useSelector((state) => selectUserData(state));
-
-  const dispatch = useDispatch();
-  const pageStatus = useSelector((state) => state.page.status);
-  let { id } = useParams();
+  const reqStatus = useSelector((state) => state.tweets.status);
+  const error = useSelector((state) => state.tweets.error);
 
   let tweet = useSelector((state) => selectTweetById(state, parseInt(id)));
-
-  const tweetList = [...useSelector((state) => selectAnswers(state))].reverse();
+  let answers = useSelector((state) => selectAnswers(state));
 
   useEffect(() => {
-    if (pageStatus === "idle") {
-      dispatch(fetchAnswers({ parentId: id, userId: user.id, jwtToken }));
-    }
+    dispatch(
+      fetchTweetWithAnswers({ parentId: id, userId: user.id, jwtToken })
+    );
 
-    return () => dispatch(closePage());
-  }, [dispatch]);
+    return () => dispatch(clearState());
+  }, [dispatch, id, jwtToken, user.id]);
 
   if (!jwtToken) {
     return <Redirect to="/" />;
@@ -39,14 +43,17 @@ export default function TweetPage(props) {
 
   return tweet ? (
     <MainLayout>
-      <div>
-        <TopBar header="Tweet" />
-        {tweet ? <TweetCard tweet={tweet} user={user} /> : null}
-        <Row className="border p-3 d-none d-md-flex" noGutters={true}>
-          <AnswerTweetForm parent_id={id} />
-        </Row>
-        <SubsetTweetList user={user} tweetList={tweetList} />
-      </div>
+      {reqStatus === "pending" && <Spinner color="info" />}
+      {reqStatus === "fulfilled" && (
+        <div>
+          {tweet ? <TweetCard tweet={tweet} user={user} /> : null}
+          <Row className="border p-3 d-none d-md-flex" noGutters={true}>
+            <AnswerTweetForm parent_id={id} />
+          </Row>
+          <SubsetTweetList user={user} tweetList={answers} />
+        </div>
+      )}
+      {reqStatus === "rejected" && <div>{error}</div>}
     </MainLayout>
   ) : null;
 }

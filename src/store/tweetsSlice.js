@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { client } from "../api/client";
-import { postAnswer } from "./PageSlice";
 import setJwtHeader from "./utils/setJwtHeader";
 
 const initialState = {
@@ -148,6 +147,33 @@ export const deleteLikeRt = createAsyncThunk(
   }
 );
 
+export const fetchTweetWithAnswers = createAsyncThunk(
+  "answers/fetch",
+  async (params) => {
+    const { parentId, userId, jwtToken } = params;
+
+    const data = await client.get(
+      `/tweets/${parentId}/answers?userId=${userId}`,
+      setJwtHeader(jwtToken)
+    );
+    return data;
+  }
+);
+
+export const postAnswer = createAsyncThunk("aswers/post", async (params) => {
+  const { userId, newTweet, parentId, jwtToken } = params;
+  const { tweet, tweetContent, updatedTweet } = await client.post(
+    `/tweets/${parentId}/answers/`,
+    {
+      userId,
+      newTweet,
+    },
+    setJwtHeader(jwtToken)
+  );
+
+  return { tweet, tweetContent, updatedTweet };
+});
+
 function isActionRejected(action) {
   return action.type.endsWith("/rejected");
 }
@@ -187,6 +213,19 @@ const tweetsSlice = createSlice({
       .addCase(postTweet.fulfilled, (state, action) => {
         const { tweet } = action.payload;
         state.data.unshift(tweet);
+      })
+      .addCase(fetchTweetWithAnswers.pending, (state, action) => {
+        state.status = "pending";
+      })
+      .addCase(fetchTweetWithAnswers.fulfilled, (state, action) => {
+        state.status = "fulfilled";
+        if (action.payload.success) {
+          state.data = action.payload.tweets;
+        }
+      })
+      .addCase(fetchTweetWithAnswers.rejected, (state, action) => {
+        state.status = "rejected";
+        state.error = action.error.message;
       })
       .addCase(postAnswer.fulfilled, (state, action) => {
         const { tweet, updatedTweet } = action.payload;
@@ -267,3 +306,5 @@ export const selectTweetById = (state, id) =>
 export const selectAllTweets = (state) => state.tweets.data;
 export const selectSomeTweets = (state, listOfIds) =>
   listOfIds.map((id) => state.tweets.data.find((tweet) => tweet.id === id));
+export const selectAnswers = (state) =>
+  state.tweets.data.filter((tweet) => tweet.type === "answer").reverse();
