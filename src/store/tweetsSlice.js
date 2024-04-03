@@ -307,4 +307,4 @@ export const selectAllTweets = (state) => state.tweets.data;
 export const selectSomeTweets = (state, listOfIds) =>
   listOfIds.map((id) => state.tweets.data.find((tweet) => tweet.id === id));
 export const selectAnswers = (state) =>
-  state.tweets.data.filter((tweet) => tweet.type === "answer").reverse();
+  state.tweets.data.filter((tweet) => tweet.type === "answer");
