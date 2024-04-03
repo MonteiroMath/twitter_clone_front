@@ -46,6 +46,7 @@ export default function TweetPage() {
       {reqStatus === "pending" && <Spinner color="info" />}
       {reqStatus === "fulfilled" && (
         <div>
+          <TopBar header="Tweet" />
           {tweet ? <TweetCard tweet={tweet} user={user} /> : null}
           <Row className="border p-3 d-none d-md-flex" noGutters={true}>
             <AnswerTweetForm parent_id={id} />
