@@ -13,7 +13,7 @@ beforeAll(() => {
   mockedTweet = mocker.mockTweet();
   mockedUser = mocker.mockUser();
   initialState = mocker.mockInitialState({
-    tweets: mocker.mockInitialSlice({ data: [mockedTweet] }),
+    tweets: mocker.mockInitialSlice({ data: [] }),
     user: mocker.mockInitialSlice({ data: { user: mockedUser, jwtToken: 1 } }),
   });
 });
@@ -42,14 +42,14 @@ describe("Comment tests", () => {
     };
 
     //mock api response to post comment
-
+    client.get.mockResolvedValue({ success: true, tweets: [mockedTweet] });
     client.post.mockResolvedValue(resp);
 
     renderWithHistory(<TweetPage />, history, "/:id", {
       initialState,
     });
 
-    let commentBox = screen.getByPlaceholderText(/Answer tweet/);
+    let commentBox = await screen.findByPlaceholderText(/Answer tweet/);
     let button = screen.getByRole("button", { name: /^comment$/i });
 
     expect(button).toBeDisabled();

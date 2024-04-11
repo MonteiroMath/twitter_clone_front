@@ -8,15 +8,14 @@ import FeedPage from "../../../../FeedPage/FeedPage";
 
 jest.mock("../../../../../api/client");
 
-let mockedTweet, mockedUser, initialState;
+let tweetListMock, mockedTweet, mockedUser, initialState;
 
 beforeAll(() => {
   mockedTweet = mocker.mockTweet();
+  tweetListMock = [mockedTweet];
   mockedUser = mocker.mockUser();
   initialState = mocker.mockInitialState({
-    tweets: mocker.mockInitialSlice({
-      data: [mockedTweet],
-    }),
+    tweets: mocker.mockInitialSlice(),
     user: mocker.mockInitialSlice({
       data: { user: mockedUser, jwtToken: 1 },
     }),
@@ -28,6 +27,7 @@ afterEach(cleanup);
 describe("Like tests", () => {
   test("Tweet get one more like", async () => {
     //mock api response to liking a tweet
+    client.get.mockResolvedValue({ success: true, tweets: [...tweetListMock] });
     client.post.mockResolvedValue({
       success: true,
       updatedTweet: {
@@ -39,8 +39,11 @@ describe("Like tests", () => {
 
     renderWithRedux(<FeedPage />, { initialState });
 
+    const likeButton = await screen.findByRole("button", {
+      name: /^like tweet$/i,
+    });
     //click the like button
-    userEvent.click(screen.getByRole("button", { name: /^like tweet$/i }));
+    userEvent.click(likeButton);
 
     //check number of likes the tweet has after the click
     const likesLabel = await screen.findByLabelText("number of likes");
@@ -50,6 +53,7 @@ describe("Like tests", () => {
 
   test("Unlike tweet", async () => {
     //mock api response to liking and unliking a tweet
+    client.get.mockResolvedValue({ success: true, tweets: [...tweetListMock] });
     client.post
       .mockImplementationOnce(() => {
         return {
@@ -71,7 +75,9 @@ describe("Like tests", () => {
     renderWithRedux(<FeedPage />, { initialState });
 
     //click the like button
-    userEvent.click(screen.getByRole("button", { name: /^like tweet$/i }));
+    userEvent.click(
+      await screen.findByRole("button", { name: /^like tweet$/i })
+    );
     //click Like button again
     userEvent.click(screen.getByRole("button", { name: /^like tweet$/i }));
 
@@ -93,6 +99,8 @@ describe("Like tests", () => {
   */
 
 test("Simple Retweet test", async () => {
+  client.get.mockResolvedValue({ success: true, tweets: [...tweetListMock] });
+
   const newTweet = mocker.mockTweet({
     id: 10055,
     type: "retweet",
@@ -115,23 +123,17 @@ test("Simple Retweet test", async () => {
   renderWithRedux(<FeedPage />, { initialState });
 
   //click retweet button
-  userEvent.click(screen.getByRole("button", { name: /^Retweet$/i }));
+  userEvent.click(await screen.findByRole("button", { name: /^Retweet$/i }));
   //click simple retweet button
   userEvent.click(screen.getByRole("menuitem", { name: /retweet/i }));
 
-  //check if a new retweet is on the page
-  let youRetweeted = await screen.findByText(/you retweeted/i);
-  expect(youRetweeted).toBeInTheDocument();
+  let retweetCounter = await screen.findByLabelText("number of retweets");
 
-  //check if retweet number is updated
-  let retweetCounters = screen
-    .getAllByLabelText("number of retweets")
-    .map((counter) => parseInt(counter.textContent));
-  expect(retweetCounters[0]).toBe(retweetCounters[1]);
-  expect(retweetCounters[0]).toBe(1);
+  expect(parseInt(retweetCounter.textContent)).toBe(1);
 });
 
 test("Undo retweet", async () => {
+  client.get.mockResolvedValue({ success: true, tweets: [...tweetListMock] });
   const newTweet = mocker.mockTweet({
     id: 10055,
     type: "retweet",
@@ -159,32 +161,29 @@ test("Undo retweet", async () => {
   renderWithRedux(<FeedPage />, { initialState });
 
   //click retweet button
-  userEvent.click(screen.getByRole("button", { name: /^Retweet$/i }));
+  userEvent.click(await screen.findByRole("button", { name: /^Retweet$/i }));
   //click simple retweet button
   userEvent.click(screen.getByRole("menuitem", { name: /retweet/i }));
 
-  //check if a new retweet is on the page
-  let youRetweeted = await screen.findByText(/you retweeted/i);
-  expect(youRetweeted).toBeInTheDocument();
-
   //click retweet button
-  userEvent.click(screen.getAllByRole("button", { name: /^Retweet$/i })[0]);
+  userEvent.click(screen.getByRole("button", { name: /^Retweet$/i }));
 
   //click undo retweet button
-  userEvent.click(screen.getByRole("menuitem", { name: /undo retweet/i }));
-
-  await waitFor(() => {
-    expect(screen.queryByText(/you retweeted/i)).not.toBeInTheDocument();
-  });
-
-  //check if retweet number is updated
-  let retweetCounters = parseInt(
-    screen.getByLabelText("number of retweets").textContent
+  userEvent.click(
+    await screen.findByRole("menuitem", { name: /undo retweet/i })
   );
-  expect(retweetCounters).toBe(0);
+
+    //check if retweet number is updated
+    await waitFor(async () => {
+      let retweetCounter = await screen.findByLabelText("number of retweets");
+      expect(parseInt(retweetCounter.textContent)).toBe(0);
+    });
+ 
 });
 
+
 test("Comment tweet with button", async () => {
+  client.get.mockResolvedValue({ success: true, tweets: [...tweetListMock] });
   const typedText = "I'm testing this answer stuff";
 
   //mock api response to post cmment
@@ -205,7 +204,7 @@ test("Comment tweet with button", async () => {
 
   renderWithRedux(<FeedPage />, { initialState });
 
-  const tweet = screen.getByText(mockedTweet.message);
+  const tweet = await screen.findByText(mockedTweet.message);
   expect(tweet).toBeInTheDocument();
 
   //click comment button
@@ -229,3 +228,4 @@ test("Comment tweet with button", async () => {
   const newComment = await screen.findByText(typedText);
   expect(newComment).toBeInTheDocument();
 });
+

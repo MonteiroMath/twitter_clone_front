@@ -6,6 +6,8 @@ import FeedPage from "./FeedPage.js";
 
 import mocker from "../../testUtilities/mockers";
 
+const tweetListMock = [mocker.mockTweet()];
+
 const initialState = mocker.mockInitialState({
   user: mocker.mockInitialState({
     data: { user: mocker.mockUser(), jwtToken: 1 },
@@ -24,6 +26,7 @@ describe("Add new tweet", () => {
       tweet: mocker.mockTweet({ id: 1111, message: typedText }),
     };
 
+    client.get.mockResolvedValue({ success: true, tweets: [...tweetListMock] });
     client.post.mockResolvedValue(resp);
 
     renderWithRedux(<FeedPage />, { initialState });

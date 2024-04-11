@@ -204,9 +204,6 @@ const tweetsSlice = createSlice({
       .addCase(fetchReference.fulfilled, (state, action) => {
         if (action.payload.success) {
           const { tweet } = action.payload;
-
-          console.log(tweet);
-
           updateTweet(state.data, tweet);
         }
       })
@@ -229,6 +226,7 @@ const tweetsSlice = createSlice({
       })
       .addCase(postAnswer.fulfilled, (state, action) => {
         const { tweet, updatedTweet } = action.payload;
+
         updateTweet(state.data, updatedTweet);
         state.data.unshift(tweet);
       })
@@ -242,13 +240,12 @@ const tweetsSlice = createSlice({
 
         updateTweet(state.data, updatedTweet);
 
-        //todo extract
         let retweetIndex = state.data.findIndex(
           (tweet) =>
             tweet.referenceId === updatedTweet.id && tweet.type === "retweet"
         );
 
-        state.data.splice(retweetIndex, 1);
+        retweetIndex !== -1 && state.data.splice(retweetIndex, 1);
       })
       .addCase(addComment.fulfilled, (state, action) => {
         const { tweet, updatedTweet } = action.payload;
@@ -307,4 +304,4 @@ export const selectAllTweets = (state) => state.tweets.data;
 export const selectSomeTweets = (state, listOfIds) =>
   listOfIds.map((id) => state.tweets.data.find((tweet) => tweet.id === id));
 export const selectAnswers = (state) =>
-  state.tweets.data.filter((tweet) => tweet.type === "answer");
+  state.tweets.data.filter((tweet) => tweet.type === "comment");

@@ -11,7 +11,6 @@ function mockInitialSlice(customValues = {}) {
 function mockInitialState(customValues = {}) {
   const initialState = {
     tweets: mockInitialSlice(),
-    page: mockInitialSlice(),
     user: mockInitialSlice(),
   };
 
@@ -36,6 +35,11 @@ function mockTweet(customValues = {}) {
     liked: 0,
     retweeted: 0,
     reference: null,
+    author: {
+      id: 1,
+      username: "notmenotme",
+      avatar: null,
+    },
   };
 
   return {
