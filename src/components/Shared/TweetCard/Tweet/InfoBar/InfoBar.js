@@ -7,7 +7,9 @@ function InfoBar(props) {
 
   return (
     <div className="d-flex">
-      <div className="font-weight-bold">{username}</div>
+      <div className="font-weight-bold">
+        <a href={`/${username}`}>{username}</a>
+      </div>
       <div className="text-secondary pl-2"> @{username}</div>
       <div className="text-secondary ml-auto">
         {" "}

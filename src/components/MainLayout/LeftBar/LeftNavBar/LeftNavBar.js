@@ -20,7 +20,7 @@ function LeftNavBar(props) {
           <img src={tweet} alt="tweet icon" width="35px" />
         </NavbarBrand>
         <NavItem>
-          <NavLink href="#">
+          <NavLink href="/home">
             <img src={home} alt="home icon" width="25px" />
             <span className="ml-3 d-none d-lg-inline text-dark">Home</span>
           </NavLink>
@@ -58,7 +58,7 @@ function LeftNavBar(props) {
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#">
+          <NavLink href="/home">
             <img src={profile} alt="profile icon" width="25px" />
             <span className="ml-3 d-none d-lg-inline text-dark">Profile</span>
           </NavLink>
