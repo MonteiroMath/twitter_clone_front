@@ -37,10 +37,6 @@ export default function TweetPage() {
     return () => dispatch(clearState());
   }, [dispatch, id, jwtToken, user.id]);
 
-  if (!jwtToken) {
-    return <Redirect to="/" />;
-  }
-
   return tweet ? (
     <MainLayout>
       {reqStatus === "pending" && <Spinner color="info" />}

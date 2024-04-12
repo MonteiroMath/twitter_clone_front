@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import { Row } from "reactstrap";
 
-import { selectJwtToken, selectUserData } from "../../store/UserSlice";
+import { selectUserData } from "../../store/UserSlice";
 
 import MainLayout from "../MainLayout/MainLayout";
 import FeedNavbar from "./Navbar/FeedNavbar";
@@ -14,12 +13,8 @@ import NewTweetButton from "../Shared//Buttons/NewTweetButton/NewTweetButton";
 
 function Feed() {
   const user = useSelector((state) => selectUserData(state));
-  const jwtToken = useSelector((state) => selectJwtToken(state));
 
-
-  
-
-  return jwtToken ? (
+  return (
     <MainLayout>
       <div>
         <Row className="sticky-top border bg-white" noGutters>
@@ -33,8 +28,6 @@ function Feed() {
         <BottomBar />
       </div>
     </MainLayout>
-  ) : (
-    <Redirect to="/" />
   );
 }
 

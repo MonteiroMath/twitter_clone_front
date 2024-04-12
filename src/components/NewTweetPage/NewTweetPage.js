@@ -1,18 +1,13 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min.js";
-import { Row } from "reactstrap";
 
-import { selectJwtToken } from "../../store/UserSlice.js";
+import { Row } from "reactstrap";
 
 import MainLayout from "../MainLayout/MainLayout.js";
 import NewTweet from "../Shared/NewTweet/NewTweet.js";
 import TopBar from "./TopBar/TopBar.js";
 
 function NewTweetPage() {
-  const jwtToken = useSelector((state) => selectJwtToken(state));
-
-  return jwtToken ? (
+  return (
     <MainLayout>
       <div>
         <Row noGutters={true}>
@@ -23,8 +18,6 @@ function NewTweetPage() {
         </Row>
       </div>
     </MainLayout>
-  ) : (
-    <Redirect to="/" />
   );
 }
 

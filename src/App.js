@@ -1,33 +1,41 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectJwtToken } from "./store/UserSlice";
 
 import "./App.css";
-
+import PrivateRoute from "./components/Shared/PrivateRoute/PrivateRoute";
 import LoginPage from "./components/LoginPage/LoginPage";
 import UserPage from "./components/UserPage/UserPage";
 import FeedPage from "./components/FeedPage/FeedPage";
 import TweetPage from "./components/TweetPage/TweetPage";
 import NewTweetPage from "./components/NewTweetPage/NewTweetPage";
 
-
 function App() {
+  const jwtToken = useSelector((state) => selectJwtToken(state));
+
   return (
     <Router>
       <Switch>
-        <Route path="/newTweet">
+        <PrivateRoute path="/newTweet">
           <NewTweetPage />
-        </Route>
-        <Route path="/tweet/:id">
+        </PrivateRoute>
+        <PrivateRoute path="/tweet/:id">
           <TweetPage />
-        </Route>
-        <Route path="/home">
+        </PrivateRoute>
+        <PrivateRoute path="/home">
           <FeedPage />
-        </Route>
-        <Route path="/:username">
+        </PrivateRoute>
+        <PrivateRoute path="/:username">
           <UserPage />
-        </Route>
+        </PrivateRoute>
         <Route path="/">
-          <LoginPage />
+          {jwtToken ? <Redirect to="/home" /> : <LoginPage />}
         </Route>
       </Switch>
     </Router>
