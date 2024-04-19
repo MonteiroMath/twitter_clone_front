@@ -4,8 +4,13 @@ import { Button } from "reactstrap";
 
 import { IoIosLink } from "react-icons/io";
 import { IoCalendarOutline } from "react-icons/io5";
+import { useSelector } from "react-redux";
+import { selectUserData } from "../../../store/UserSlice";
 
-function UserProfile({ user }) {
+function UserProfile({ user, handleFollow }) {
+  const localUser = useSelector((state) => selectUserData(state));
+  const isLocalUserPage = localUser.id === user.id;
+
   return (
     <div className="profileContainer">
       <img
@@ -18,9 +23,20 @@ function UserProfile({ user }) {
         <Avatar context="userProfile" avatar={user.avatar} />
 
         <div>
-          <Button className="mt-2" color="primary" outline>
-            Edit Profile
-          </Button>
+          {isLocalUserPage ? (
+            <Button className="mt-2" color="primary" outline>
+              Edit Profile
+            </Button>
+          ) : (
+            <Button
+              className="mt-2"
+              color="primary"
+              outline
+              onClick={() => handleFollow()}
+            >
+              {user.isFollowed ? "Unfollow" : "Follow"}
+            </Button>
+          )}
         </div>
       </div>
       <div className="profileInfo">
@@ -44,9 +60,9 @@ function UserProfile({ user }) {
         </div>
         <div>
           {" "}
-          <span className="cfw-bolder">32</span>{" "}
+          <span className="cfw-bolder">{user.followedCount}</span>{" "}
           <span className="cfc-gray">following</span> -{" "}
-          <span className="cfw-bolder">31</span>{" "}
+          <span className="cfw-bolder">{user.followersCount}</span>{" "}
           <span className="cfc-gray">followers</span>
         </div>
       </div>

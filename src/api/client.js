@@ -1,3 +1,5 @@
+import setJwtHeader from "../store/utils/setJwtHeader";
+
 export async function client(endpoint, method, body, extraHeaders = {}) {
   const baseUrl = `http://localhost:6868`;
   const headers = { "Content-Type": "application/json", ...extraHeaders };
@@ -37,10 +39,17 @@ client.delete = async function (endpoint, body, extraHeaders = {}) {
 
 client.getTweet = (id, userId) => client.get(`/tweets/${id}?userId=${userId}`);
 
-client.getUserData = (username) => client.get(`/users?username=${username}`);
+client.getUserData = (username, jwtToken) =>
+  client.get(`/users?username=${username}`, setJwtHeader(jwtToken));
 
 client.registerUser = ({ email, username, password, birthDate }) =>
   client.post("/users/register", { email, username, password, birthDate });
 
 client.login = (email, password) =>
   client.post("/users/login", { email, password });
+
+client.follow = (followedId, jwtToken) =>
+  client.post(`/users/follow/${followedId}`, {}, setJwtHeader(jwtToken));
+
+client.unfollow = (followedId, jwtToken) =>
+  client.delete(`/users/follow/${followedId}`, {}, setJwtHeader(jwtToken));
