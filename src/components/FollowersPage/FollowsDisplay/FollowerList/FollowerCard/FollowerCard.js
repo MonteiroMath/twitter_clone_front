@@ -5,7 +5,7 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 function FollowerCard({ follower }) {
   return (
-    <Container>
+    <Container className="mb-4">
       <Row className="align-items-center mt-3">
         <Col xs="2" md="1">
           <Avatar avatar={follower.avatar} />
@@ -19,7 +19,7 @@ function FollowerCard({ follower }) {
       </Row>
       <Row>
         <Col xs="10" md="11" className="ml-auto mt-2">
-          {/*{follower.description}*/} Lorem IPsum Lorem IPsum
+          {follower.description}
         </Col>
       </Row>
     </Container>
