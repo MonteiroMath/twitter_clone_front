@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Spinner, ButtonGroup, Button } from "reactstrap";
+import { Spinner } from "reactstrap";
 
 import { client } from "../../api/client";
 
@@ -8,10 +8,9 @@ import MainLayout from "../MainLayout/MainLayout";
 import { useSelector } from "react-redux";
 import { selectJwtToken } from "../../store/UserSlice";
 import FollowerCard from "./FollowerCard/FollowerCard";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import FollowersButtonGroup from "./FollowersButtonGroup/FollowersButtonGroup";
 
 function FollowersPage() {
-  const history = useHistory();
   let { username } = useParams();
 
   const [loadingState, setLoadingState] = useState("idle");
@@ -35,22 +34,7 @@ function FollowersPage() {
   return (
     <MainLayout>
       <div>Nav bar</div>
-      <ButtonGroup className="d-flex my-4">
-        <Button
-          color="light"
-          className="cfw-bolder"
-          onClick={() => history.push(`/${username}/followers`)}
-        >
-          Followers
-        </Button>
-        <Button
-          color="light"
-          className="cfw-bolder"
-          onClick={() => history.push(`/${username}/following`)}
-        >
-          Following
-        </Button>
-      </ButtonGroup>
+      <FollowersButtonGroup className="my-4"/>
       <div>
         {loadingState === "loading" && (
           <div className="d-flex justify-content-center">
