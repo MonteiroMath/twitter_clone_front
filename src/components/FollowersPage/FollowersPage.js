@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { selectJwtToken } from "../../store/UserSlice";
 import FollowerCard from "./FollowerCard/FollowerCard";
 import FollowersButtonGroup from "./FollowersButtonGroup/FollowersButtonGroup";
+import TopBar from "./TopBar/TopBar";
 
 function FollowersPage() {
   let { username } = useParams();
@@ -33,8 +34,8 @@ function FollowersPage() {
 
   return (
     <MainLayout>
-      <div>Nav bar</div>
-      <FollowersButtonGroup className="my-4"/>
+      <TopBar className="mt-1 ml-2 mb-2" username={username} />
+      <FollowersButtonGroup className="mb-4" />
       <div>
         {loadingState === "loading" && (
           <div className="d-flex justify-content-center">

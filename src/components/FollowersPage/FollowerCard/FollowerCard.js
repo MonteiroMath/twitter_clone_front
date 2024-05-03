@@ -15,7 +15,7 @@ function FollowerCard({ follower }) {
           <div className="font-weight-bold">
             <Link to={`/${follower.username}`}>{follower.username}</Link>
           </div>
-          <div className="text-secondary pl-2">{`@${follower.username}`}</div>
+          <div className="cfs-small text-secondary">{`@${follower.username}`}</div>
         </Col>
         <Button
           className="mt-2 ml-auto mr-2"
