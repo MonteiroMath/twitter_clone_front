@@ -6,6 +6,7 @@ import { IoIosLink } from "react-icons/io";
 import { IoCalendarOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { selectUserData } from "../../../store/UserSlice";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 function UserProfile({ user, handleFollow }) {
   const localUser = useSelector((state) => selectUserData(state));
@@ -60,10 +61,14 @@ function UserProfile({ user, handleFollow }) {
         </div>
         <div>
           {" "}
-          <span className="cfw-bolder">{user.followedCount}</span>{" "}
-          <span className="cfc-gray">following</span> -{" "}
-          <span className="cfw-bolder">{user.followersCount}</span>{" "}
-          <span className="cfc-gray">followers</span>
+          <Link to={`/${user.username}/following`}>
+            <span className="cfw-bolder">{user.followedCount}</span>{" "}
+            <span className="cfc-gray">following</span> -{" "}
+          </Link>
+          <Link to={`/${user.username}/followers`}>
+            <span className="cfw-bolder">{user.followersCount}</span>{" "}
+            <span className="cfc-gray">followers</span>{" "}
+          </Link>
         </div>
       </div>
     </div>

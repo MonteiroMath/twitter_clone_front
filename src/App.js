@@ -15,6 +15,7 @@ import UserPage from "./components/UserPage/UserPage";
 import FeedPage from "./components/FeedPage/FeedPage";
 import TweetPage from "./components/TweetPage/TweetPage";
 import NewTweetPage from "./components/NewTweetPage/NewTweetPage";
+import FollowersPage from "./components/FollowersPage/FollowersPage";
 
 function App() {
   const jwtToken = useSelector((state) => selectJwtToken(state));
@@ -30,6 +31,9 @@ function App() {
         </PrivateRoute>
         <PrivateRoute path="/home">
           <FeedPage />
+        </PrivateRoute>
+        <PrivateRoute path="/:username/followers">
+          <FollowersPage />
         </PrivateRoute>
         <PrivateRoute path="/:username">
           <UserPage />

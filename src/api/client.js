@@ -53,3 +53,9 @@ client.follow = (followedId, jwtToken) =>
 
 client.unfollow = (followedId, jwtToken) =>
   client.delete(`/users/follow/${followedId}`, {}, setJwtHeader(jwtToken));
+
+client.getFollowers = (username, jwtToken) =>
+  client.get(`/users/${username}/followers`, setJwtHeader(jwtToken));
+
+client.getFollowing = (username, jwtToken) =>
+  client.get(`/users/${username}/following`, setJwtHeader(jwtToken));
