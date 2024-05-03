@@ -1,8 +1,7 @@
 import { Container, Row, Col } from "reactstrap";
 
-import Avatar from "../../Shared/Avatar/Avatar";
+import Avatar from "../../../../Shared/Avatar/Avatar";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import { Button } from "reactstrap";
 
 function FollowerCard({ follower }) {
   return (
@@ -17,14 +16,6 @@ function FollowerCard({ follower }) {
           </div>
           <div className="cfs-small text-secondary">{`@${follower.username}`}</div>
         </Col>
-        <Button
-          className="mt-2 ml-auto mr-2"
-          color="primary"
-          outline
-          onClick={() => console.log("todo")}
-        >
-          Unfollow
-        </Button>
       </Row>
       <Row>
         <Col xs="10" md="11" className="ml-auto mt-2">

@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Spinner } from "reactstrap";
 
 import { client } from "../../api/client";
 
-import MainLayout from "../MainLayout/MainLayout";
 import { useSelector } from "react-redux";
 import { selectJwtToken } from "../../store/UserSlice";
-import FollowerCard from "./FollowerCard/FollowerCard";
-import FollowersButtonGroup from "./FollowersButtonGroup/FollowersButtonGroup";
-import TopBar from "./TopBar/TopBar";
+import FollowsDisplay from "./FollowsDisplay/FollowsDisplay";
 
 function FollowersPage() {
   let { username } = useParams();
@@ -33,56 +29,12 @@ function FollowersPage() {
   }, [username, jwtToken]);
 
   return (
-    <MainLayout>
-      <TopBar className="mt-1 ml-2 mb-2" username={username} />
-      <FollowersButtonGroup className="mb-4" />
-      <div>
-        {loadingState === "loading" && (
-          <div className="d-flex justify-content-center">
-            <Spinner color="info" />
-          </div>
-        )}
-
-        {loadingState === "success" && (
-          <>
-            {userList.map((follower) => (
-              <FollowerCard follower={follower} />
-            ))}
-          </>
-        )}
-
-        {loadingState === "failed" && (
-          <div className="d-flex justify-content-center cfs-30 cfw-bold">
-            Something went wrong!
-          </div>
-        )}
-      </div>
-    </MainLayout>
+    <FollowsDisplay
+      username={username}
+      userList={userList}
+      loadingState={loadingState}
+    />
   );
-  /* 
-  return (
-    
-      {loadingState === "loading" && (
-        <div className="d-flex justify-content-center">
-          <Spinner color="info" />
-        </div>
-      )}
-
-      {loadingState === "success" && (
-        <>
-          <UserProfile user={user} handleFollow={handleFollow} />
-          <FeedTweetList username={username} />
-        </>
-      )}
-
-      {loadingState === "failed" && (
-        <div className="d-flex justify-content-center cfs-30 cfw-bold">
-          Something went wrong!
-        </div>
-      )}
-    </MainLayout>
-  );
-  */
 }
 
 export default FollowersPage;
