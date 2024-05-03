@@ -18,7 +18,7 @@ function FollowerCard({ follower }) {
           <div className="text-secondary pl-2">{`@${follower.username}`}</div>
         </Col>
         <Button
-          className="mt-2"
+          className="mt-2 ml-auto mr-2"
           color="primary"
           outline
           onClick={() => console.log("todo")}

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Redirect } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Row, Spinner } from "reactstrap";
 import { selectJwtToken, selectUserData } from "../../store/UserSlice";
 import {
