@@ -58,6 +58,9 @@ function mockUser(customValues = {}) {
     birthDate: "1992-01-01T00:00:00.000Z",
     updatedAt: "2024-03-15T13:16:21.473Z",
     createdAt: "2024-03-15T13:16:21.473Z",
+    followedCount: 0,
+    followersCount: 0,
+    isFollowed: false,
   };
 
   return {

@@ -99,11 +99,15 @@ function UserProfile({ username }) {
             <div>
               {" "}
               <Link to={`/${user.username}/following`}>
-                <span className="cfw-bolder">{user.followedCount}</span>{" "}
+                <span data-testid="followed-count" className="cfw-bolder">
+                  {user.followedCount}
+                </span>{" "}
                 <span className="cfc-gray">following</span> -{" "}
               </Link>
               <Link to={`/${user.username}/followers`}>
-                <span className="cfw-bolder">{user.followersCount}</span>{" "}
+                <span data-testid="followers-count" className="cfw-bolder">
+                  {user.followersCount}
+                </span>{" "}
                 <span className="cfc-gray">followers</span>{" "}
               </Link>
             </div>
