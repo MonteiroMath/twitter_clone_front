@@ -10,7 +10,7 @@ function TopBar({ username, className }) {
       <Row className={`align-items-center ${className}`}>
         <RiArrowGoBackLine
           className="cpointer"
-          onClick={() => history.goBack()}
+          onClick={() => history.push(`/${username}`)}
         />
         <div className="ml-4">
           <div className="cfw-bolder">{username}</div>
