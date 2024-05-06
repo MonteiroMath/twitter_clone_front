@@ -1,5 +1,6 @@
 import React from "react";
-
+import { useSelector } from "react-redux";
+import { selectUserData } from "../../../../store/UserSlice";
 import { Navbar, Nav, NavItem, NavLink, NavbarBrand } from "reactstrap";
 
 import tweet from "../../../../assets/icons/tweet.svg";
@@ -13,6 +14,8 @@ import profile from "../../../../assets/icons/profile.svg";
 import dots from "../../../../assets/icons/three-dots.svg";
 
 function LeftNavBar(props) {
+  const userData = useSelector(selectUserData);
+
   return (
     <Navbar>
       <Nav className="justify-content-center font-weight-bold" navbar>
@@ -58,7 +61,7 @@ function LeftNavBar(props) {
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="/home">
+          <NavLink href={`/${userData.username}`}>
             <img src={profile} alt="profile icon" width="25px" />
             <span className="ml-3 d-none d-lg-inline text-dark">Profile</span>
           </NavLink>
