@@ -78,7 +78,48 @@ describe("Follow tests", () => {
     });
 
     expect(unfollowButton).toBeInTheDocument();
+  });
 
-    //await waitFor(() => expect(followersCount.textContent).toBe("1"));
+  test("Unfollow an user that was followed before", async () => {
+    //mock api response to getting the followTestUser data
+    client.getUserData.mockResolvedValue({
+      success: true,
+      user: { ...followTestUser, isFollowed: true, followersCount: 1 },
+    });
+
+    //mock api response to following the followTestUser
+    client.unfollow.mockResolvedValue({
+      success: true,
+      user: {
+        ...followTestUser,
+        isFollowed: false,
+        followersCount: followTestUser.followersCount - 1,
+      },
+    });
+
+    renderWithRedux(
+      <MemoryRouter initialEntries={[`/${followTestUser.username}`]}>
+        <UserProfile user={followTestUser} />
+      </MemoryRouter>,
+      { initialState }
+    );
+
+    const unfollowButton = await screen.findByRole("button", {
+      name: /^unfollow$/i,
+    });
+    let followersCount = screen.getByTestId("followers-count");
+
+    expect(unfollowButton).toBeInTheDocument();
+    expect(followersCount.textContent).toBe("1");
+
+    userEvent.click(unfollowButton);
+
+    
+    const followButton = await screen.findByRole("button", {
+      name: /^follow$/i,
+    });
+
+    expect(followButton).toBeInTheDocument();
+    
   });
 });
