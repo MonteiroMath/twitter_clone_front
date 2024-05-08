@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 
 import MainLayout from "../MainLayout/MainLayout";
 import UserProfile from "./UserProfile/UserProfile";
-import FeedTweetList from "../FeedPage/FeedTweetList/FeedTweetList";
+import UserTweetList from "./UserTweetList/UserTweetList";
+
 
 
 function UserPage() {
@@ -12,7 +13,7 @@ function UserPage() {
   return (
     <MainLayout>
       <UserProfile username={username} />
-      <FeedTweetList username={username} />
+      <UserTweetList username={username} />
     </MainLayout>
   );
 }
