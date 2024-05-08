@@ -18,7 +18,7 @@ function FeedTweetList({ username }) {
   const tweetList = useSelector(selectAllTweets);
 
   useEffect(() => {
-    dispatch(fetchTweets({ username, jwtToken }));
+    dispatch(fetchTweets({ jwtToken }));
 
     return () => dispatch(clearState());
   }, [dispatch, jwtToken, username]);
