@@ -18,11 +18,18 @@ function updateTweet(stateData, updatedTweet) {
 
 export const fetchTweets = createAsyncThunk(
   "tweets/fetch",
-  async ({ username, jwtToken }) => {
-    const data = await client.get(
-      `/tweets?username=${username}`,
-      setJwtHeader(jwtToken)
-    );
+  async ({ username, jwtToken, page }) => {
+    let query = "";
+
+    if (username) {
+      query += `username=${username}&`;
+    }
+
+    if (page) {
+      query += `page=${page}&`;
+    }
+
+    const data = await client.get(`/tweets?${query}`, setJwtHeader(jwtToken));
     return data;
   }
 );
