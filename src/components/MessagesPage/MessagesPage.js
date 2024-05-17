@@ -1,34 +1,21 @@
+import LeftBar from "../MainLayout/LeftBar/LeftBar";
+import ContactsBox from "./ContactsBox/ContactsBox";
+import MessagesBox from "./MessagesBox/MessagesBox";
 import { Container, Row, Col } from "reactstrap";
-import { useSelector } from "react-redux";
-import { selectUserData } from "../../store/UserSlice";
-import TopBar from "../Shared/Bars/TopBar/TopBar";
-import Avatar from "../Shared/Avatar/Avatar";
-
-import styles from "./MessagesPage.module.css";
 
 function MessagesPage() {
-  const userData = useSelector(selectUserData);
-
-  console.log(userData);
   return (
-    <Container className={`d-flex flex-column ${styles.h100}`}>
-      <TopBar header="Matham" />
-
-      <Row className={`flex-column align-items-center p-4 ${styles.rowGap}`}>
-        <Avatar />
-        <div>{userData.username}</div>
-        <div>{`@${userData.username}`}</div>
-        <div>{userData.description}</div>
-      </Row>
-      <Row className="flex-column align-items-end">
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 3</div>
-      </Row>
-      <Row className="mt-auto pb-4">
-        <div>message tools</div>
-        <input placeholder="Start a new message" />
-        <div>submit button</div>
+    <Container>
+      <Row>
+        <Col className="d-none d-sm-block pt-1 " sm="2" lg="4" xl="3">
+          <LeftBar />
+        </Col>
+        <Col className="d-none d-xl-block mt-3 " sm="2" xl="4">
+          <ContactsBox />
+        </Col>
+        <Col className="ml-auto p-0" xs="12" sm="10" lg="8" xl="5">
+          <MessagesBox />
+        </Col>
       </Row>
     </Container>
   );
