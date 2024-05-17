@@ -1,9 +1,8 @@
-import { Row, Col } from "reactstrap";
 import { LuMailPlus } from "react-icons/lu";
 import { CiSettings } from "react-icons/ci";
 import { Input } from "reactstrap";
 
-import Avatar from "../../Shared/Avatar/Avatar";
+import ContactCard from "./ContactCard/ContactCard";
 
 function ContactsBox() {
   return (
@@ -17,19 +16,10 @@ function ContactsBox() {
         <Input placeholder="Search Direct Messages" />
       </div>
       <div className="mt-5">
-        <Row>
-          <Col lg="4" xl="3">
-            <Avatar />
-          </Col>
-          <Col>
-            <div>
-              {" "}
-              <span className="cfw-bolder">Contact name </span> -{" "}
-              <span className="text-muted">December 12</span>
-            </div>
-            <div>last message...</div>{" "}
-          </Col>
-        </Row>
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
+        <ContactCard />
       </div>
     </div>
   );
