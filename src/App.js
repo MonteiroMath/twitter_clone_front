@@ -33,7 +33,7 @@ function App() {
         <PrivateRoute path="/home">
           <FeedPage />
         </PrivateRoute>
-        <PrivateRoute path="/messages/:userId?">
+        <PrivateRoute path="/messages/:recipientID?">
           <MessagesPage />
         </PrivateRoute>
         <PrivateRoute path="/:username/followers">

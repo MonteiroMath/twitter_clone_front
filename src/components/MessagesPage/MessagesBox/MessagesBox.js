@@ -1,4 +1,8 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { io } from "socket.io-client";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+
 import { Row, Col, Input, Button } from "reactstrap";
 import { selectUserData } from "../../../store/UserSlice";
 import TopBar from "../../Shared/Bars/TopBar/TopBar";
@@ -7,10 +11,17 @@ import { CiImageOff } from "react-icons/ci";
 import { MdOutlineGifBox } from "react-icons/md";
 import styles from "../MessagesPage.module.css";
 
+import StartConversation from "./StartConversation/StartConversation";
+
 function MessagesBox() {
+  const { recipientID } = useParams;
   const userData = useSelector(selectUserData);
 
-  return (
+  useEffect(() => {
+    const socket = io("http://localhost:6868");
+  }, []);
+
+  return recipientID ? (
     <div className={`d-flex flex-column ${styles.h100}`}>
       <TopBar header="Matham" />
 
@@ -27,7 +38,7 @@ function MessagesBox() {
       </Row>
       <Row className="d-flex mt-auto pb-4 justify-content-around align-items-center px-4">
         <div>
-          <CiImageOff size="24"/>
+          <CiImageOff size="24" />
           <MdOutlineGifBox size="24" />
         </div>
         <Col>
@@ -38,7 +49,11 @@ function MessagesBox() {
         </Button>
       </Row>
     </div>
+  ) : (
+    <StartConversation />
   );
 }
+
+
 
 export default MessagesBox;

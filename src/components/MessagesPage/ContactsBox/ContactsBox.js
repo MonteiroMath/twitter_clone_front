@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { LuMailPlus } from "react-icons/lu";
 import { CiSettings } from "react-icons/ci";
 import { Input } from "reactstrap";
@@ -5,6 +6,8 @@ import { Input } from "reactstrap";
 import ContactCard from "./ContactCard/ContactCard";
 
 function ContactsBox() {
+  const { recipientID } = useParams();
+
   return (
     <div>
       <div className="d-flex align-items-center p-1">

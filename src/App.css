@@ -76,6 +76,10 @@ input:valid {
   color: gray;
 }
 
+.c-rgap-20 {
+  gap: 20px;
+}
+
 .croundCorners {
   border-radius: 15px !important;
 }

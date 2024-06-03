@@ -1,9 +1,13 @@
+
 import LeftBar from "../MainLayout/LeftBar/LeftBar";
 import ContactsBox from "./ContactsBox/ContactsBox";
 import MessagesBox from "./MessagesBox/MessagesBox";
 import { Container, Row, Col } from "reactstrap";
 
 function MessagesPage() {
+  //const { recipientId } = useParams();
+
+  //console.log(recipientId);
   return (
     <Container>
       <Row>
