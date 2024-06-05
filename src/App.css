@@ -112,6 +112,10 @@ input:valid {
   max-width: 100%;
 }
 
+.chover_darken:hover{
+  background-color: lightgray;
+}
+
 .cpointer {
   cursor: pointer;
 }
