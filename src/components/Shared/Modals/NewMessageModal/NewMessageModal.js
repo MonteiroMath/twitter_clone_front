@@ -16,10 +16,11 @@ import { client } from "../../../../api/client";
 import { selectUserData, selectJwtToken } from "../../../../store/UserSlice";
 
 import FollowingList from "./FollowingList/FollowingList";
+import { Spinner } from "reactstrap";
 
 function NewMessageModal({ isOpen, toggle }) {
   //todo search will filter list of contacts
-  
+
   //todo next button should be disabled until an user is selected
 
   const history = useHistory();
@@ -65,15 +66,27 @@ function NewMessageModal({ isOpen, toggle }) {
           <Input placeholder="Search people" />
         </InputGroup>
         <div>
-          <FollowingList
-            userList={followingList}
-            handleUserSelection={handleUserSelection}
-            selectedUser={selected}
-          />
+          {loadingState === "idle" && <Spinner color="info" />}
+          {loadingState === "success" && (
+            <FollowingList
+              userList={followingList}
+              handleUserSelection={handleUserSelection}
+              selectedUser={selected}
+            />
+          )}
+          {loadingState === "failed" && (
+            <div className="d-flex justify-content-center cfs-30 cfw-bold">
+              Something went wrong!
+            </div>
+          )}
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary" onClick={handleNext} disabled={selected ? false : true}>
+        <Button
+          color="primary"
+          onClick={handleNext}
+          disabled={selected ? false : true}
+        >
           Next
         </Button>
       </ModalFooter>
