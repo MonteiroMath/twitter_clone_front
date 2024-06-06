@@ -71,6 +71,7 @@ function NewMessageModal({ isOpen, toggle }) {
           <FollowingList
             userList={followingList}
             handleUserSelection={handleUserSelection}
+            selectedUser={selected}
           />
         </div>
       </ModalBody>

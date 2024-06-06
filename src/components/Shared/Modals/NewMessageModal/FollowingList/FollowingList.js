@@ -1,7 +1,6 @@
 import FollowingCard from "./FollowingCard/FollowingCard/FollowingCard";
 
-function FollowingList({ userList, handleUserSelection }) {
-  
+function FollowingList({ userList, handleUserSelection, selectedUser }) {
   return (
     <>
       {userList.length !== 0 ? (
@@ -10,6 +9,7 @@ function FollowingList({ userList, handleUserSelection }) {
             handleClick={() => handleUserSelection(user.id)}
             key={user.id}
             user={user}
+            selected={selectedUser === user.id}
           />
         ))
       ) : (

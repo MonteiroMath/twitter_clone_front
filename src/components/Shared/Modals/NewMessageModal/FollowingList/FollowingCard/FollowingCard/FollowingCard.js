@@ -1,9 +1,12 @@
 import { Row, Col } from "reactstrap";
 import Avatar from "../../../../../Avatar/Avatar";
 
-function FollowingCard({ user, handleClick }) {
+function FollowingCard({ user, handleClick, selected }) {
   return (
-    <Row className="mt-4 cpointer chover_darken py-2" onClick={handleClick}>
+    <Row
+      className={`mt-4 cpointer chover_darken py-2 ${selected && "selectedBG"}`}
+      onClick={handleClick}
+    >
       <Col xs="2">
         <Avatar />
       </Col>
