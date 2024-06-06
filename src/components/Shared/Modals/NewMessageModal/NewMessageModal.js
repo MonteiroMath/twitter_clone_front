@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import {
-  Row,
-  Col,
   Modal,
   ModalHeader,
   ModalBody,
@@ -17,12 +15,11 @@ import {
 import { client } from "../../../../api/client";
 import { selectUserData, selectJwtToken } from "../../../../store/UserSlice";
 
-import Avatar from "../../Avatar/Avatar";
 import FollowingList from "./FollowingList/FollowingList";
 
 function NewMessageModal({ isOpen, toggle }) {
   //todo search will filter list of contacts
-  //todo clicking on an user should make it selected
+  
   //todo next button should be disabled until an user is selected
 
   const history = useHistory();
@@ -76,7 +73,7 @@ function NewMessageModal({ isOpen, toggle }) {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary" onClick={handleNext}>
+        <Button color="primary" onClick={handleNext} disabled={selected ? false : true}>
           Next
         </Button>
       </ModalFooter>
