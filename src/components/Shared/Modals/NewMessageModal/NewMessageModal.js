@@ -17,12 +17,10 @@ import { selectUserData, selectJwtToken } from "../../../../store/UserSlice";
 
 import FollowingList from "./FollowingList/FollowingList";
 import { Spinner } from "reactstrap";
+import styles from "./NewMessageModal.module.css";
 
 function NewMessageModal({ isOpen, toggle }) {
-  //todo search will filter list of contacts
-
-  //todo next button should be disabled until an user is selected
-
+  //todo search will filter list of contact
   const history = useHistory();
   const user = useSelector((state) => selectUserData(state));
   const jwtToken = useSelector((state) => selectJwtToken(state));
@@ -68,11 +66,13 @@ function NewMessageModal({ isOpen, toggle }) {
         <div>
           {loadingState === "idle" && <Spinner color="info" />}
           {loadingState === "success" && (
-            <FollowingList
-              userList={followingList}
-              handleUserSelection={handleUserSelection}
-              selectedUser={selected}
-            />
+            <div className={`overflow-auto ${styles.followingListContainer}`}>
+              <FollowingList
+                userList={followingList}
+                handleUserSelection={handleUserSelection}
+                selectedUser={selected}
+              />
+            </div>
           )}
           {loadingState === "failed" && (
             <div className="d-flex justify-content-center cfs-30 cfw-bold">

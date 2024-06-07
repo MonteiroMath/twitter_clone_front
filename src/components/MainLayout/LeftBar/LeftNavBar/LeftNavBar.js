@@ -43,7 +43,7 @@ function LeftNavBar(props) {
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#">
+          <NavLink href="/messages">
             <img src={mail} alt="messages icon" width="25px" />
             <span className="ml-3 d-none d-lg-inline text-dark">Messages</span>
           </NavLink>
