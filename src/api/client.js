@@ -59,3 +59,6 @@ client.getFollowers = (username, jwtToken) =>
 
 client.getFollowing = (username, jwtToken) =>
   client.get(`/users/${username}/following`, setJwtHeader(jwtToken));
+
+client.getMessages = (authorID, recipientID, jwtToken) =>
+  client.get(`/messages/${authorID}/${recipientID}`, setJwtHeader(jwtToken));

@@ -14,7 +14,6 @@ import { client } from "../../../../api/client";
 import { useEffect } from "react";
 
 function ConversationDisplay() {
-  
   //get messages from user messaged
 
   const { recipientName } = useParams();
@@ -22,6 +21,7 @@ function ConversationDisplay() {
   const jwtToken = useSelector(selectJwtToken);
 
   const [recipientUser, setRecipientUser] = useState({});
+  const [messageList, setMessageList] = useState([]);
 
   useEffect(() => {
     //setLoadingState("loading");
@@ -31,24 +31,39 @@ function ConversationDisplay() {
         //setLoadingState("success");
       } else {
         //setLoadingState("failed");
+        console.log("error");
       }
     });
   }, [recipientName, jwtToken]);
+
+  useEffect(() => {
+    if (recipientUser.id) {
+      client
+        .getMessages(userData.id, recipientUser.id, jwtToken)
+        .then((result) => {
+          if (result.success) {
+            setMessageList(result.messages);
+          } else {
+            console.log("error");
+          }
+        });
+    }
+  }, [recipientUser.id, userData.id, jwtToken]);
 
   return (
     <div className={`d-flex flex-column ${styles.h100}`}>
       <TopBar header="Matham" />
 
       <Row className={`flex-column align-items-center p-4 ${styles.rowGap}`}>
-        <Avatar avatar={recipientUser.avatar}/>
+        <Avatar avatar={recipientUser.avatar} />
         <div>{recipientUser.username}</div>
         <div>{`@${recipientUser.username}`}</div>
         <div>{recipientUser.description}</div>
       </Row>
       <Row className="flex-column align-items-end pr-5">
-        <div>Message 1</div>
-        <div>Message 2</div>
-        <div>Message 3</div>
+        {messageList.map((message) => (
+          <div key={message.id}>{message.message}</div>
+        ))}
       </Row>
       <Row className="d-flex mt-auto pb-4 justify-content-around align-items-center px-4">
         <div>
