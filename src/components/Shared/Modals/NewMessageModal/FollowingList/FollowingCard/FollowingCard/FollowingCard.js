@@ -5,7 +5,7 @@ function FollowingCard({ user, handleClick, selected }) {
   return (
     <Container>
       <Row
-        className={`mt-4 cpointer chover_darken py-2 ${
+        className={`mt-3 cpointer chover_darken py-2 ${
           selected && "selectedBG"
         }`}
         onClick={handleClick}

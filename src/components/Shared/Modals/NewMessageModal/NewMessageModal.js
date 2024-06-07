@@ -1,16 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import {
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-  InputGroup,
-  InputGroupText,
-  Input,
-} from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 
 import { client } from "../../../../api/client";
 import { selectUserData, selectJwtToken } from "../../../../store/UserSlice";
@@ -20,8 +11,8 @@ import { Spinner } from "reactstrap";
 import styles from "./NewMessageModal.module.css";
 
 function NewMessageModal({ isOpen, toggle }) {
-  //todo search will filter list of contact
   const history = useHistory();
+
   const user = useSelector((state) => selectUserData(state));
   const jwtToken = useSelector((state) => selectJwtToken(state));
 
@@ -42,8 +33,8 @@ function NewMessageModal({ isOpen, toggle }) {
     });
   }, [user.username, jwtToken]);
 
-  function handleUserSelection(userId) {
-    setSelected(userId);
+  function handleUserSelection(username) {
+    setSelected(username);
   }
 
   function handleNext() {
@@ -59,10 +50,6 @@ function NewMessageModal({ isOpen, toggle }) {
         <div className="modal-title">New Message</div>
       </ModalHeader>
       <ModalBody>
-        <InputGroup>
-          <InputGroupText>@</InputGroupText>
-          <Input placeholder="Search people" />
-        </InputGroup>
         <div>
           {loadingState === "idle" && <Spinner color="info" />}
           {loadingState === "success" && (
