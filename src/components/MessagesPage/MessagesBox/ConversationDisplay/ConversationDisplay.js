@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { Row, Col, Input, Button } from "reactstrap";
+import { io } from "socket.io-client";
+
 import TopBar from "../../../Shared/Bars/TopBar/TopBar";
 import Avatar from "../../../Shared/Avatar/Avatar";
 import styles from "../../MessagesPage.module.css";
@@ -48,6 +50,27 @@ function ConversationDisplay() {
         });
     }
   }, [recipientUser.id, userData.id, jwtToken]);
+
+  useEffect(() => {
+    const socket = io("http://localhost:6868");
+
+    socket.on("NEW_MESSAGE", (data) => {
+      if (data.action === "CREATE") {
+        const { message } = data;
+
+        if (
+          message.authorID === userData.id ||
+          message.recipientID === userData.id
+        ) {
+          setMessageList((prev) => [...prev, message]);
+        }
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   function handleWriteMessage(e) {
     const { value } = e.target;
