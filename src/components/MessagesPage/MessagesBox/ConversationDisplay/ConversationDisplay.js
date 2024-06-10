@@ -4,8 +4,6 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { Row, Col, Input, Button } from "reactstrap";
 import TopBar from "../../../Shared/Bars/TopBar/TopBar";
 import Avatar from "../../../Shared/Avatar/Avatar";
-import { CiImageOff } from "react-icons/ci";
-import { MdOutlineGifBox } from "react-icons/md";
 import styles from "../../MessagesPage.module.css";
 
 import { selectUserData, selectJwtToken } from "../../../../store/UserSlice";
@@ -22,6 +20,7 @@ function ConversationDisplay() {
 
   const [recipientUser, setRecipientUser] = useState({});
   const [messageList, setMessageList] = useState([]);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     //setLoadingState("loading");
@@ -50,6 +49,23 @@ function ConversationDisplay() {
     }
   }, [recipientUser.id, userData.id, jwtToken]);
 
+  function handleWriteMessage(e) {
+    const { value } = e.target;
+    setMessage(value);
+  }
+
+  function handleSendMessage(e) {
+    e.preventDefault();
+
+    const newMessage = {
+      authorID: userData.id,
+      recipientID: recipientUser.id,
+      message,
+    };
+
+    client.postMessage(newMessage, jwtToken);
+  }
+
   return (
     <div className={`d-flex flex-column ${styles.h100}`}>
       <TopBar header="Matham" />
@@ -66,14 +82,14 @@ function ConversationDisplay() {
         ))}
       </Row>
       <Row className="d-flex mt-auto pb-4 justify-content-around align-items-center px-4">
-        <div>
-          <CiImageOff size="24" />
-          <MdOutlineGifBox size="24" />
-        </div>
         <Col>
-          <Input placeholder="Start a new message" />
+          <Input
+            placeholder="Start a new message"
+            value={message}
+            onChange={handleWriteMessage}
+          />
         </Col>
-        <Button color="primary" size="sm">
+        <Button color="primary" size="sm" onClick={handleSendMessage}>
           Send
         </Button>
       </Row>
