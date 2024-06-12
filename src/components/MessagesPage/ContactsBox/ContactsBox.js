@@ -5,7 +5,16 @@ import { Input } from "reactstrap";
 
 import ContactCard from "./ContactCard/ContactCard";
 
+
+
 function ContactsBox() {
+
+  /*
+
+    - Get a list of all the conversation an user have and display one box for each
+      - 
+
+   */
   const { recipientID } = useParams();
 
   return (

@@ -13,9 +13,9 @@ import { selectUserData, selectJwtToken } from "../../../../store/UserSlice";
 import { client } from "../../../../api/client";
 import { useEffect } from "react";
 
-function ConversationDisplay() {
-  //get messages from user messaged
+import MessagesList from "./MessagesList/MessagesList";
 
+function ConversationDisplay() {
   const { recipientName } = useParams();
   const userData = useSelector(selectUserData);
   const jwtToken = useSelector(selectJwtToken);
@@ -70,7 +70,7 @@ function ConversationDisplay() {
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [userData.id]);
 
   function handleWriteMessage(e) {
     const { value } = e.target;
@@ -99,10 +99,8 @@ function ConversationDisplay() {
         <div>{`@${recipientUser.username}`}</div>
         <div>{recipientUser.description}</div>
       </Row>
-      <Row className="flex-column align-items-end pr-5">
-        {messageList.map((message) => (
-          <div key={message.id}>{message.message}</div>
-        ))}
+      <Row className="flex-column align-items-end px-5">
+        <MessagesList messages={messageList} userID={userData.id} />
       </Row>
       <Row className="d-flex mt-auto pb-4 justify-content-around align-items-center px-4">
         <Col>
