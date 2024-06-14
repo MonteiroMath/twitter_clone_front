@@ -1,7 +1,7 @@
 import { Row, Col } from "reactstrap";
 import Avatar from "../../../Shared/Avatar/Avatar";
 
-function ContactCard() {
+function ContactCard({ conversation }) {
   return (
     <Row className="mt-4">
       <Col lg="4" xl="3">
@@ -9,10 +9,10 @@ function ContactCard() {
       </Col>
       <Col>
         <div>
-          <span className="cfw-bolder">Contact name </span> -{" "}
-          <span className="text-muted">December 12</span>
+          <span className="cfw-bolder">{conversation.recipientID} </span> -{" "}
+          <span className="text-muted">{conversation.createdAt}</span>
         </div>
-        <div>last message...</div>{" "}
+        <div>{conversation.message}</div>
       </Col>
     </Row>
   );

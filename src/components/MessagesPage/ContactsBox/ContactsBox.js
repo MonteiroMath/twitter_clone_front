@@ -1,21 +1,31 @@
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { selectUserData } from "../../../store/UserSlice";
 import { LuMailPlus } from "react-icons/lu";
 import { CiSettings } from "react-icons/ci";
 import { Input } from "reactstrap";
 
+import { client } from "../../../api/client";
+
 import ContactCard from "./ContactCard/ContactCard";
 
-
-
 function ContactsBox() {
-
-  /*
-
-    - Get a list of all the conversation an user have and display one box for each
-      - 
-
-   */
   const { recipientID } = useParams();
+
+  const userData = useSelector(selectUserData);
+
+  const [conversations, setConversations] = useState([]);
+
+  useEffect(() => {
+    client.getConversations(userData.id).then((result) => {
+      if (result.success) {
+        setConversations(result.messages);
+      }
+    });
+  }, [userData.id]);
+
+  console.log(conversations);
 
   return (
     <div>
@@ -28,10 +38,9 @@ function ContactsBox() {
         <Input placeholder="Search Direct Messages" />
       </div>
       <div className="mt-5">
-        <ContactCard />
-        <ContactCard />
-        <ContactCard />
-        <ContactCard />
+        {conversations.map((conversation) => (
+          <ContactCard conversation={conversation} />
+        ))}
       </div>
     </div>
   );
