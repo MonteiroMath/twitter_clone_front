@@ -25,8 +25,6 @@ function ContactsBox() {
     });
   }, [userData.id]);
 
-  console.log(conversations);
-
   return (
     <div>
       <div className="d-flex align-items-center p-1">

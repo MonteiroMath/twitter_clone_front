@@ -60,11 +60,21 @@ client.getFollowers = (username, jwtToken) =>
 client.getFollowing = (username, jwtToken) =>
   client.get(`/users/${username}/following`, setJwtHeader(jwtToken));
 
-client.getMessages = (authorID, recipientID, jwtToken) =>
-  client.get(`/messages/${authorID}/${recipientID}`, setJwtHeader(jwtToken));
+client.getMessages = (conversationID, jwtToken) =>
+  client.get(`/messages/${conversationID}`, setJwtHeader(jwtToken));
 
 client.getConversations = (userID, jwtToken) =>
   client.get(`/messages/conversations/${userID}`, setJwtHeader(jwtToken));
 
-client.postMessage = (newMessage, jwtToken) =>
-  client.post(`/messages`, { newMessage }, setJwtHeader(jwtToken));
+client.postMessage = (conversationID, newMessage, jwtToken) =>
+  client.post(
+    `/messages/${conversationID}`,
+    { newMessage },
+    setJwtHeader(jwtToken)
+  );
+
+client.postConversation = (participantsIDs, jwtToken) =>
+  client.post(`/`, { ...participantsIDs }, setJwtHeader(jwtToken));
+
+client.getSummary = (conversationID, jwtToken) =>
+  client.get(`/${conversationID}/summary`, setJwtHeader(jwtToken));
