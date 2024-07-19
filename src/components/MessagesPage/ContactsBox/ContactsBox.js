@@ -11,7 +11,7 @@ import { client } from "../../../api/client";
 import ContactCard from "./ContactCard/ContactCard";
 
 function ContactsBox() {
-  const { recipientID } = useParams();
+  const { conversationID } = useParams();
 
   const userData = useSelector(selectUserData);
 
@@ -20,7 +20,7 @@ function ContactsBox() {
   useEffect(() => {
     client.getConversations(userData.id).then((result) => {
       if (result.success) {
-        setConversations(result.messages);
+        setConversations(result.conversations);
       }
     });
   }, [userData.id]);
@@ -37,7 +37,7 @@ function ContactsBox() {
       </div>
       <div className="mt-5">
         {conversations.map((conversation) => (
-          <ContactCard conversation={conversation} />
+          <ContactCard conversationID={conversation.id} />
         ))}
       </div>
     </div>

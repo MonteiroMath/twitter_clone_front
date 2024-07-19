@@ -74,7 +74,7 @@ client.postMessage = (conversationID, newMessage, jwtToken) =>
   );
 
 client.postConversation = (participantsIDs, jwtToken) =>
-  client.post(`/`, { ...participantsIDs }, setJwtHeader(jwtToken));
+  client.post(`/messages`, { ...participantsIDs }, setJwtHeader(jwtToken));
 
 client.getSummary = (conversationID, jwtToken) =>
-  client.get(`/${conversationID}/summary`, setJwtHeader(jwtToken));
+  client.get(`/messages/${conversationID}/summary`, setJwtHeader(jwtToken));
