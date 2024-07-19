@@ -4,9 +4,9 @@ import ConversationDisplay from "./ConversationDisplay/ConversationDisplay";
 import StartConversation from "./StartConversation/StartConversation";
 
 function MessagesBox() {
-  const { recipientName } = useParams();
+  const { conversationID } = useParams();
 
-  return recipientName ? <ConversationDisplay /> : <StartConversation />;
+  return conversationID ? <ConversationDisplay /> : <StartConversation />;
 }
 
 export default MessagesBox;

@@ -6,10 +6,10 @@ function FollowingList({ userList, handleUserSelection, selectedUser }) {
       {userList.length !== 0 ? (
         userList.map((user) => (
           <FollowingCard
-            handleClick={() => handleUserSelection(user.username)}
+            handleClick={() => handleUserSelection(user.user.id)}
             key={user.id}
             user={user}
-            selected={selectedUser === user.username}
+            selected={selectedUser === user.id}
           />
         ))
       ) : (

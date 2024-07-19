@@ -33,14 +33,20 @@ function NewMessageModal({ isOpen, toggle }) {
     });
   }, [user.username, jwtToken]);
 
-  function handleUserSelection(username) {
-    setSelected(username);
+  function handleUserSelection(userID) {
+    setSelected(userID);
   }
 
   function handleNext() {
     if (selected) {
-      history.push(`/messages/${selected}`);
-      toggle();
+      client
+        .postConversation({ from: selected, to: user.id })
+        .then((result) => {
+          if (result.success) {
+            history.push(`/messages/${selected}`);
+            toggle();
+          }
+        });
     }
   }
 

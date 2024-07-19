@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import MessagesList from "./MessagesList/MessagesList";
 
 function ConversationDisplay() {
-  const { recipientName } = useParams();
+  const { conversationID } = useParams();
   const userData = useSelector(selectUserData);
   const jwtToken = useSelector(selectJwtToken);
 
@@ -26,30 +26,32 @@ function ConversationDisplay() {
 
   useEffect(() => {
     //setLoadingState("loading");
-    client.getUserData(recipientName, jwtToken).then((result) => {
+    client.getSummary(conversationID, jwtToken).then((result) => {
       if (result.success) {
-        setRecipientUser(result.user);
+        const { conversation } = result;
+
+        const toUser = conversation.participants.find(
+          (participant) => participant.id !== userData.id
+        );
+
+        setRecipientUser(toUser);
         //setLoadingState("success");
       } else {
         //setLoadingState("failed");
         console.log("error");
       }
     });
-  }, [recipientName, jwtToken]);
+  }, [userData.id, conversationID, jwtToken]);
 
   useEffect(() => {
-    if (recipientUser.id) {
-      client
-        .getMessages(userData.id, recipientUser.id, jwtToken)
-        .then((result) => {
-          if (result.success) {
-            setMessageList(result.messages);
-          } else {
-            console.log("error");
-          }
-        });
-    }
-  }, [recipientUser.id, userData.id, jwtToken]);
+    client.getMessages(conversationID, jwtToken).then((result) => {
+      if (result.success) {
+        setMessageList(result.messages);
+      } else {
+        console.log("error");
+      }
+    });
+  }, [conversationID, jwtToken]);
 
   useEffect(() => {
     const socket = io("http://localhost:6868");
@@ -58,10 +60,7 @@ function ConversationDisplay() {
       if (data.action === "CREATE") {
         const { message } = data;
 
-        if (
-          message.authorID === userData.id ||
-          message.recipientID === userData.id
-        ) {
+        if (message.conversationID === parseInt(conversationID)) {
           setMessageList((prev) => [...prev, message]);
         }
       }
@@ -70,7 +69,7 @@ function ConversationDisplay() {
     return () => {
       socket.disconnect();
     };
-  }, [userData.id]);
+  }, [conversationID]);
 
   function handleWriteMessage(e) {
     const { value } = e.target;
@@ -81,12 +80,11 @@ function ConversationDisplay() {
     e.preventDefault();
 
     const newMessage = {
-      authorID: userData.id,
-      recipientID: recipientUser.id,
+      userID: userData.id,
       message,
     };
 
-    client.postMessage(newMessage, jwtToken);
+    client.postMessage(conversationID, newMessage, jwtToken);
   }
 
   return (
@@ -97,7 +95,6 @@ function ConversationDisplay() {
         <Avatar avatar={recipientUser.avatar} />
         <div>{recipientUser.username}</div>
         <div>{`@${recipientUser.username}`}</div>
-        <div>{recipientUser.description}</div>
       </Row>
       <Row className="flex-column align-items-end px-5">
         <MessagesList messages={messageList} userID={userData.id} />
