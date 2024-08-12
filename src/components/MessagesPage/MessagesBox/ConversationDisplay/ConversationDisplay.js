@@ -95,10 +95,10 @@ function ConversationDisplay() {
         <div>{recipientUser.username}</div>
         <div>{`@${recipientUser.username}`}</div>
       </Row>
-      <Row className="flex-column align-items-end px-5">
+      <Row className="flex-column align-items-end px-5 flex-grow-1 flex-nowrap c-mh-100">
         <MessagesList messages={messageList} userID={userData.id} />
       </Row>
-      <Row className="d-flex mt-auto pb-4 justify-content-around align-items-center px-4">
+      <Row className="d-flex pb-4 justify-content-around align-items-center px-4 mt-3">
         <Col>
           <Input
             placeholder="Start a new message"
