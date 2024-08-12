@@ -25,7 +25,6 @@ function ConversationDisplay() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    //setLoadingState("loading");
     client.getSummary(conversationID, jwtToken).then((result) => {
       if (result.success) {
         const { conversation } = result;
@@ -35,9 +34,7 @@ function ConversationDisplay() {
         );
 
         setRecipientUser(toUser);
-        //setLoadingState("success");
       } else {
-        //setLoadingState("failed");
         console.log("error");
       }
     });

@@ -1,11 +1,14 @@
 .message {
 
-  background-color: lightcyan;
+  background-color: rgb(29, 155, 240);
+  color: white;
   margin-top: 3px;
   padding: 5px;
   border-radius: 10px;
 }
 
 .contactMessage {
+  background-color: rgb(239, 243, 244);
+  color: black;
   margin-right: auto;
 }
