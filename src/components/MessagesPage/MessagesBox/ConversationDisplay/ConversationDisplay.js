@@ -84,6 +84,8 @@ function ConversationDisplay() {
       message,
     };
 
+    setMessage("");
+
     client.postMessage(conversationID, newMessage, jwtToken);
   }
 
