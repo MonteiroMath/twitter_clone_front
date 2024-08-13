@@ -24,6 +24,8 @@ function ConversationDisplay() {
   const [messageList, setMessageList] = useState([]);
   const [message, setMessage] = useState("");
 
+
+
   useEffect(() => {
     client.getSummary(conversationID, jwtToken).then((result) => {
       if (result.success) {

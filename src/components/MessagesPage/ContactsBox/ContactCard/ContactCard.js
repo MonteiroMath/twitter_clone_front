@@ -13,7 +13,7 @@ function ContactCard({ conversationID }) {
 
   useEffect(() => {
     client.getSummary(conversationID).then((result) => {
-      console.log(result);
+      
       if (result.success) {
         setConversation(result.conversation);
       }
