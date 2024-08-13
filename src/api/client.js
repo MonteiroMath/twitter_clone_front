@@ -78,3 +78,6 @@ client.postConversation = (participantsIDs, jwtToken) =>
 
 client.getSummary = (conversationID, jwtToken) =>
   client.get(`/messages/${conversationID}/summary`, setJwtHeader(jwtToken));
+
+client.markRead = (messageID, userID, jwtToken) =>
+  client.put(`/messages/${messageID}`, { userID }, setJwtHeader(jwtToken));

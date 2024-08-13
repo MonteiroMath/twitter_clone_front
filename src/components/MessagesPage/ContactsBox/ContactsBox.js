@@ -11,8 +11,7 @@ import { client } from "../../../api/client";
 import ContactCard from "./ContactCard/ContactCard";
 
 function ContactsBox() {
-  const { conversationID } = useParams();
-
+ 
   const userData = useSelector(selectUserData);
 
   const [conversations, setConversations] = useState([]);
