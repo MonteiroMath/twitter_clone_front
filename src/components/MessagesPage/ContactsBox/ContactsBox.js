@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { selectUserData } from "../../../store/UserSlice";
 import { LuMailPlus } from "react-icons/lu";
 import { CiSettings } from "react-icons/ci";

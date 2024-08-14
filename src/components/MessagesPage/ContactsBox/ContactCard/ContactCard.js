@@ -7,13 +7,14 @@ import Avatar from "../../../Shared/Avatar/Avatar";
 
 import { client } from "../../../../api/client";
 
+import styles from "./ContactCard.module.css";
+
 function ContactCard({ conversationID }) {
   const userData = useSelector(selectUserData);
   const [conversation, setConversation] = useState(null);
 
   useEffect(() => {
     client.getSummary(conversationID).then((result) => {
-      
       if (result.success) {
         setConversation(result.conversation);
       }
@@ -37,7 +38,7 @@ function ContactCard({ conversationID }) {
 
   return conversation ? (
     <Link to={`/messages/${conversationID}`}>
-      <Row className="mt-4">
+      <Row className={`mt-4 ${!message.isRead && styles.notRead}`}>
         <Col lg="1" xl="1">
           <Avatar avatar={toUser.avatar} />
         </Col>
